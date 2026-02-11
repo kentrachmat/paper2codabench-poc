@@ -1,0 +1,86 @@
+{
+  "paper_id": "paper1",
+  "task_name": "Small Molecule-Protein Binding Prediction",
+  "task_type": "classification",
+  "problem_statement": "Predict whether a given small molecule will bind to one of three protein targets: BRD4, EPHX2/sEH, or ALB/HSA. This task aims to accelerate drug discovery by identifying likely binders from a large chemical space.",
+  "input_description": "SMILES strings representing small molecules, such as 'CC(=O)Oc1ccccc1C(=O)O' or 'C1=CC=CC=C1'. Each input corresponds to a single small molecule. The dataset includes 133M small molecules, with examples provided for training, validation, and testing.",
+  "output_description": "Binary labels indicating binding (1) or non-binding (0) for each small molecule-protein pair. For example, '1' indicates binding, and '0' indicates no binding. Outputs should be provided for each of the three protein targets.",
+  "submission_format": {
+    "type": "predictions_file",
+    "filename": "submission.csv",
+    "columns": [
+      "id",
+      "protein",
+      "pred"
+    ],
+    "example_rows": [
+      [
+        "molecule_001",
+        "BRD4",
+        "1"
+      ],
+      [
+        "molecule_002",
+        "EPHX2",
+        "0"
+      ],
+      [
+        "molecule_003",
+        "ALB",
+        "1"
+      ],
+      [
+        "molecule_004",
+        "BRD4",
+        "0"
+      ],
+      [
+        "molecule_005",
+        "EPHX2",
+        "1"
+      ]
+    ]
+  },
+  "dataset": {
+    "public_train_available": false,
+    "public_dev_available": false,
+    "test_is_hidden": true,
+    "notes": "The dataset includes approximately 98M training examples per protein, 200K validation examples per protein, and 360K test molecules per protein. The test set includes molecules synthesized with undisclosed building blocks and reactions to evaluate generalization."
+  },
+  "evaluation": {
+    "primary_metric": "Mean Average Precision",
+    "metrics": [
+      "Mean Average Precision",
+      "Top-k Precision (k=100, k=1000)"
+    ],
+    "higher_is_better": true,
+    "notes": "Mean Average Precision is computed across all three protein targets using a private test set of 360K molecules. Top-k precision is used to evaluate the precision of the top predictions, with k values of 100 and 1000."
+  },
+  "constraints": {
+    "runtime_limit_sec": 600,
+    "memory_limit_mb": 4096,
+    "allowed_external_data": "unknown"
+  },
+  "codabench_mapping": {
+    "ingestion_io": "read predictions file; align by id and protein",
+    "scoring_steps": [
+      "load reference labels",
+      "load submission file",
+      "validate submission format and IDs",
+      "compute Mean Average Precision and Top-k Precision",
+      "write scores to scores.json"
+    ],
+    "edge_cases": [
+      "missing molecule IDs",
+      "extra molecule IDs",
+      "mismatched protein targets",
+      "ties in Top-k predictions"
+    ]
+  },
+  "open_questions": [
+    "What specific SMILES strings or molecules should be included in toy data for public testing?",
+    "Are there any restrictions on using external datasets or pre-trained models for submissions?",
+    "Should the Top-k precision metric be weighted differently across the three protein targets?",
+    "What is the expected format for submissions that incorporate structural data (e.g., PDB files)?"
+  ]
+}

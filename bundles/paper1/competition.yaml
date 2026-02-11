@@ -1,0 +1,41 @@
+# Codabench Competition Configuration
+# Auto-generated from TaskSpec: Small Molecule-Protein Binding Prediction
+
+title: "Small Molecule-Protein Binding Prediction"
+description: |
+  Predict whether a given small molecule will bind to one of three protein targets: BRD4, EPHX2/sEH, or ALB/HSA. This task aims to accelerate drug discovery by identifying likely binders from a large chemical space.
+
+# Task details
+task_type: classification
+
+# Phases (single phase for POC)
+phases:
+  - id: 1
+    name: "Evaluation Phase"
+    description: "Main evaluation phase"
+    start: "2024-01-01"
+    end: "2025-12-31"
+
+    # Scoring
+    tasks:
+      - name: "Small Molecule-Protein Binding Prediction"
+        scoring_program: "scoring_program.zip"
+        reference_data: "reference_data.zip"
+        ingestion_program: "ingestion_program.zip"
+        input_data: "input_data.zip"
+
+# Leaderboard
+leaderboard:
+  - title: "Results"
+    key: "Mean Average Precision"
+    sorting: "desc"
+    computation: "average"
+
+# Resource limits
+resource_limits:
+  time_limit: 600
+  memory_limit_mb: 4096
+
+# Metadata
+created_by: "Paper2Codabench POC"
+version: "1.0"

@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+"""
+Ingestion Program for {{task_name}}
+Auto-generated from TaskSpec
+
+This program processes submissions and prepares them for scoring.
+"""
+import os
+import sys
+import pandas as pd
+from pathlib import Path
+
+
+def main():
+    """Main ingestion function"""
+    # Standard Codabench directory structure
+    input_dir = Path('/app/input_data')
+    output_dir = Path('/app/output')
+    submission_dir = Path('/app/ingested_program')
+
+    # For local testing, use different paths
+    if not input_dir.exists():
+        input_dir = Path('input_data')
+        output_dir = Path('output')
+        submission_dir = Path('submission')
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    print("=" * 60)
+    print("Ingestion Program: {{task_name}}")
+    print("=" * 60)
+
+    # Find submission file
+    submission_file = submission_dir / "{{submission_filename}}"
+
+    if not submission_file.exists():
+        # Try to find any CSV file
+        csv_files = list(submission_dir.glob("*.csv"))
+        if csv_files:
+            submission_file = csv_files[0]
+            print(f"Using found submission: {submission_file.name}")
+        else:
+            print(f"ERROR: Submission file not found: {submission_file}")
+            sys.exit(1)
+
+    print(f"Processing submission: {submission_file}")
+
+    # Load submission
+    try:
+        submission_df = pd.read_csv(submission_file)
+        print(f"✓ Loaded {len(submission_df)} predictions")
+    except Exception as e:
+        print(f"ERROR loading submission: {e}")
+        sys.exit(1)
+
+    # Validate columns
+    required_columns = {{required_columns}}
+    missing_columns = [col for col in required_columns if col not in submission_df.columns]
+
+    if missing_columns:
+        print(f"ERROR: Missing required columns: {missing_columns}")
+        print(f"Found columns: {list(submission_df.columns)}")
+        sys.exit(1)
+
+    print(f"✓ Validated columns: {required_columns}")
+
+    # Copy to output for scoring
+    output_file = output_dir / "predictions.csv"
+    submission_df.to_csv(output_file, index=False)
+    print(f"✓ Saved predictions to {output_file}")
+
+    print("=" * 60)
+    print("Ingestion completed successfully")
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    main()

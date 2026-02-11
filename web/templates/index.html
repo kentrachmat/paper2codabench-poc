@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper2Codabench POC - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Paper → Codabench POC</h1>
+            <p class="subtitle">Automatically generating Codabench bundles from research papers</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-value">{{ papers|length }}</div>
+                <div class="stat-label">Papers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="taskspecs-count">-</div>
+                <div class="stat-label">TaskSpecs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="bundles-count">-</div>
+                <div class="stat-label">Bundles</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="seals-count">-</div>
+                <div class="stat-label">Seals</div>
+            </div>
+        </section>
+
+        <section class="papers-grid">
+            {% for paper in papers %}
+            <div class="paper-card">
+                <div class="paper-header">
+                    <h3>{{ paper.title }}</h3>
+                    <span class="badge badge-{{ paper.task_type }}">{{ paper.task_type }}</span>
+                </div>
+
+                <p class="paper-description">{{ paper.description }}</p>
+
+                <div class="paper-status">
+                    <div class="status-item">
+                        <span class="status-label">TaskSpec:</span>
+                        {% if paper.taskspec_exists %}
+                            <span class="status-badge status-success">✓ Extracted</span>
+                        {% else %}
+                            <span class="status-badge status-pending">Not extracted</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="status-item">
+                        <span class="status-label">Bundle:</span>
+                        {% if paper.bundle_exists %}
+                            <span class="status-badge status-success">✓ Generated</span>
+                        {% else %}
+                            <span class="status-badge status-pending">Not generated</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if paper.taskspec_exists %}
+                <div class="paper-meta">
+                    <div><strong>Task:</strong> {{ paper.task_name }}</div>
+                    <div><strong>Metric:</strong> {{ paper.primary_metric }}</div>
+                </div>
+                {% endif %}
+
+                <div class="paper-actions">
+                    <a href="{{ paper.link }}" target="_blank" class="btn btn-secondary">📄 View Paper</a>
+
+                    {% if paper.taskspec_exists %}
+                    <a href="{{ url_for('view_taskspec', paper_id=paper.paper_id) }}" class="btn btn-primary">View TaskSpec</a>
+                    {% endif %}
+
+                    {% if paper.bundle_exists %}
+                    <a href="{{ url_for('view_bundle', paper_id=paper.paper_id) }}" class="btn btn-primary">View Bundle</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Paper2Codabench POC - Exploring automated reproducibility verification</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fetch and display stats
+        fetch('/api/stats')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('taskspecs-count').textContent = data.taskspecs_extracted;
+                document.getElementById('bundles-count').textContent = data.bundles_generated;
+                document.getElementById('seals-count').textContent = data.total_seals;
+            })
+            .catch(error => console.error('Error loading stats:', error));
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+# Codabench Competition Configuration
+# Auto-generated from TaskSpec: {{task_name}}
+
+title: "{{task_name}}"
+description: |
+  {{problem_statement}}
+
+# Task details
+task_type: {{task_type}}
+
+# Phases (single phase for POC)
+phases:
+  - id: 1
+    name: "Evaluation Phase"
+    description: "Main evaluation phase"
+    start: "2024-01-01"
+    end: "2025-12-31"
+
+    # Scoring
+    tasks:
+      - name: "{{task_name}}"
+        scoring_program: "scoring_program.zip"
+        reference_data: "reference_data.zip"
+        ingestion_program: "ingestion_program.zip"
+        input_data: "input_data.zip"
+
+# Leaderboard
+leaderboard:
+  - title: "Results"
+    key: "{{primary_metric}}"
+    sorting: "{{sort_order}}"
+    computation: "average"
+
+# Resource limits
+resource_limits:
+  time_limit: {{runtime_limit_sec}}
+  memory_limit_mb: {{memory_limit_mb}}
+
+# Metadata
+created_by: "Paper2Codabench POC"
+version: "1.0"

@@ -1,0 +1,142 @@
+"""
+Metrics module for {{task_name}}
+Auto-generated from TaskSpec
+
+Implements evaluation metrics based on task type: {{task_type}}
+"""
+import numpy as np
+from typing import Dict, Any
+
+
+def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, task_type: str) -> Dict[str, float]:
+    """
+    Compute evaluation metrics based on task type.
+
+    Args:
+        y_true: Ground truth values
+        y_pred: Predicted values
+        task_type: Type of task (classification, ranking, etc.)
+
+    Returns:
+        Dictionary of metric names to values
+    """
+    if task_type == 'classification':
+        return compute_classification_metrics(y_true, y_pred)
+    elif task_type == 'ranking':
+        return compute_ranking_metrics(y_true, y_pred)
+    elif task_type == 'generation':
+        return compute_generation_metrics(y_true, y_pred)
+    elif task_type == 'segmentation':
+        return compute_segmentation_metrics(y_true, y_pred)
+    else:
+        # Default to simple accuracy/error
+        return compute_default_metrics(y_true, y_pred)
+
+
+def compute_classification_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, float]:
+    """Compute classification metrics"""
+    from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+    # Convert to integers for classification
+    y_true = y_true.astype(int)
+    y_pred = y_pred.astype(int)
+
+    metrics = {
+        'accuracy': accuracy_score(y_true, y_pred),
+        'f1_score': f1_score(y_true, y_pred, average='weighted', zero_division=0),
+        'precision': precision_score(y_true, y_pred, average='weighted', zero_division=0),
+        'recall': recall_score(y_true, y_pred, average='weighted', zero_division=0),
+    }
+
+    return metrics
+
+
+def compute_ranking_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, float]:
+    """Compute ranking metrics (MRR, NDCG)"""
+    # Simplified MRR calculation
+    # Assumes y_true contains relevance scores, y_pred contains predicted ranks
+
+    # Mean Reciprocal Rank (simplified)
+    mrr = 0.0
+    for true_val, pred_val in zip(y_true, y_pred):
+        if true_val > 0:  # Relevant item
+            rank = int(pred_val) if pred_val > 0 else 1000
+            mrr += 1.0 / rank
+
+    mrr = mrr / len(y_true) if len(y_true) > 0 else 0.0
+
+    metrics = {
+        'mrr': mrr,
+        'mean_rank': float(np.mean(y_pred)),
+    }
+
+    return metrics
+
+
+def compute_generation_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, float]:
+    """Compute generation metrics (BLEU, ROUGE - stubs for POC)"""
+    # For POC, use simple string similarity
+    # In production, would use actual BLEU/ROUGE libraries
+
+    # Simple character-level accuracy
+    total_chars = 0
+    matching_chars = 0
+
+    for true_str, pred_str in zip(y_true, y_pred):
+        true_str = str(true_str)
+        pred_str = str(pred_str)
+        total_chars += len(true_str)
+
+        # Count matching characters
+        for i, char in enumerate(pred_str[:len(true_str)]):
+            if i < len(true_str) and char == true_str[i]:
+                matching_chars += 1
+
+    char_accuracy = matching_chars / total_chars if total_chars > 0 else 0.0
+
+    metrics = {
+        'bleu_stub': char_accuracy,  # Simplified BLEU proxy
+        'rouge_stub': char_accuracy,  # Simplified ROUGE proxy
+        'char_accuracy': char_accuracy,
+    }
+
+    return metrics
+
+
+def compute_segmentation_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, float]:
+    """Compute segmentation metrics (IoU, Dice)"""
+    # Assumes binary masks (0/1)
+    y_true_binary = (y_true > 0.5).astype(int)
+    y_pred_binary = (y_pred > 0.5).astype(int)
+
+    # Intersection over Union
+    intersection = np.sum(y_true_binary & y_pred_binary)
+    union = np.sum(y_true_binary | y_pred_binary)
+    iou = intersection / union if union > 0 else 0.0
+
+    # Dice coefficient
+    dice = (2 * intersection) / (np.sum(y_true_binary) + np.sum(y_pred_binary)) if (np.sum(y_true_binary) + np.sum(y_pred_binary)) > 0 else 0.0
+
+    metrics = {
+        'iou': iou,
+        'dice': dice,
+        'pixel_accuracy': np.mean(y_true_binary == y_pred_binary),
+    }
+
+    return metrics
+
+
+def compute_default_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, float]:
+    """Default metrics for unknown task types"""
+    # Mean Absolute Error and Mean Squared Error
+    mae = np.mean(np.abs(y_true - y_pred))
+    mse = np.mean((y_true - y_pred) ** 2)
+    rmse = np.sqrt(mse)
+
+    metrics = {
+        'mae': mae,
+        'mse': mse,
+        'rmse': rmse,
+    }
+
+    return metrics

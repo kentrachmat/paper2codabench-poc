@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bundle: {{ paper_id }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Codabench Bundle</h1>
+            <p class="subtitle">{{ taskspec.task_name if taskspec else paper_id }}</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <nav class="breadcrumb">
+            <a href="{{ url_for('index') }}">Dashboard</a> / Bundle: {{ paper_id }}
+        </nav>
+
+        <div class="card">
+            <h2>Bundle Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Paper ID:</span>
+                    <span class="info-value">{{ paper_id }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Files:</span>
+                    <span class="info-value">{{ bundle_info.file_count }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Size:</span>
+                    <span class="info-value">{{ bundle_info.size_mb|round(2) }} MB</span>
+                </div>
+                {% if bundle_info.creation_time %}
+                <div class="info-item">
+                    <span class="info-label">Created:</span>
+                    <span class="info-value">{{ bundle_info.creation_time | format_timestamp }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Bundle Structure</h2>
+            <div class="file-tree">
+                {% for file in file_tree %}
+                <div class="file-item">
+                    <code>{{ file.path }}</code>
+                    <span class="file-size">{{ file.size | format_size }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔒 Verification Seals</h2>
+
+            {% if seals %}
+            <p>This bundle has <strong>{{ seals|length }}</strong> verification seal(s).</p>
+
+            {% for seal in seals %}
+            <div class="seal-card {% if seal.verified %}seal-valid{% else %}seal-invalid{% endif %}">
+                <div class="seal-header">
+                    <h3>
+                        {% if seal.verified %}
+                            ✅ Valid Seal
+                        {% else %}
+                            ❌ Invalid Seal
+                        {% endif %}
+                    </h3>
+                    <span class="seal-id">ID: {{ seal.seal_id }}</span>
+                </div>
+
+                <div class="seal-info">
+                    <div class="info-item">
+                        <span class="info-label">Type:</span>
+                        <span class="badge">{{ seal.seal_type }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Timestamp:</span>
+                        <span>{{ seal.timestamp | format_timestamp }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Bundle Hash:</span>
+                        <code class="hash">{{ seal.bundle_hash[:32] }}...</code>
+                    </div>
+                </div>
+
+                {% if seal.data %}
+                <details class="seal-data">
+                    <summary>Seal Data</summary>
+                    <pre><code>{{ seal.data | tojson(indent=2) }}</code></pre>
+                </details>
+                {% endif %}
+
+                <div class="seal-signature">
+                    <strong>Digital Signature:</strong>
+                    <code class="signature">{{ seal.signature[:64] }}...</code>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% else %}
+            <p class="warning">No verification seals found for this bundle.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>What are Verification Seals?</h2>
+            <p>Verification seals provide cryptographic proof that:</p>
+            <ul>
+                <li><strong>Authenticity:</strong> The bundle and results are genuine</li>
+                <li><strong>Integrity:</strong> Files haven't been tampered with (SHA-256 hash)</li>
+                <li><strong>Timestamp:</strong> When the bundle/evaluation was created</li>
+                <li><strong>Traceability:</strong> Results can be linked back to specific runs</li>
+            </ul>
+
+            <p>Each seal uses RSA-2048 digital signatures - a simplified "blockchain-lite" approach for POC verification.</p>
+        </div>
+
+        <div class="actions">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">← Back to Dashboard</a>
+            {% if taskspec %}
+            <a href="{{ url_for('view_taskspec', paper_id=paper_id) }}" class="btn btn-primary">View TaskSpec</a>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Paper2Codabench POC</p>
+        </div>
+    </footer>
+</body>
+</html>
