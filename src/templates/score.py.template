@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Scoring Program for {{task_name}}
-Auto-generated from TaskSpec
+Auto-generated from Croissant Task
 
 Primary Metric: {{primary_metric}}
 Task Type: {{task_type}}
@@ -44,7 +44,7 @@ def main():
 
     try:
         predictions_df = pd.read_csv(predictions_file)
-        print(f"✓ Loaded {len(predictions_df)} predictions")
+        print(f"  Loaded {len(predictions_df)} predictions")
     except Exception as e:
         print(f"ERROR loading predictions: {e}")
         sys.exit(1)
@@ -57,7 +57,7 @@ def main():
 
     try:
         reference_df = pd.read_csv(reference_file)
-        print(f"✓ Loaded {len(reference_df)} reference labels")
+        print(f"  Loaded {len(reference_df)} reference labels")
     except Exception as e:
         print(f"ERROR loading reference: {e}")
         sys.exit(1)
@@ -78,7 +78,7 @@ def main():
         missing = len(reference_df) - len(merged)
         print(f"WARNING: {missing} reference IDs not found in predictions")
 
-    print(f"✓ Matched {len(merged)} predictions with reference")
+    print(f"  Matched {len(merged)} predictions with reference")
 
     # Extract true and predicted values
     y_true = merged['{{target_column}}_true'].values
@@ -88,7 +88,7 @@ def main():
     print("\nComputing metrics...")
     try:
         scores = compute_metrics(y_true, y_pred, task_type='{{task_type}}')
-        print("✓ Metrics computed successfully")
+        print("  Metrics computed successfully")
     except Exception as e:
         print(f"ERROR computing metrics: {e}")
         import traceback
@@ -108,7 +108,7 @@ def main():
     with open(scores_file, 'w') as f:
         json.dump(scores, f, indent=2)
 
-    print(f"\n✓ Scores saved to {scores_file}")
+    print(f"\n  Scores saved to {scores_file}")
     print("\nScoring completed successfully")
 
 

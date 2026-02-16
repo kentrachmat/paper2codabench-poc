@@ -10,7 +10,7 @@
     <header>
         <div class="container">
             <h1>Codabench Bundle</h1>
-            <p class="subtitle">{{ taskspec.task_name if taskspec else paper_id }}</p>
+            <p class="subtitle">{{ croissant_task.name if croissant_task else paper_id }}</p>
         </div>
     </header>
 
@@ -55,19 +55,17 @@
             </div>
         </div>
 
-        <!-- Seals section hidden as per user request -->
-
         <div class="actions">
-            <a href="{{ url_for('index') }}" class="btn btn-secondary">← Back to Dashboard</a>
-            {% if taskspec %}
-            <a href="{{ url_for('view_taskspec', paper_id=paper_id) }}" class="btn btn-primary">View TaskSpec</a>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Dashboard</a>
+            {% if croissant_task %}
+            <a href="{{ url_for('view_croissant_task', paper_id=paper_id) }}" class="btn btn-primary">View Croissant Task</a>
             {% endif %}
         </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>Paper2Codabench POC</p>
+            <p>Paper2Codabench</p>
         </div>
     </footer>
 </body>

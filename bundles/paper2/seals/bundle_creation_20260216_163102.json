@@ -1,0 +1,14 @@
+{
+  "seal_type": "bundle_creation",
+  "bundle_id": "paper2",
+  "timestamp": "2026-02-16T16:31:02.696282Z",
+  "data": {
+    "task_name": "Uncertainty Quantification in Particle Physics",
+    "task_type": "other",
+    "paper_id": "paper2",
+    "primary_metric": "coverage_score"
+  },
+  "bundle_hash": "41210d2e91b049701d3b0aa95d5654f2a2c611e9b6709d2966d01821215c0d39",
+  "signature": "5a41eaf7f467e03d7e4a137f857b585f5df83a70ef92f4c91bab3a6a6351418fe709076fbd281cc04949256f8c3cf3da309383d36a7285a89371cfef318bd2e29e910210cd8257a8b8b32274637a04d4bfd2d3b80fdfbf3b46bd5472eba72fc92230da771db97c6433bbce4f683e41095fb66d4586d07eb1046cbe08a15329014e582548e09f9b49eec7ce16947c23ba5e69fa041e19472ae302196e3eb0a2725e945192e59db5816df593ef1eb8170e3428a6629338eed4b5529f957a7b4c3537c4f799eb33d9c9f5c4c48a2952d9d946057b5dab1285f55e98862cf8429433f1f2a4668701d5d170f190f4365f5d8c3a07493b69e54984fc46900302155365",
+  "seal_id": "8ce923f7de04b6be"
+}

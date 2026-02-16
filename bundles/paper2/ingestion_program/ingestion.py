@@ -54,7 +54,5 @@ def main():
         print("ERROR: Solution did not create predictions.csv")
         sys.exit(1)
 
-    print("Ingestion completed successfully. Predictions saved to predictions.csv")
-
 if __name__ == "__main__":
     main()

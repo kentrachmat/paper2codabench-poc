@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
-Flask web interface for Paper2Codabench POC.
+Flask web interface for Paper2Codabench.
 
 Shows:
-- TaskSpecs extracted from papers
+- Croissant Tasks extracted from papers
 - Generated bundles
 - Verification seals
 
 Usage:
     python web/app.py
-    Then visit: http://localhost:5000
+    Then visit: http://localhost:5001
 """
 import json
 import sys
@@ -47,11 +47,11 @@ def load_papers_metadata():
     return []
 
 
-def load_taskspec(paper_id: str):
-    """Load TaskSpec for a paper"""
-    taskspec_path = Config.TASKSPEC_DIR / f"{paper_id}.taskspec.json"
-    if taskspec_path.exists():
-        with open(taskspec_path, 'r') as f:
+def load_croissant_task(paper_id: str):
+    """Load Croissant Task for a paper"""
+    croissant_path = Config.CROISSANT_DIR / f"{paper_id}.croissant_task.json"
+    if croissant_path.exists():
+        with open(croissant_path, 'r') as f:
             return json.load(f)
     return None
 
@@ -76,7 +76,6 @@ def get_bundle_info(paper_id: str):
     seals = load_seals(paper_id)
     creation_time = None
     if seals:
-        # Find bundle_creation seal
         for seal in seals:
             if seal.get('seal_type') == 'bundle_creation':
                 creation_time = seal.get('timestamp')
@@ -107,7 +106,6 @@ def load_seals(paper_id: str):
             with open(seal_file, 'r') as f:
                 seal_data = json.load(f)
 
-            # Verify seal
             is_valid = seal_verifier.verify_seal(seal_data.copy())
             seal_data['verified'] = is_valid
             seal_data['seal_file'] = seal_file.name
@@ -124,19 +122,17 @@ def index():
     """Dashboard showing all papers"""
     papers = load_papers_metadata()
 
-    # Enrich with TaskSpec and bundle status
     for paper in papers:
         paper_id = paper['paper_id']
 
-        # Check TaskSpec status
-        taskspec = load_taskspec(paper_id)
-        paper['taskspec_exists'] = taskspec is not None
+        croissant_task = load_croissant_task(paper_id)
+        paper['croissant_exists'] = croissant_task is not None
 
-        if taskspec:
-            paper['task_name'] = taskspec.get('task_name', 'Unknown')
-            paper['primary_metric'] = taskspec.get('evaluation', {}).get('primary_metric', 'N/A')
+        if croissant_task:
+            paper['task_name'] = croissant_task.get('name', 'Unknown')
+            evaluation = croissant_task.get('cr:evaluation', {})
+            paper['primary_metric'] = evaluation.get('primaryMetric', 'N/A')
 
-        # Check bundle status
         bundle_info = get_bundle_info(paper_id)
         paper['bundle_exists'] = bundle_info is not None
 
@@ -146,19 +142,18 @@ def index():
     return render_template('index.html', papers=papers)
 
 
-@app.route('/taskspec/<paper_id>')
-def view_taskspec(paper_id):
-    """View TaskSpec for a paper"""
-    taskspec = load_taskspec(paper_id)
+@app.route('/croissant/<paper_id>')
+def view_croissant_task(paper_id):
+    """View Croissant Task for a paper"""
+    croissant_task = load_croissant_task(paper_id)
 
-    if taskspec is None:
-        return f"TaskSpec not found for {paper_id}", 404
+    if croissant_task is None:
+        return f"Croissant Task not found for {paper_id}", 404
 
-    # Get paper metadata
     papers = load_papers_metadata()
     paper_info = next((p for p in papers if p['paper_id'] == paper_id), None)
 
-    return render_template('taskspec.html', taskspec=taskspec, paper_info=paper_info)
+    return render_template('croissant_task.html', croissant_task=croissant_task, paper_info=paper_info)
 
 
 @app.route('/bundle/<paper_id>')
@@ -169,23 +164,17 @@ def view_bundle(paper_id):
     if bundle_info is None:
         return f"Bundle not found for {paper_id}", 404
 
-    # Load TaskSpec
-    taskspec = load_taskspec(paper_id)
-
-    # Load seals
+    croissant_task = load_croissant_task(paper_id)
     seals = load_seals(paper_id)
 
-    # Get paper metadata
     papers = load_papers_metadata()
     paper_info = next((p for p in papers if p['paper_id'] == paper_id), None)
 
-    # Get bundle file tree (excluding seals directory)
     bundle_path = bundle_info['path']
     file_tree = []
     for item in sorted(bundle_path.rglob("*")):
         if item.is_file():
             rel_path = item.relative_to(bundle_path)
-            # Hide seals directory from file tree
             if not str(rel_path).startswith('seals'):
                 file_tree.append({
                     'path': str(rel_path),
@@ -196,7 +185,7 @@ def view_bundle(paper_id):
         'bundle.html',
         paper_id=paper_id,
         paper_info=paper_info,
-        taskspec=taskspec,
+        croissant_task=croissant_task,
         bundle_info=bundle_info,
         seals=seals,
         file_tree=file_tree
@@ -233,7 +222,7 @@ def api_stats():
 
     stats = {
         'total_papers': len(papers),
-        'taskspecs_extracted': 0,
+        'croissant_tasks_extracted': 0,
         'bundles_generated': 0,
         'total_seals': 0,
     }
@@ -241,8 +230,8 @@ def api_stats():
     for paper in papers:
         paper_id = paper['paper_id']
 
-        if load_taskspec(paper_id):
-            stats['taskspecs_extracted'] += 1
+        if load_croissant_task(paper_id):
+            stats['croissant_tasks_extracted'] += 1
 
         if get_bundle_info(paper_id):
             stats['bundles_generated'] += 1
@@ -267,28 +256,24 @@ def api_process_paper():
         return jsonify({'error': 'Only PDF files are supported'}), 400
 
     try:
-        # Save uploaded file
         filename = secure_filename(file.filename)
         paper_id = Path(filename).stem
         upload_path = Config.PAPERS_DIR / filename
 
-        # Create papers directory if it doesn't exist
         Config.PAPERS_DIR.mkdir(parents=True, exist_ok=True)
 
         file.save(upload_path)
 
-        # Initialize processing status
         processing_status[paper_id] = {
             'uploading': False,
             'extracting': True,
-            'taskspec_extracted': False,
+            'croissant_extracted': False,
             'generating': False,
             'bundle_generated': False,
             'details': 'Starting extraction...',
             'terminal_output': [],
         }
 
-        # Start background processing
         thread = threading.Thread(target=process_paper_background, args=(paper_id, upload_path))
         thread.daemon = True
         thread.start()
@@ -307,37 +292,37 @@ def api_process_paper():
 def api_progress(paper_id):
     """API endpoint to check processing progress"""
     if paper_id not in processing_status:
-        # Check if already processed
-        taskspec = load_taskspec(paper_id)
+        croissant_task = load_croissant_task(paper_id)
         bundle_info = get_bundle_info(paper_id)
 
         if bundle_info:
+            evaluation = croissant_task.get('cr:evaluation', {}) if croissant_task else {}
             return jsonify({
-                'taskspec_extracted': True,
+                'croissant_extracted': True,
                 'bundle_generated': True,
                 'paper_id': paper_id,
-                'task_name': taskspec.get('task_name') if taskspec else 'Unknown',
-                'primary_metric': taskspec.get('evaluation', {}).get('primary_metric') if taskspec else 'N/A',
+                'task_name': croissant_task.get('name') if croissant_task else 'Unknown',
+                'primary_metric': evaluation.get('primaryMetric', 'N/A'),
                 'file_count': bundle_info.get('file_count', 0),
             })
 
     status = processing_status.get(paper_id, {
         'extracting': False,
-        'taskspec_extracted': False,
+        'croissant_extracted': False,
         'generating': False,
         'bundle_generated': False,
         'details': 'Unknown status',
         'terminal_output': [],
     })
 
-    # Add additional info if complete
     if status.get('bundle_generated'):
-        taskspec = load_taskspec(paper_id)
+        croissant_task = load_croissant_task(paper_id)
         bundle_info = get_bundle_info(paper_id)
 
+        evaluation = croissant_task.get('cr:evaluation', {}) if croissant_task else {}
         status['paper_id'] = paper_id
-        status['task_name'] = taskspec.get('task_name') if taskspec else 'Unknown'
-        status['primary_metric'] = taskspec.get('evaluation', {}).get('primary_metric') if taskspec else 'N/A'
+        status['task_name'] = croissant_task.get('name') if croissant_task else 'Unknown'
+        status['primary_metric'] = evaluation.get('primaryMetric', 'N/A')
         status['file_count'] = bundle_info.get('file_count', 0) if bundle_info else 0
 
     return jsonify(status)
@@ -348,17 +333,16 @@ def process_paper_background(paper_id, paper_path):
     try:
         project_root = Path(__file__).parent.parent
 
-        # Step 1: Extract TaskSpec
+        # Step 1: Extract Croissant Task
         processing_status[paper_id]['details'] = 'Starting extraction...'
         processing_status[paper_id]['terminal_output'] = []
 
         extract_cmd = [
             sys.executable,
-            str(project_root / "src" / "extract_taskspec.py"),
+            str(project_root / "src" / "extract_croissant_task.py"),
             str(paper_path)
         ]
 
-        # Run with streaming output
         process = subprocess.Popen(
             extract_cmd,
             stdout=subprocess.PIPE,
@@ -369,7 +353,6 @@ def process_paper_background(paper_id, paper_path):
             universal_newlines=True
         )
 
-        # Stream output to status
         for line in process.stdout:
             line = line.rstrip()
             if line:
@@ -384,19 +367,18 @@ def process_paper_background(paper_id, paper_path):
             return
 
         processing_status[paper_id]['extracting'] = False
-        processing_status[paper_id]['taskspec_extracted'] = True
+        processing_status[paper_id]['croissant_extracted'] = True
         processing_status[paper_id]['generating'] = True
         processing_status[paper_id]['details'] = 'Starting bundle generation...'
 
         # Step 2: Generate Bundle
-        taskspec_path = Config.TASKSPEC_DIR / f"{paper_id}.taskspec.json"
+        croissant_path = Config.CROISSANT_DIR / f"{paper_id}.croissant_task.json"
         generate_cmd = [
             sys.executable,
             str(project_root / "src" / "generate_bundle.py"),
-            str(taskspec_path)
+            str(croissant_path)
         ]
 
-        # Run with streaming output
         process = subprocess.Popen(
             generate_cmd,
             stdout=subprocess.PIPE,
@@ -407,7 +389,6 @@ def process_paper_background(paper_id, paper_path):
             universal_newlines=True
         )
 
-        # Stream output to status
         for line in process.stdout:
             line = line.rstrip()
             if line:
@@ -423,7 +404,7 @@ def process_paper_background(paper_id, paper_path):
 
         processing_status[paper_id]['generating'] = False
         processing_status[paper_id]['bundle_generated'] = True
-        processing_status[paper_id]['details'] = '✅ Bundle generated successfully!'
+        processing_status[paper_id]['details'] = 'Bundle generated successfully!'
 
     except Exception as e:
         error_msg = f'Error: {str(e)}'
@@ -459,16 +440,16 @@ def format_size(size_bytes):
 
 def main():
     print("=" * 60)
-    print("Paper2Codabench POC - Web Interface")
+    print("Paper2Codabench - Web Interface")
     print("=" * 60)
     print(f"\nProject root: {Config.PROJECT_ROOT}")
-    print(f"TaskSpecs: {Config.TASKSPEC_DIR}")
+    print(f"Croissant Tasks: {Config.CROISSANT_DIR}")
     print(f"Bundles: {Config.BUNDLES_DIR}")
     print("\nStarting Flask development server...")
-    print("Visit: http://localhost:5000")
+    print("Visit: http://localhost:5001")
     print("=" * 60 + "\n")
 
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5001)
 
 
 if __name__ == "__main__":

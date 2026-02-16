@@ -5,17 +5,19 @@ Local simulation of Codabench evaluation pipeline.
 Simulates:
     Submission → Ingestion → Scoring → Results + Seal
 
+Supports both code submissions (.py) and CSV submissions (.csv).
+
 Bundle structure:
     - input_data/: Input data for participants to make predictions on
     - reference_data/: Ground truth labels (hidden from participants)
     - examples/: Sample submission files showing the correct format
-    - ingestion_program/: Validates and processes submissions
+    - ingestion_program/: Executes submitted code or validates CSV
     - scoring_program/: Computes metrics
 
 Usage:
+    python src/local_run.py bundles/paper1 bundles/paper1/examples/solution.py
     python src/local_run.py bundles/paper1 bundles/paper1/examples/sample_submission.csv
-    python src/local_run.py bundles/paper1 bundles/paper1/examples/sample_submission.csv --verbose
-    python src/local_run.py bundles/paper1 my_custom_submission.csv
+    python src/local_run.py bundles/paper1 bundles/paper1/examples/solution.py --verbose
 """
 import argparse
 import json
@@ -31,12 +33,13 @@ from seal import create_evaluation_seal
 
 def validate_bundle(bundle_path: Path) -> bool:
     """Validate bundle structure"""
-    print("🔍 Validating bundle structure...")
+    print("  Validating bundle structure...")
 
     required_dirs = [
         "ingestion_program",
         "scoring_program",
-        "reference_data"
+        "reference_data",
+        "input_data"
     ]
 
     required_files = [
@@ -56,12 +59,12 @@ def validate_bundle(bundle_path: Path) -> bool:
             missing.append(f"file: {file_path}")
 
     if missing:
-        print("✗ Bundle validation failed. Missing:")
+        print("  Bundle validation failed. Missing:")
         for item in missing:
             print(f"  - {item}")
         return False
 
-    print("✓ Bundle structure is valid")
+    print("  Bundle structure is valid")
     return True
 
 
@@ -105,13 +108,13 @@ def run_local_simulation(bundle_path: Path, submission_path: Path, verbose: bool
 
     Args:
         bundle_path: Path to bundle directory
-        submission_path: Path to submission file
+        submission_path: Path to submission file (.py or .csv)
         verbose: Print detailed output
 
     Returns:
         Scores dictionary
     """
-    # Resolve to absolute paths to avoid issues when changing working directories
+    # Resolve to absolute paths
     bundle_path = bundle_path.resolve()
     submission_path = submission_path.resolve()
 
@@ -127,10 +130,13 @@ def run_local_simulation(bundle_path: Path, submission_path: Path, verbose: bool
     if not submission_path.exists():
         raise FileNotFoundError(f"Submission file not found: {submission_path}")
 
-    print(f"✓ Submission file: {submission_path.name}")
+    # Determine submission type
+    is_code_submission = submission_path.suffix == '.py'
+    submission_type = "code (.py)" if is_code_submission else "predictions (.csv)"
+    print(f"  Submission file: {submission_path.name} ({submission_type})")
 
     # Create working directories
-    print("\n📁 Setting up working directories...")
+    print("\n  Setting up working directories...")
     work_dir = Path(tempfile.mkdtemp(prefix="codabench_sim_"))
 
     try:
@@ -145,13 +151,17 @@ def run_local_simulation(bundle_path: Path, submission_path: Path, verbose: bool
         output_dir.mkdir()
         scores_dir.mkdir()
 
-        print(f"✓ Working directory: {work_dir}")
+        print(f"  Working directory: {work_dir}")
 
-        # Copy submission to submission directory with expected filename
-        # Ingestion scripts expect the file to be named "submission.csv" (from TaskSpec)
-        expected_submission_filename = "submission.csv"
-        shutil.copy(submission_path, submission_dir / expected_submission_filename)
-        print(f"✓ Copied submission as: {expected_submission_filename}")
+        # Copy submission to submission directory
+        if is_code_submission:
+            # Code submission: copy as solution.py
+            shutil.copy(submission_path, submission_dir / "solution.py")
+            print(f"  Copied submission as: solution.py")
+        else:
+            # CSV submission: copy as submission.csv (backward compatible)
+            shutil.copy(submission_path, submission_dir / "submission.csv")
+            print(f"  Copied submission as: submission.csv")
 
         # Copy input data
         input_data_dir = bundle_path / "input_data"
@@ -177,18 +187,18 @@ def run_local_simulation(bundle_path: Path, submission_path: Path, verbose: bool
         success, output = run_program(ingestion_script, work_dir, verbose)
 
         if not success:
-            print("✗ Ingestion failed!")
+            print("  Ingestion failed!")
             print(output)
             raise RuntimeError("Ingestion failed")
 
-        print("✅ Ingestion completed successfully")
+        print("  Ingestion completed successfully")
 
         # Check if predictions were created
         predictions_file = output_dir / "predictions.csv"
         if not predictions_file.exists():
             raise FileNotFoundError("Ingestion did not create predictions.csv")
 
-        print(f"✓ Predictions file created: {predictions_file.name}")
+        print(f"  Predictions file created: {predictions_file.name}")
 
         print("\n" + "="*60)
         print("STEP 2: Scoring")
@@ -201,11 +211,11 @@ def run_local_simulation(bundle_path: Path, submission_path: Path, verbose: bool
         success, output = run_program(scoring_script, work_dir, verbose)
 
         if not success:
-            print("✗ Scoring failed!")
+            print("  Scoring failed!")
             print(output)
             raise RuntimeError("Scoring failed")
 
-        print("✅ Scoring completed successfully")
+        print("  Scoring completed successfully")
 
         # Read scores
         scores_file = scores_dir / "scores.json"
@@ -215,7 +225,7 @@ def run_local_simulation(bundle_path: Path, submission_path: Path, verbose: bool
         with open(scores_file, 'r') as f:
             scores = json.load(f)
 
-        print(f"✓ Scores file created: {scores_file.name}")
+        print(f"  Scores file created: {scores_file.name}")
 
         print("\n" + "="*60)
         print("RESULTS")
@@ -227,32 +237,33 @@ def run_local_simulation(bundle_path: Path, submission_path: Path, verbose: bool
         print("="*60)
 
         # Create verification seal
-        print("\n🔒 Creating verification seal...")
+        print("\n  Creating verification seal...")
 
         submission_info = {
             'filename': submission_path.name,
+            'type': 'code' if is_code_submission else 'csv',
             'timestamp': datetime.utcnow().isoformat() + 'Z',
         }
 
         seal = create_evaluation_seal(bundle_path, scores, submission_info)
-        print(f"✓ Seal created: {seal.get('seal_id', 'N/A')}")
+        print(f"  Seal created: {seal.get('seal_id', 'N/A')}")
 
-        print(f"\n✅ Simulation completed successfully!")
+        print(f"\n  Simulation completed successfully!")
         print(f"   Working directory: {work_dir}")
         print(f"   (Temporary files can be deleted)\n")
 
         return scores
 
     except Exception as e:
-        print(f"\n✗ Simulation failed: {e}")
+        print(f"\n  Simulation failed: {e}")
         raise
 
     finally:
-        # Optionally clean up (keep for debugging in POC)
+        # Optionally clean up
         if not verbose:
             try:
                 shutil.rmtree(work_dir)
-                print(f"🧹 Cleaned up working directory")
+                print(f"  Cleaned up working directory")
             except:
                 pass
 
@@ -269,7 +280,7 @@ def main():
     parser.add_argument(
         "submission_path",
         type=Path,
-        help="Path to submission file (e.g., submission.csv)"
+        help="Path to submission file (.py for code, .csv for predictions)"
     )
     parser.add_argument(
         "--verbose", "-v",
@@ -281,11 +292,11 @@ def main():
 
     # Validate inputs
     if not args.bundle_path.exists():
-        print(f"✗ Error: Bundle not found: {args.bundle_path}")
+        print(f"  Error: Bundle not found: {args.bundle_path}")
         sys.exit(1)
 
     if not args.submission_path.exists():
-        print(f"✗ Error: Submission file not found: {args.submission_path}")
+        print(f"  Error: Submission file not found: {args.submission_path}")
         sys.exit(1)
 
     # Run simulation
@@ -307,7 +318,7 @@ def main():
         print("="*60 + "\n")
 
     except Exception as e:
-        print(f"\n✗ Simulation failed: {e}")
+        print(f"\n  Simulation failed: {e}")
         import traceback
         traceback.print_exc()
         sys.exit(1)

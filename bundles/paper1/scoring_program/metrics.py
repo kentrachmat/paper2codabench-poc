@@ -1,20 +1,42 @@
 import numpy as np
 from typing import Dict
-from sklearn.metrics import average_precision_score
+from sklearn.metrics import average_precision_score, roc_auc_score
+
+def mean_average_precision(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+    """
+    Compute Mean Average Precision (MAP) across all targets.
+    """
+    average_precisions = []
+    for i in range(y_true.shape[1]):
+        if np.sum(y_true[:, i]) == 0:  # Avoid division by zero for targets with no positives
+            continue
+        average_precisions.append(average_precision_score(y_true[:, i], y_pred[:, i]))
+    return np.mean(average_precisions) if average_precisions else 0.0
+
+def top_k_precision(y_true: np.ndarray, y_pred: np.ndarray, k: int) -> float:
+    """
+    Compute Top-k Precision for a given k.
+    """
+    top_k_precisions = []
+    for i in range(y_true.shape[1]):
+        sorted_indices = np.argsort(-y_pred[:, i])[:k]
+        top_k_true = y_true[sorted_indices, i]
+        top_k_precisions.append(np.sum(top_k_true) / k)
+    return np.mean(top_k_precisions)
 
 def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, task_type: str) -> Dict[str, float]:
     """
     Compute evaluation metrics for classification tasks.
 
-    Parameters:
-    - y_true (np.ndarray): Ground truth binary labels (shape: [n_samples, n_targets]).
-    - y_pred (np.ndarray): Predicted scores or probabilities (shape: [n_samples, n_targets]).
-    - task_type (str): Task type, expected to be 'classification'.
+    Args:
+        y_true (np.ndarray): Ground truth binary labels (0 or 1), shape (n_samples, n_targets).
+        y_pred (np.ndarray): Predicted probabilities, shape (n_samples, n_targets).
+        task_type (str): Task type, must be 'classification'.
 
     Returns:
-    - Dict[str, float]: Dictionary containing the computed metrics.
+        Dict[str, float]: Dictionary containing metric names and their computed values.
     """
-    # Reshape 1D arrays to 2D for single target tasks
+    # Reshape 1D arrays to 2D
     if y_true.ndim == 1:
         y_true = y_true.reshape(-1, 1)
     if y_pred.ndim == 1:
@@ -23,38 +45,16 @@ def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, task_type: str) -> D
     # Validate inputs
     if y_true.shape != y_pred.shape:
         raise ValueError("Shape mismatch: y_true and y_pred must have the same shape.")
-    if y_true.size == 0 or y_pred.size == 0:
-        raise ValueError("Empty input arrays are not allowed.")
     if np.any(np.isnan(y_true)) or np.any(np.isnan(y_pred)):
-        raise ValueError("NaN values detected in input arrays.")
+        raise ValueError("Input contains NaN values.")
+    if task_type != "classification":
+        raise ValueError("Invalid task type. Only 'classification' is supported.")
 
-    # Compute Mean Average Precision (MAP)
-    map_scores = []
-    for i in range(y_true.shape[1]):  # Iterate over targets
-        if np.unique(y_true[:, i]).size > 1:  # Avoid undefined MAP for constant labels
-            map_scores.append(average_precision_score(y_true[:, i], y_pred[:, i]))
-        else:
-            map_scores.append(0.0)  # Assign 0 if MAP is undefined
-    mean_average_precision = np.mean(map_scores)
+    # Compute metrics
+    metrics = {}
+    metrics["mean_average_precision"] = mean_average_precision(y_true, y_pred)
+    metrics["top_100_precision"] = top_k_precision(y_true, y_pred, k=100)
+    metrics["top_1000_precision"] = top_k_precision(y_true, y_pred, k=1000)
+    metrics["auc_roc"] = roc_auc_score(y_true, y_pred, average="macro", multi_class="ovr")
 
-    # Compute Top-k Precision for k=100 and k=1000
-    def top_k_precision(y_true_col, y_pred_col, k):
-        """Compute Top-k Precision for a single target."""
-        sorted_indices = np.argsort(-y_pred_col)  # Sort in descending order
-        top_k_indices = sorted_indices[:k]
-        return np.sum(y_true_col[top_k_indices]) / k
-
-    top_k_precision_100 = []
-    top_k_precision_1000 = []
-    for i in range(y_true.shape[1]):  # Iterate over targets
-        top_k_precision_100.append(top_k_precision(y_true[:, i], y_pred[:, i], k=100))
-        top_k_precision_1000.append(top_k_precision(y_true[:, i], y_pred[:, i], k=1000))
-    mean_top_k_precision_100 = np.mean(top_k_precision_100)
-    mean_top_k_precision_1000 = np.mean(top_k_precision_1000)
-
-    # Return metrics dictionary with primary metric first
-    return {
-        "Mean Average Precision (MAP)": mean_average_precision,
-        "Top-100 Precision": mean_top_k_precision_100,
-        "Top-1000 Precision": mean_top_k_precision_1000
-    }
+    return metrics

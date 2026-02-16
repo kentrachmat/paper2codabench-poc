@@ -24,7 +24,7 @@ class Config:
     # Project Paths
     PROJECT_ROOT = project_root
     PAPERS_DIR = project_root / "papers"
-    TASKSPEC_DIR = project_root / "taskspec"
+    CROISSANT_DIR = project_root / "croissant_tasks"
     BUNDLES_DIR = project_root / "bundles"
     EXAMPLES_DIR = project_root / "examples"
     TEMPLATES_DIR = project_root / "src" / "templates"
@@ -53,7 +53,7 @@ class Config:
     def ensure_directories(cls):
         """Ensure all required directories exist"""
         for dir_path in [
-            cls.TASKSPEC_DIR,
+            cls.CROISSANT_DIR,
             cls.BUNDLES_DIR,
             cls.EXAMPLES_DIR,
             cls.TEMPLATES_DIR

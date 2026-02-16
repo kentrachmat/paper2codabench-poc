@@ -1,0 +1,89 @@
+{
+  "@context": {
+    "@vocab": "http://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "sc": "http://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "@id": "belka-task",
+  "name": "Small Molecule Binding Prediction",
+  "description": "Predict whether a small molecule binds to one of three protein targets (BRD4, EPHX2/sEH, ALB/HSA) based on its chemical representation.",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "CSV with columns: id (string), smiles (SMILES string like CC(=O)Oc1ccccc1C(=O)O), protein_name (one of BRD4, EPHX2/sEH, ALB/HSA), label (binary: 0=no binding, 1=binding). Includes 98M training examples per protein, 200K validation examples per protein, and 360K test molecules per protein.",
+      "url": "[FILL IN THE BLANK]",
+      "distribution": null,
+      "recordSet": null
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Binary binding predictions for each molecule and protein target: 0=no binding, 1=binding. Includes predicted probabilities between 0.0 and 1.0.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "id",
+          "description": "Unique sample identifier, e.g., molecule_001",
+          "dataType": "sc:Text",
+          "source": null
+        },
+        {
+          "name": "protein_name",
+          "description": "Protein target name, e.g., BRD4, EPHX2/sEH, ALB/HSA",
+          "dataType": "sc:Text",
+          "source": null
+        },
+        {
+          "name": "pred",
+          "description": "Predicted binding probability between 0.0 and 1.0",
+          "dataType": "sc:Float",
+          "source": null
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "rdkit"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "mean_average_precision",
+    "metrics": [
+      "mean_average_precision",
+      "top_k_precision",
+      "auc_roc"
+    ],
+    "higherIsBetter": true,
+    "notes": "Mean Average Precision computed per protein target and averaged across all three targets. Top-k precision evaluated for k=100 and k=1000."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper1",
+  "open_questions": [
+    "What is the exact URL for the competition dataset?",
+    "What are the exact versions of Python packages required for compatibility?",
+    "What are the specific rules for allowed external data usage during the competition?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].url - dataset URL not specified in paper",
+    "cr:implementation.cr:environment.packages - exact package versions not specified",
+    "cr:execution.allowedExternalData - external data usage rules not specified"
+  ]
+}

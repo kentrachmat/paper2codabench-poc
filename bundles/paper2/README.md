@@ -1,13 +1,13 @@
-# Small Molecule Binding Prediction
+# Uncertainty Quantification in Particle Physics
 
 Auto-generated Codabench bundle from Croissant Task.
 
 ## Task Overview
 
-**Type:** classification
-**Primary Metric:** mean_average_precision
+**Type:** other
+**Primary Metric:** coverage_score
 
-Predict whether a small molecule binds to one of three protein targets (BRD4, EPHX2/sEH, ALB/HSA) based on its representation.
+Estimate the 68% Confidence Interval (CI) for the signal strength parameter (µ) in simulated particle physics data, addressing aleatoric and epistemic uncertainties.
 
 ## Submission Format
 
@@ -22,18 +22,18 @@ Your solution must define a `predict(input_dir, output_dir)` function that:
 
 ## Evaluation
 
-Primary metric: mean_average_precision
+Primary metric: coverage_score
 Higher is better: True
 
 ## Resource Limits
 
-- Runtime: 600 seconds
-- Memory: 4096 MB
+- Runtime: 3600 seconds
+- Memory: 512000 MB
 
 ## Directory Structure
 
 ```
-paper1/
+paper2/
 ├── competition.yaml          # Competition configuration
 ├── ingestion_program/        # Executes submitted code
 │   ├── ingestion.py
@@ -56,10 +56,10 @@ paper1/
 
 ```bash
 # Run local simulation with sample solution
-python src/local_run.py bundles/paper1 bundles/paper1/examples/solution.py
+python src/local_run.py bundles/paper2 bundles/paper2/examples/solution.py
 
 # Run with CSV submission (backward compatible)
-python src/local_run.py bundles/paper1 bundles/paper1/examples/sample_submission.csv
+python src/local_run.py bundles/paper2 bundles/paper2/examples/sample_submission.csv
 ```
 
 ---

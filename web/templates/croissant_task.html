@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Croissant Task: {{ croissant_task.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Croissant Task Viewer</h1>
+            <p class="subtitle">{{ croissant_task.name }}</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <nav class="breadcrumb">
+            <a href="{{ url_for('index') }}">Dashboard</a> / Croissant Task: {{ croissant_task.paper_id }}
+        </nav>
+
+        <div class="card">
+            <h2>Task Overview</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Paper ID:</span>
+                    <span class="info-value">{{ croissant_task.paper_id }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Type:</span>
+                    <span class="info-value">{{ croissant_task.get('@type', 'cr:TaskProblem') }}</span>
+                </div>
+                {% if croissant_task.get('cr:evaluation') %}
+                <div class="info-item">
+                    <span class="info-label">Primary Metric:</span>
+                    <span class="info-value">{{ croissant_task['cr:evaluation'].get('primaryMetric', 'N/A') }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="section">
+                <h3>Description</h3>
+                <p>{{ croissant_task.description }}</p>
+            </div>
+        </div>
+
+        {% if croissant_task.get('cr:input') %}
+        <div class="card">
+            <h2>Input Datasets</h2>
+            {% for input_item in croissant_task['cr:input'] %}
+            <div class="section">
+                <h3>{{ input_item.get('name', 'Dataset') }}</h3>
+                <p>{{ input_item.get('description', 'No description') }}</p>
+                {% if input_item.get('url') %}
+                <div class="info-item">
+                    <span class="info-label">URL:</span>
+                    <code>{{ input_item.url }}</code>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if croissant_task.get('cr:output') %}
+        <div class="card">
+            <h2>Output Specification</h2>
+            <div class="section">
+                <p>{{ croissant_task['cr:output'].get('description', '') }}</p>
+            </div>
+
+            {% if croissant_task['cr:output'].get('cr:schema') %}
+            <div class="section">
+                <h3>Schema Fields</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for field in croissant_task['cr:output']['cr:schema'].get('field', []) %}
+                        <tr>
+                            <td><code>{{ field.get('name', '') }}</code></td>
+                            <td>{{ field.get('dataType', 'sc:Text') }}</td>
+                            <td>{{ field.get('description', '') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if croissant_task.get('cr:evaluation') %}
+        <div class="card">
+            <h2>Evaluation</h2>
+            {% set evaluation = croissant_task['cr:evaluation'] %}
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Primary Metric:</span>
+                    <strong>{{ evaluation.get('primaryMetric', 'N/A') }}</strong>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Higher is Better:</span>
+                    {% if evaluation.get('higherIsBetter', true) %}
+                        <span class="status-badge status-success">Yes</span>
+                    {% else %}
+                        <span class="status-badge status-warning">No</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>All Metrics</h3>
+                <ul>
+                    {% for metric in evaluation.get('metrics', []) %}
+                    <li><code>{{ metric }}</code></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            {% if evaluation.get('notes') %}
+            <div class="section">
+                <h3>Notes</h3>
+                <p>{{ evaluation.notes }}</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if croissant_task.get('cr:execution') %}
+        <div class="card">
+            <h2>Execution Constraints</h2>
+            {% set execution = croissant_task['cr:execution'] %}
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Runtime Limit:</span>
+                    <span class="info-value">{{ execution.get('runtimeLimitSec', 600) }} seconds</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Memory Limit:</span>
+                    <span class="info-value">{{ execution.get('memoryLimitMb', 4096) }} MB</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">External Data:</span>
+                    <span class="info-value">{{ execution.get('allowedExternalData', 'unknown') }}</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if croissant_task.get('fill_in_the_blank') %}
+        <div class="card card-warning">
+            <h2>[FILL IN THE BLANK] Placeholders</h2>
+            <p>These fields could not be determined from the paper and need manual input:</p>
+            <ul>
+                {% for item in croissant_task.fill_in_the_blank %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if croissant_task.get('open_questions') %}
+        <div class="card card-warning">
+            <h2>Open Questions</h2>
+            <p>These aspects were unclear or missing from the paper:</p>
+            <ul>
+                {% for question in croissant_task.open_questions %}
+                <li>{{ question }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div class="card">
+            <h2>Raw JSON-LD</h2>
+            <details>
+                <summary>Show full Croissant Task JSON-LD</summary>
+                <pre><code>{{ croissant_task | tojson(indent=2) }}</code></pre>
+            </details>
+        </div>
+
+        <div class="actions">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Dashboard</a>
+            {% if paper_info %}
+            <a href="{{ paper_info.link }}" target="_blank" class="btn btn-secondary">View Original Paper</a>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Paper2Codabench</p>
+        </div>
+    </footer>
+</body>
+</html>

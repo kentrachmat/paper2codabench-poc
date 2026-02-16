@@ -1,5 +1,5 @@
 # Codabench Competition Configuration
-# Auto-generated from TaskSpec: {{task_name}}
+# Auto-generated from Croissant Task: {{task_name}}
 
 title: "{{task_name}}"
 description: |

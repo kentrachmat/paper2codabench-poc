@@ -1,6 +1,6 @@
 """
 Metrics module for {{task_name}}
-Auto-generated from TaskSpec
+Auto-generated from Croissant Task
 
 Implements evaluation metrics based on task type: {{task_type}}
 """

@@ -1,0 +1,21 @@
+{
+  "seal_type": "evaluation_run",
+  "bundle_id": "paper1",
+  "timestamp": "2026-02-16T16:13:03.438981Z",
+  "data": {
+    "scores": {
+      "mean_average_precision": 0.5968300929839392,
+      "top_100_precision": 0.13,
+      "top_1000_precision": 0.013,
+      "auc_roc": 0.2857142857142857
+    },
+    "submission": {
+      "filename": "solution.py",
+      "type": "code",
+      "timestamp": "2026-02-16T16:13:03.383373Z"
+    }
+  },
+  "bundle_hash": "41a05e0305349f0535fa7d918fc7e93e7f434342e4d14c466355bb972ad5f891",
+  "signature": "121d2d5836826e4ac45358da44382ae5b891f1e9b5139cd98a8f5df6062a919dcf3f3535c456a185d448aeb56627c43b74b413ec7506beec79aa8835985c6e1e2665acbf987eecc78f8cc4ac7cf48a19dddc3c547318b4507b4671722a50208a6b959046ac5e6bd3b4b90c4db66a9655be176c432bf94b199c11ae482d8eb71171d532f8138ab9e86dfaa15e283e393a91869e0c4ba3be560d9b1dd260b90cb2d14ede42c4efc9fe3aa31e98632e62dc64b9f49e74e753753d92f7f61748c4ea15b2d442c272ef06709e32c39925b6665d63f53116f15954e0aa90b617426fba90877ae07d4b6675c4f5b8cd55cc1fd09f39a1dc656093b32ebf24b2898d2b24",
+  "seal_id": "e42f65c69ed49f66"
+}

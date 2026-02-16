@@ -1,73 +1,102 @@
 #!/usr/bin/env python3
 """
 Ingestion Program for {{task_name}}
-Auto-generated from TaskSpec
+Auto-generated from Croissant Task
 
-This program processes submissions and prepares them for scoring.
+Code-execution pattern: finds and runs user's solution.py
 """
-import os
 import sys
-import pandas as pd
+import importlib.util
 from pathlib import Path
 
 
 def main():
-    """Main ingestion function"""
+    """Main ingestion function - code execution pattern"""
     # Standard Codabench directory structure
+    submission_dir = Path('/app/ingested_program')
     input_dir = Path('/app/input_data')
     output_dir = Path('/app/output')
-    submission_dir = Path('/app/ingested_program')
 
     # For local testing, use different paths
-    if not input_dir.exists():
+    if not submission_dir.exists():
+        submission_dir = Path('submission')
         input_dir = Path('input_data')
         output_dir = Path('output')
-        submission_dir = Path('submission')
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print("=" * 60)
     print("Ingestion Program: {{task_name}}")
+    print("Code-Execution Mode")
     print("=" * 60)
 
-    # Find submission file
-    submission_file = submission_dir / "{{submission_filename}}"
+    # Step 1: Find solution file
+    solution_file = submission_dir / 'solution.py'
 
-    if not submission_file.exists():
-        # Try to find any CSV file
-        csv_files = list(submission_dir.glob("*.csv"))
-        if csv_files:
-            submission_file = csv_files[0]
-            print(f"Using found submission: {submission_file.name}")
+    if not solution_file.exists():
+        # Try to find any .py file in submission directory
+        py_files = list(submission_dir.glob('*.py'))
+        if py_files:
+            solution_file = py_files[0]
+            print(f"Using found solution: {solution_file.name}")
         else:
-            print(f"ERROR: Submission file not found: {submission_file}")
+            # Fallback: check for CSV submission (backward compatibility)
+            csv_files = list(submission_dir.glob('*.csv'))
+            if csv_files:
+                print("CSV submission detected - copying to output")
+                import shutil
+                shutil.copy(csv_files[0], output_dir / 'predictions.csv')
+                print(f"Copied {csv_files[0].name} to output/predictions.csv")
+                print("=" * 60)
+                print("Ingestion completed successfully (CSV mode)")
+                print("=" * 60)
+                return
+            print("ERROR: No solution.py or CSV file found in submission directory")
+            print(f"Searched in: {submission_dir}")
             sys.exit(1)
 
-    print(f"Processing submission: {submission_file}")
+    print(f"Found solution: {solution_file}")
 
-    # Load submission
+    # Step 2: Import solution module dynamically
+    print("Importing solution module...")
     try:
-        submission_df = pd.read_csv(submission_file)
-        print(f"✓ Loaded {len(submission_df)} predictions")
+        spec = importlib.util.spec_from_file_location('solution', str(solution_file))
+        if spec is None:
+            print(f"ERROR: Could not load spec for {solution_file}")
+            sys.exit(1)
+        solution = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(solution)
+        print("  Solution module loaded successfully")
     except Exception as e:
-        print(f"ERROR loading submission: {e}")
+        print(f"ERROR: Failed to import solution: {e}")
+        import traceback
+        traceback.print_exc()
         sys.exit(1)
 
-    # Validate columns
-    required_columns = {{required_columns}}
-    missing_columns = [col for col in required_columns if col not in submission_df.columns]
+    # Step 3: Call predict function
+    print(f"Running solution.predict('{input_dir}', '{output_dir}')...")
+    try:
+        if not hasattr(solution, 'predict'):
+            print("ERROR: Solution does not define a 'predict' function")
+            print("Expected: def predict(input_dir, output_dir)")
+            sys.exit(1)
 
-    if missing_columns:
-        print(f"ERROR: Missing required columns: {missing_columns}")
-        print(f"Found columns: {list(submission_df.columns)}")
+        solution.predict(str(input_dir), str(output_dir))
+        print("  Solution execution completed")
+    except Exception as e:
+        print(f"ERROR: Solution execution failed: {e}")
+        import traceback
+        traceback.print_exc()
         sys.exit(1)
 
-    print(f"✓ Validated columns: {required_columns}")
+    # Step 4: Verify output was created
+    predictions_file = output_dir / 'predictions.csv'
+    if not predictions_file.exists():
+        print(f"ERROR: Solution did not create {predictions_file}")
+        print("Expected: predictions.csv in the output directory")
+        sys.exit(1)
 
-    # Copy to output for scoring
-    output_file = output_dir / "predictions.csv"
-    submission_df.to_csv(output_file, index=False)
-    print(f"✓ Saved predictions to {output_file}")
+    print(f"  Predictions file created: {predictions_file}")
 
     print("=" * 60)
     print("Ingestion completed successfully")

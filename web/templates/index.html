@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paper2Codabench POC - Dashboard</title>
+    <title>Paper2Codabench - Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>Paper → Codabench POC</h1>
+            <h1>Paper to Codabench</h1>
             <p class="subtitle">Upload a research paper and watch AI generate a Codabench bundle</p>
         </div>
     </header>
@@ -37,28 +37,28 @@
                 <h2 id="progressTitle">AI Processing Status</h2>
                 <div id="progressSteps">
                     <div class="progress-step" data-step="upload">
-                        <div class="step-icon">📄</div>
+                        <div class="step-icon">PDF</div>
                         <div class="step-content">
                             <div class="step-title">Paper Upload</div>
                             <div class="step-status">Waiting...</div>
                         </div>
                     </div>
                     <div class="progress-step" data-step="extract">
-                        <div class="step-icon">🤖</div>
+                        <div class="step-icon">AI</div>
                         <div class="step-content">
-                            <div class="step-title">Extracting TaskSpec</div>
+                            <div class="step-title">Extracting Croissant Task</div>
                             <div class="step-status">Analyzing paper structure and task details...</div>
                         </div>
                     </div>
                     <div class="progress-step" data-step="generate">
-                        <div class="step-icon">⚙️</div>
+                        <div class="step-icon">GEN</div>
                         <div class="step-content">
                             <div class="step-title">Generating Bundle</div>
-                            <div class="step-status">Creating evaluation code and test data...</div>
+                            <div class="step-status">Creating evaluation code, solution template, and test data...</div>
                         </div>
                     </div>
                     <div class="progress-step" data-step="complete">
-                        <div class="step-icon">✅</div>
+                        <div class="step-icon">OK</div>
                         <div class="step-content">
                             <div class="step-title">Complete</div>
                             <div class="step-status">Bundle ready for download</div>
@@ -93,7 +93,7 @@
 
     <footer>
         <div class="container">
-            <p>Paper2Codabench POC - Exploring automated reproducibility verification</p>
+            <p>Paper2Codabench - Exploring automated reproducibility verification</p>
         </div>
     </footer>
 
@@ -104,25 +104,21 @@
         const progressSection = document.getElementById('progressSection');
         const resultsSection = document.getElementById('resultsSection');
 
-        // File input handler
         paperFile.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 fileName.textContent = e.target.files[0].name;
             }
         });
 
-        // Form submission
         uploadForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const formData = new FormData();
             formData.append('paper', paperFile.files[0]);
 
-            // Show progress section
             progressSection.style.display = 'block';
             uploadForm.parentElement.style.display = 'none';
 
-            // Start processing
             updateStep('upload', 'active', 'Uploading...');
 
             try {
@@ -138,7 +134,6 @@
                 const data = await response.json();
                 updateStep('upload', 'complete', 'Upload complete');
 
-                // Poll for status
                 pollProgress(data.paper_id);
 
             } catch (error) {
@@ -163,9 +158,8 @@
                     const response = await fetch(`/api/progress/${paperId}`);
                     const data = await response.json();
 
-                    // Update steps based on progress
-                    if (data.taskspec_extracted) {
-                        updateStep('extract', 'complete', 'TaskSpec extracted successfully');
+                    if (data.croissant_extracted) {
+                        updateStep('extract', 'complete', 'Croissant Task extracted successfully');
                     } else if (data.extracting) {
                         updateStep('extract', 'active', 'Analyzing paper with AI...');
                     }
@@ -179,26 +173,23 @@
                         updateStep('generate', 'active', 'Generating evaluation code...');
                     }
 
-                    // Update details
                     if (data.details) {
                         document.getElementById('progressDetails').innerHTML =
                             `<div class="detail-item">${data.details}</div>`;
                     }
 
-                    // Update terminal output
                     if (data.terminal_output && data.terminal_output.length > 0) {
                         const terminalConsole = document.getElementById('terminalConsole');
                         terminalConsole.innerHTML = data.terminal_output
                             .map(line => `<div class="terminal-line">${escapeHtml(line)}</div>`)
                             .join('');
-                        // Auto-scroll to bottom
                         terminalConsole.scrollTop = terminalConsole.scrollHeight;
                     }
 
                 } catch (error) {
                     console.error('Polling error:', error);
                 }
-            }, 1000);  // Poll more frequently for terminal output
+            }, 1000);
         }
 
         function escapeHtml(text) {
@@ -208,10 +199,8 @@
         }
 
         function showResults(data) {
-            // Update progress title to show completion
-            document.getElementById('progressTitle').textContent = 'Processing Complete ✅';
+            document.getElementById('progressTitle').textContent = 'Processing Complete';
 
-            // Show results section
             resultsSection.style.display = 'block';
 
             const content = `
@@ -221,7 +210,7 @@
                     <p><strong>Files generated:</strong> ${data.file_count || 0}</p>
                 </div>
                 <div class="result-actions">
-                    <a href="/taskspec/${data.paper_id}" class="btn btn-primary">View TaskSpec</a>
+                    <a href="/croissant/${data.paper_id}" class="btn btn-primary">View Croissant Task</a>
                     <a href="/bundle/${data.paper_id}" class="btn btn-primary">View Bundle</a>
                 </div>
             `;
