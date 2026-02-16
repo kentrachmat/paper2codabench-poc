@@ -13,10 +13,14 @@ Usage:
 """
 import json
 import sys
+import os
+import subprocess
+import threading
 from pathlib import Path
 from datetime import datetime
+from werkzeug.utils import secure_filename
 
-from flask import Flask, render_template, jsonify, send_file
+from flask import Flask, render_template, jsonify, send_file, request
 
 # Add src to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
@@ -25,6 +29,10 @@ from config import Config
 from seal import VerificationSeal
 
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB max file size
+
+# Track processing status
+processing_status = {}
 
 # Initialize seal verifier
 seal_verifier = VerificationSeal()
@@ -171,16 +179,18 @@ def view_bundle(paper_id):
     papers = load_papers_metadata()
     paper_info = next((p for p in papers if p['paper_id'] == paper_id), None)
 
-    # Get bundle file tree
+    # Get bundle file tree (excluding seals directory)
     bundle_path = bundle_info['path']
     file_tree = []
     for item in sorted(bundle_path.rglob("*")):
         if item.is_file():
             rel_path = item.relative_to(bundle_path)
-            file_tree.append({
-                'path': str(rel_path),
-                'size': item.stat().st_size,
-            })
+            # Hide seals directory from file tree
+            if not str(rel_path).startswith('seals'):
+                file_tree.append({
+                    'path': str(rel_path),
+                    'size': item.stat().st_size,
+                })
 
     return render_template(
         'bundle.html',
@@ -241,6 +251,186 @@ def api_stats():
         stats['total_seals'] += len(seals)
 
     return jsonify(stats)
+
+
+@app.route('/api/process_paper', methods=['POST'])
+def api_process_paper():
+    """API endpoint to upload and process a paper"""
+    if 'paper' not in request.files:
+        return jsonify({'error': 'No file uploaded'}), 400
+
+    file = request.files['paper']
+    if file.filename == '':
+        return jsonify({'error': 'No file selected'}), 400
+
+    if not file.filename.endswith('.pdf'):
+        return jsonify({'error': 'Only PDF files are supported'}), 400
+
+    try:
+        # Save uploaded file
+        filename = secure_filename(file.filename)
+        paper_id = Path(filename).stem
+        upload_path = Config.PAPERS_DIR / filename
+
+        # Create papers directory if it doesn't exist
+        Config.PAPERS_DIR.mkdir(parents=True, exist_ok=True)
+
+        file.save(upload_path)
+
+        # Initialize processing status
+        processing_status[paper_id] = {
+            'uploading': False,
+            'extracting': True,
+            'taskspec_extracted': False,
+            'generating': False,
+            'bundle_generated': False,
+            'details': 'Starting extraction...',
+            'terminal_output': [],
+        }
+
+        # Start background processing
+        thread = threading.Thread(target=process_paper_background, args=(paper_id, upload_path))
+        thread.daemon = True
+        thread.start()
+
+        return jsonify({
+            'success': True,
+            'paper_id': paper_id,
+            'filename': filename
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/progress/<paper_id>')
+def api_progress(paper_id):
+    """API endpoint to check processing progress"""
+    if paper_id not in processing_status:
+        # Check if already processed
+        taskspec = load_taskspec(paper_id)
+        bundle_info = get_bundle_info(paper_id)
+
+        if bundle_info:
+            return jsonify({
+                'taskspec_extracted': True,
+                'bundle_generated': True,
+                'paper_id': paper_id,
+                'task_name': taskspec.get('task_name') if taskspec else 'Unknown',
+                'primary_metric': taskspec.get('evaluation', {}).get('primary_metric') if taskspec else 'N/A',
+                'file_count': bundle_info.get('file_count', 0),
+            })
+
+    status = processing_status.get(paper_id, {
+        'extracting': False,
+        'taskspec_extracted': False,
+        'generating': False,
+        'bundle_generated': False,
+        'details': 'Unknown status',
+        'terminal_output': [],
+    })
+
+    # Add additional info if complete
+    if status.get('bundle_generated'):
+        taskspec = load_taskspec(paper_id)
+        bundle_info = get_bundle_info(paper_id)
+
+        status['paper_id'] = paper_id
+        status['task_name'] = taskspec.get('task_name') if taskspec else 'Unknown'
+        status['primary_metric'] = taskspec.get('evaluation', {}).get('primary_metric') if taskspec else 'N/A'
+        status['file_count'] = bundle_info.get('file_count', 0) if bundle_info else 0
+
+    return jsonify(status)
+
+
+def process_paper_background(paper_id, paper_path):
+    """Background task to process a paper"""
+    try:
+        project_root = Path(__file__).parent.parent
+
+        # Step 1: Extract TaskSpec
+        processing_status[paper_id]['details'] = 'Starting extraction...'
+        processing_status[paper_id]['terminal_output'] = []
+
+        extract_cmd = [
+            sys.executable,
+            str(project_root / "src" / "extract_taskspec.py"),
+            str(paper_path)
+        ]
+
+        # Run with streaming output
+        process = subprocess.Popen(
+            extract_cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            cwd=project_root,
+            bufsize=1,
+            universal_newlines=True
+        )
+
+        # Stream output to status
+        for line in process.stdout:
+            line = line.rstrip()
+            if line:
+                processing_status[paper_id]['terminal_output'].append(line)
+                processing_status[paper_id]['details'] = line
+
+        process.wait()
+
+        if process.returncode != 0:
+            processing_status[paper_id]['details'] = f'Extraction failed with exit code {process.returncode}'
+            processing_status[paper_id]['extracting'] = False
+            return
+
+        processing_status[paper_id]['extracting'] = False
+        processing_status[paper_id]['taskspec_extracted'] = True
+        processing_status[paper_id]['generating'] = True
+        processing_status[paper_id]['details'] = 'Starting bundle generation...'
+
+        # Step 2: Generate Bundle
+        taskspec_path = Config.TASKSPEC_DIR / f"{paper_id}.taskspec.json"
+        generate_cmd = [
+            sys.executable,
+            str(project_root / "src" / "generate_bundle.py"),
+            str(taskspec_path)
+        ]
+
+        # Run with streaming output
+        process = subprocess.Popen(
+            generate_cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            cwd=project_root,
+            bufsize=1,
+            universal_newlines=True
+        )
+
+        # Stream output to status
+        for line in process.stdout:
+            line = line.rstrip()
+            if line:
+                processing_status[paper_id]['terminal_output'].append(line)
+                processing_status[paper_id]['details'] = line
+
+        process.wait()
+
+        if process.returncode != 0:
+            processing_status[paper_id]['details'] = f'Generation failed with exit code {process.returncode}'
+            processing_status[paper_id]['generating'] = False
+            return
+
+        processing_status[paper_id]['generating'] = False
+        processing_status[paper_id]['bundle_generated'] = True
+        processing_status[paper_id]['details'] = '✅ Bundle generated successfully!'
+
+    except Exception as e:
+        error_msg = f'Error: {str(e)}'
+        processing_status[paper_id]['details'] = error_msg
+        processing_status[paper_id]['terminal_output'].append(error_msg)
+        processing_status[paper_id]['extracting'] = False
+        processing_status[paper_id]['generating'] = False
 
 
 @app.template_filter('format_timestamp')

@@ -1,9 +1,9 @@
 # Codabench Competition Configuration
-# Auto-generated from TaskSpec: Small Molecule-Protein Binding Prediction
+# Auto-generated from TaskSpec: BELKA Small Molecule-Protein Binding Prediction
 
-title: "Small Molecule-Protein Binding Prediction"
+title: "BELKA Small Molecule-Protein Binding Prediction"
 description: |
-  Predict whether a given small molecule will bind to one of three protein targets: BRD4, EPHX2/sEH, or ALB/HSA. This task aims to accelerate drug discovery by identifying likely binders from a large chemical space.
+  Predict whether a given small molecule is likely to bind to one of three protein targets (BRD4, EPHX2/sEH, or ALB/HSA) using a dataset of empirical binding measurements.
 
 # Task details
 task_type: classification
@@ -18,7 +18,7 @@ phases:
 
     # Scoring
     tasks:
-      - name: "Small Molecule-Protein Binding Prediction"
+      - name: "BELKA Small Molecule-Protein Binding Prediction"
         scoring_program: "scoring_program.zip"
         reference_data: "reference_data.zip"
         ingestion_program: "ingestion_program.zip"
@@ -27,7 +27,7 @@ phases:
 # Leaderboard
 leaderboard:
   - title: "Results"
-    key: "Mean Average Precision"
+    key: "Mean Average Precision (MAP)"
     sorting: "desc"
     computation: "average"
 

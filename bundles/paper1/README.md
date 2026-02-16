@@ -1,27 +1,26 @@
-# Small Molecule-Protein Binding Prediction
+# BELKA Small Molecule-Protein Binding Prediction
 
 Auto-generated Codabench bundle from TaskSpec.
 
 ## Task Overview
 
 **Type:** classification
-**Primary Metric:** Mean Average Precision
+**Primary Metric:** Mean Average Precision (MAP)
 
-Predict whether a given small molecule will bind to one of three protein targets: BRD4, EPHX2/sEH, or ALB/HSA. This task aims to accelerate drug discovery by identifying likely binders from a large chemical space.
+Predict whether a given small molecule is likely to bind to one of three protein targets (BRD4, EPHX2/sEH, or ALB/HSA) using a dataset of empirical binding measurements.
 
 ## Submission Format
 
 **File:** submission.csv
-**Columns:** id, protein, pred
+**Columns:** id, pred
 
 ## Dataset
 
-- Input samples: 20 (toy data)
-- Reference labels: 20 (toy data)
+**Note:** This bundle does not include input or reference data. Only example submission format is provided in the `examples/` directory.
 
 ## Evaluation
 
-Primary metric: Mean Average Precision
+Primary metric: Mean Average Precision (MAP)
 Higher is better: True
 
 ## Resource Limits
@@ -41,13 +40,13 @@ paper1/
 │   ├── score.py
 │   ├── metrics.py
 │   └── metadata
-├── input_data/              # Test inputs (toy data)
-│   └── input.csv
-├── reference_data/          # Ground truth (toy data)
-│   └── reference.csv
-├── seals/                   # Verification seals
+├── examples/                # Example submission format
+│   ├── sample_submission.csv
+│   └── README.md
 └── README.md
 ```
+
+**Note:** Input and reference data are not included in this bundle.
 
 ## Usage
 

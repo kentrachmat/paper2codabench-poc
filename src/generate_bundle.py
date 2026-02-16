@@ -204,10 +204,8 @@ def create_bundle_structure(bundle_path: Path):
     directories = [
         bundle_path / "ingestion_program",
         bundle_path / "scoring_program",
-        bundle_path / "input_data",
-        bundle_path / "reference_data",
         bundle_path / "seals",
-        bundle_path / "examples"  # Add examples directory inside bundle
+        bundle_path / "examples"  # Examples directory for submission format
     ]
 
     for directory in directories:
@@ -511,13 +509,9 @@ def generate_bundle(taskspec_path: Path, output_dir: Path = None) -> Path:
     (bundle_path / "scoring_program" / "metadata").write_text("command: python score.py\n")
     print("✓ Metadata files created")
 
-    # Generate paper-specific toy data and examples
-    print("\n📊 Generating paper-specific toy data and examples...")
-    input_df, reference_df, sample_submission_df = generate_toy_data_with_llm(taskspec, num_samples=20)
-
-    # Save input and reference data
-    (bundle_path / "input_data" / "input.csv").write_text(input_df.to_csv(index=False))
-    (bundle_path / "reference_data" / "reference.csv").write_text(reference_df.to_csv(index=False))
+    # Generate example submission only (no input/reference data)
+    print("\n📊 Generating example submission...")
+    _, _, sample_submission_df = generate_toy_data_with_llm(taskspec, num_samples=20)
 
     # Save sample submission inside bundle/examples/
     (bundle_path / "examples" / "sample_submission.csv").write_text(sample_submission_df.to_csv(index=False))
@@ -525,24 +519,24 @@ def generate_bundle(taskspec_path: Path, output_dir: Path = None) -> Path:
     # Create examples README
     examples_readme = f"""# Example Submissions for {task_name}
 
-This directory contains example submission files to help you get started.
+This directory contains example submission files to help you understand the required submission format.
 
 ## sample_submission.csv
 
-A valid submission file with {len(sample_submission_df)} example predictions.
+A valid submission file with {len(sample_submission_df)} example predictions showing the expected format.
 
 Format:
 - Columns: {', '.join(sample_submission_df.columns.tolist())}
 - Rows: {len(sample_submission_df)}
+- File type: CSV
 
-To test this bundle locally:
-```bash
-python src/local_run.py bundles/{paper_id} bundles/{paper_id}/examples/sample_submission.csv
-```
+**Note:** This bundle does not include input or reference data. Only the submission format example is provided.
+
+To test submissions with this bundle, you'll need to provide your own test data or use the actual competition data.
 """
     (bundle_path / "examples" / "README.md").write_text(examples_readme)
 
-    print("✓ Toy data and examples created")
+    print("✓ Example submission created")
 
     # Generate README
     print("\n📝 Generating README...")
@@ -564,8 +558,7 @@ Auto-generated Codabench bundle from TaskSpec.
 
 ## Dataset
 
-- Input samples: 20 (toy data)
-- Reference labels: 20 (toy data)
+**Note:** This bundle does not include input or reference data. Only example submission format is provided in the `examples/` directory.
 
 ## Evaluation
 
@@ -589,13 +582,13 @@ Higher is better: {evaluation.get('higher_is_better', True)}
 │   ├── score.py
 │   ├── metrics.py
 │   └── metadata
-├── input_data/              # Test inputs (toy data)
-│   └── input.csv
-├── reference_data/          # Ground truth (toy data)
-│   └── reference.csv
-├── seals/                   # Verification seals
+├── examples/                # Example submission format
+│   ├── sample_submission.csv
+│   └── README.md
 └── README.md
 ```
+
+**Note:** Input and reference data are not included in this bundle.
 
 ## Usage
 

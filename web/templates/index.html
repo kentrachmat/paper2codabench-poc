@@ -10,80 +10,84 @@
     <header>
         <div class="container">
             <h1>Paper → Codabench POC</h1>
-            <p class="subtitle">Automatically generating Codabench bundles from research papers</p>
+            <p class="subtitle">Upload a research paper and watch AI generate a Codabench bundle</p>
         </div>
     </header>
 
     <main class="container">
-        <section class="stats" id="stats">
-            <div class="stat-card">
-                <div class="stat-value">{{ papers|length }}</div>
-                <div class="stat-label">Papers</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="taskspecs-count">-</div>
-                <div class="stat-label">TaskSpecs</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="bundles-count">-</div>
-                <div class="stat-label">Bundles</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="seals-count">-</div>
-                <div class="stat-label">Seals</div>
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <div class="upload-card">
+                <h2>Upload Research Paper</h2>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="file-upload">
+                        <input type="file" id="paperFile" name="paper" accept=".pdf" required>
+                        <label for="paperFile" class="file-label">
+                            <span id="fileName">Choose PDF file...</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large">Start Processing</button>
+                </form>
             </div>
         </section>
 
-        <section class="papers-grid">
-            {% for paper in papers %}
-            <div class="paper-card">
-                <div class="paper-header">
-                    <h3>{{ paper.title }}</h3>
-                    <span class="badge badge-{{ paper.task_type }}">{{ paper.task_type }}</span>
-                </div>
-
-                <p class="paper-description">{{ paper.description }}</p>
-
-                <div class="paper-status">
-                    <div class="status-item">
-                        <span class="status-label">TaskSpec:</span>
-                        {% if paper.taskspec_exists %}
-                            <span class="status-badge status-success">✓ Extracted</span>
-                        {% else %}
-                            <span class="status-badge status-pending">Not extracted</span>
-                        {% endif %}
+        <!-- Processing Progress Section -->
+        <section id="progressSection" class="progress-section" style="display: none;">
+            <div class="progress-card">
+                <h2 id="progressTitle">AI Processing Status</h2>
+                <div id="progressSteps">
+                    <div class="progress-step" data-step="upload">
+                        <div class="step-icon">📄</div>
+                        <div class="step-content">
+                            <div class="step-title">Paper Upload</div>
+                            <div class="step-status">Waiting...</div>
+                        </div>
                     </div>
-
-                    <div class="status-item">
-                        <span class="status-label">Bundle:</span>
-                        {% if paper.bundle_exists %}
-                            <span class="status-badge status-success">✓ Generated</span>
-                        {% else %}
-                            <span class="status-badge status-pending">Not generated</span>
-                        {% endif %}
+                    <div class="progress-step" data-step="extract">
+                        <div class="step-icon">🤖</div>
+                        <div class="step-content">
+                            <div class="step-title">Extracting TaskSpec</div>
+                            <div class="step-status">Analyzing paper structure and task details...</div>
+                        </div>
+                    </div>
+                    <div class="progress-step" data-step="generate">
+                        <div class="step-icon">⚙️</div>
+                        <div class="step-content">
+                            <div class="step-title">Generating Bundle</div>
+                            <div class="step-status">Creating evaluation code and test data...</div>
+                        </div>
+                    </div>
+                    <div class="progress-step" data-step="complete">
+                        <div class="step-icon">✅</div>
+                        <div class="step-content">
+                            <div class="step-title">Complete</div>
+                            <div class="step-status">Bundle ready for download</div>
+                        </div>
                     </div>
                 </div>
+                <div id="progressDetails" class="progress-details"></div>
 
-                {% if paper.taskspec_exists %}
-                <div class="paper-meta">
-                    <div><strong>Task:</strong> {{ paper.task_name }}</div>
-                    <div><strong>Metric:</strong> {{ paper.primary_metric }}</div>
-                </div>
-                {% endif %}
-
-                <div class="paper-actions">
-                    <a href="{{ paper.link }}" target="_blank" class="btn btn-secondary">📄 View Paper</a>
-
-                    {% if paper.taskspec_exists %}
-                    <a href="{{ url_for('view_taskspec', paper_id=paper.paper_id) }}" class="btn btn-primary">View TaskSpec</a>
-                    {% endif %}
-
-                    {% if paper.bundle_exists %}
-                    <a href="{{ url_for('view_bundle', paper_id=paper.paper_id) }}" class="btn btn-primary">View Bundle</a>
-                    {% endif %}
+                <!-- Terminal Output -->
+                <div class="terminal-output">
+                    <div class="terminal-header">
+                        <span class="terminal-title">Terminal Output</span>
+                    </div>
+                    <div id="terminalConsole" class="terminal-console">
+                        <div class="terminal-line">Waiting for output...</div>
+                    </div>
                 </div>
             </div>
-            {% endfor %}
+        </section>
+
+        <!-- Results Section -->
+        <section id="resultsSection" class="results-section" style="display: none;">
+            <div class="results-card">
+                <h2>Processing Complete!</h2>
+                <div id="resultsContent"></div>
+                <div class="results-actions">
+                    <button onclick="location.reload()" class="btn btn-secondary">Process Another Paper</button>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -94,15 +98,135 @@
     </footer>
 
     <script>
-        // Fetch and display stats
-        fetch('/api/stats')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('taskspecs-count').textContent = data.taskspecs_extracted;
-                document.getElementById('bundles-count').textContent = data.bundles_generated;
-                document.getElementById('seals-count').textContent = data.total_seals;
-            })
-            .catch(error => console.error('Error loading stats:', error));
+        const uploadForm = document.getElementById('uploadForm');
+        const paperFile = document.getElementById('paperFile');
+        const fileName = document.getElementById('fileName');
+        const progressSection = document.getElementById('progressSection');
+        const resultsSection = document.getElementById('resultsSection');
+
+        // File input handler
+        paperFile.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileName.textContent = e.target.files[0].name;
+            }
+        });
+
+        // Form submission
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append('paper', paperFile.files[0]);
+
+            // Show progress section
+            progressSection.style.display = 'block';
+            uploadForm.parentElement.style.display = 'none';
+
+            // Start processing
+            updateStep('upload', 'active', 'Uploading...');
+
+            try {
+                const response = await fetch('/api/process_paper', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Upload failed');
+                }
+
+                const data = await response.json();
+                updateStep('upload', 'complete', 'Upload complete');
+
+                // Poll for status
+                pollProgress(data.paper_id);
+
+            } catch (error) {
+                updateStep('upload', 'error', 'Upload failed: ' + error.message);
+            }
+        });
+
+        function updateStep(step, status, message) {
+            const stepEl = document.querySelector(`.progress-step[data-step="${step}"]`);
+            if (stepEl) {
+                stepEl.className = `progress-step status-${status}`;
+                const statusEl = stepEl.querySelector('.step-status');
+                if (statusEl && message) {
+                    statusEl.textContent = message;
+                }
+            }
+        }
+
+        async function pollProgress(paperId) {
+            const pollInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`/api/progress/${paperId}`);
+                    const data = await response.json();
+
+                    // Update steps based on progress
+                    if (data.taskspec_extracted) {
+                        updateStep('extract', 'complete', 'TaskSpec extracted successfully');
+                    } else if (data.extracting) {
+                        updateStep('extract', 'active', 'Analyzing paper with AI...');
+                    }
+
+                    if (data.bundle_generated) {
+                        updateStep('generate', 'complete', 'Bundle generated successfully');
+                        updateStep('complete', 'complete', 'Ready!');
+                        clearInterval(pollInterval);
+                        showResults(data);
+                    } else if (data.generating) {
+                        updateStep('generate', 'active', 'Generating evaluation code...');
+                    }
+
+                    // Update details
+                    if (data.details) {
+                        document.getElementById('progressDetails').innerHTML =
+                            `<div class="detail-item">${data.details}</div>`;
+                    }
+
+                    // Update terminal output
+                    if (data.terminal_output && data.terminal_output.length > 0) {
+                        const terminalConsole = document.getElementById('terminalConsole');
+                        terminalConsole.innerHTML = data.terminal_output
+                            .map(line => `<div class="terminal-line">${escapeHtml(line)}</div>`)
+                            .join('');
+                        // Auto-scroll to bottom
+                        terminalConsole.scrollTop = terminalConsole.scrollHeight;
+                    }
+
+                } catch (error) {
+                    console.error('Polling error:', error);
+                }
+            }, 1000);  // Poll more frequently for terminal output
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showResults(data) {
+            // Update progress title to show completion
+            document.getElementById('progressTitle').textContent = 'Processing Complete ✅';
+
+            // Show results section
+            resultsSection.style.display = 'block';
+
+            const content = `
+                <div class="result-summary">
+                    <h3>${data.task_name || 'Task'}</h3>
+                    <p><strong>Metric:</strong> ${data.primary_metric || 'N/A'}</p>
+                    <p><strong>Files generated:</strong> ${data.file_count || 0}</p>
+                </div>
+                <div class="result-actions">
+                    <a href="/taskspec/${data.paper_id}" class="btn btn-primary">View TaskSpec</a>
+                    <a href="/bundle/${data.paper_id}" class="btn btn-primary">View Bundle</a>
+                </div>
+            `;
+            document.getElementById('resultsContent').innerHTML = content;
+        }
     </script>
 </body>
 </html>

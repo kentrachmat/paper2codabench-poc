@@ -21,7 +21,7 @@ from prompts import (
 )
 
 
-def extract_pdf_text(pdf_path: Path, max_pages: int = 20) -> str:
+def extract_pdf_text(pdf_path: Path, max_pages: int = 50) -> str:
     """Extract text from PDF using PyMuPDF"""
     print(f"📄 Extracting text from {pdf_path.name}...")
 
@@ -29,7 +29,13 @@ def extract_pdf_text(pdf_path: Path, max_pages: int = 20) -> str:
         doc = pymupdf.open(pdf_path)
         text_parts = []
 
-        pages_to_extract = min(len(doc), max_pages)
+        total_pages = len(doc)
+        pages_to_extract = min(total_pages, max_pages)
+
+        # Warn if paper is being truncated
+        if total_pages > max_pages:
+            print(f"⚠️  Paper has {total_pages} pages, extracting first {max_pages} only")
+            print(f"   This may result in incomplete task specification")
 
         # Extract text with progress bar
         for page_num in tqdm(range(pages_to_extract), desc="Extracting pages", unit="page"):
@@ -39,7 +45,7 @@ def extract_pdf_text(pdf_path: Path, max_pages: int = 20) -> str:
         doc.close()
 
         full_text = "\n\n".join(text_parts)
-        print(f"✓ Extracted {len(full_text)} characters from {pages_to_extract} pages")
+        print(f"✓ Extracted {len(full_text)} characters from {pages_to_extract}/{total_pages} pages")
         return full_text
 
     except Exception as e:
@@ -47,7 +53,7 @@ def extract_pdf_text(pdf_path: Path, max_pages: int = 20) -> str:
         raise
 
 
-def call_azure_openai(prompt_messages: list, max_retries: int = 3) -> str:
+def call_azure_openai(prompt_messages: list, max_retries: int = 3, max_tokens: int = 16000) -> str:
     """Call Azure OpenAI API with retry logic"""
     # Validate configuration
     try:
@@ -69,12 +75,20 @@ def call_azure_openai(prompt_messages: list, max_retries: int = 3) -> str:
                 response = client.chat.completions.create(
                     model=Config.AZURE_OPENAI_DEPLOYMENT,
                     messages=prompt_messages,
-                    max_tokens=4000,
+                    max_tokens=max_tokens,  # Increased from 4000 to support longer papers
                     temperature=0.3,  # Lower temperature for more deterministic output
                     response_format={"type": "json_object"}  # Force JSON response
                 )
 
                 content = response.choices[0].message.content
+                finish_reason = response.choices[0].finish_reason
+
+                # Check if response was cut off due to token limits
+                if finish_reason == "length":
+                    print(f"\n⚠️  Warning: Response truncated due to token limit!")
+                    print(f"   Consider reducing paper length or splitting into chunks")
+                    # Still return the content, validation will catch issues
+
                 pbar.update(1)
                 pbar.set_description(f"✓ Received response ({len(content)} chars)")
                 return content
@@ -114,14 +128,21 @@ def extract_taskspec(pdf_path: Path, paper_id: str) -> dict:
             f.write(paper_text)
         pbar.update(1)
 
+    # Check if paper is extremely long and might need truncation
+    paper_char_count = len(paper_text)
+    if paper_char_count > 100000:  # ~25k tokens for GPT-4
+        print(f"⚠️  Paper is very long ({paper_char_count} chars)")
+        print(f"   Truncating to first 100k characters to fit context window")
+        paper_text = paper_text[:100000]
+
     # Step 2: Prepare prompt
     messages = [
         {"role": "system", "content": TASKSPEC_EXTRACTION_SYSTEM},
         {"role": "user", "content": create_taskspec_extraction_prompt(paper_text)}
     ]
 
-    # Step 3: Call Azure OpenAI
-    raw_response = call_azure_openai(messages)
+    # Step 3: Call Azure OpenAI with increased token limit
+    raw_response = call_azure_openai(messages, max_tokens=16000)
 
     # Step 4: Parse JSON response
     with tqdm(total=1, desc="📝 Parsing JSON response", unit="task") as pbar:

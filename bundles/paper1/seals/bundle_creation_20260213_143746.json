@@ -1,0 +1,14 @@
+{
+  "seal_type": "bundle_creation",
+  "bundle_id": "paper1",
+  "timestamp": "2026-02-13T14:37:46.730722Z",
+  "data": {
+    "task_name": "BELKA Small Molecule-Protein Binding Prediction",
+    "task_type": "classification",
+    "paper_id": "paper1",
+    "primary_metric": "Mean Average Precision (MAP)"
+  },
+  "bundle_hash": "056a4de21b2bc958dd9722a954559b3d7cfc1716a3a497aa6a2489bf7d5e8fac",
+  "signature": "02df322fd1f3ede3a723265404b34781cd045ceea2e556a8199250e8ad35d341caf392a9dce61fdaa23384849314a38866e29781fbd4080bcfaaa6550a00cbb065b86fe6f59c5614a260956306e8eb525a6ce519f4efb2b8160f6c921ee8b75f4cb502fbb808a198c411040bcff58024461271f7e965bda826a2c62e39ceca6dccdb6085dd2fcb4eea1eb12ca8b2789f3e240c260f31fd3e97c37ec9f9bea411157bee0b054a2063486eca8e3963c2807a7d8e2c0796254418e76ac28bf78703b2f791bc8ee434213b20793127d8f62225931c547502841e146843e725b807ea053bac56f1e743edde9671f55b4dfc5aa55a791b83adec9bc269eb066e5094ff",
+  "seal_id": "b8d42d191e4434bb"
+}
