@@ -1,0 +1,85 @@
+{
+  "@context": {
+    "@vocab": "http://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "sc": "http://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "@id": "fair-universe-higgsml-task",
+  "name": "Signal Strength Parameter Estimation for Higgs Boson Events",
+  "description": "Estimate the signal strength parameter (\u00b5) for Higgs boson events in simulated high-energy physics data, producing a 68.27% Confidence Interval (CI) while accounting for systematic uncertainties.",
+  "paper_id": "paper3",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Apache Parquet dataset with 280 million rows, each representing a simulated collision event. Features include primary quantities (e.g., PRI_had_pt, PRI_met) and derived quantities (e.g., DER_mass_transverse_met_lep). Example values: PRI_had_pt ~23-26 GeV, PRI_met ~0-100 GeV, DER_mass_transverse_met_lep ~0-100 GeV.",
+      "url": "[FILL IN THE BLANK]"
+    }
+  ],
+  "cr:output": {
+    "name": "confidence_intervals",
+    "description": "68.27% Confidence Interval bounds for the signal strength parameter \u00b5. Format: [\u00b516, \u00b584]. Example: [0.5, 1.2].",
+    "cr:schema": {
+      "name": "confidence_interval_schema",
+      "field": [
+        {
+          "name": "id",
+          "dataType": "sc:Text",
+          "description": "Unique identifier for the pseudo-experiment, e.g., experiment_001"
+        },
+        {
+          "name": "mu16",
+          "dataType": "sc:Float",
+          "description": "Lower bound of the 68.27% Confidence Interval for \u00b5"
+        },
+        {
+          "name": "mu84",
+          "dataType": "sc:Float",
+          "description": "Upper bound of the 68.27% Confidence Interval for \u00b5"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "numpy",
+        "pandas",
+        "xgboost",
+        "torch",
+        "[FILL IN THE BLANK]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "final_quantile_score",
+    "metrics": [
+      "average_interval_width",
+      "coverage",
+      "final_quantile_score"
+    ],
+    "higherIsBetter": true,
+    "notes": "Final quantile score combines interval width and coverage into a single score. Smaller interval widths and coverage closer to 68.27% are better."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 20,
+    "memoryLimitMb": "[FILL IN THE BLANK]",
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact URL for the FAIR Universe HiggsML Uncertainty Dataset?",
+    "What are the exact memory limits for submissions?",
+    "Are participants allowed to use external data for training or validation?",
+    "What are the exact versions of Python packages required (e.g., xgboost, torch)?",
+    "What is the expected Docker image or environment setup for Codabench evaluation?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].url - dataset URL not specified in paper",
+    "cr:implementation.cr:environment.packages[4] - exact package versions not specified",
+    "cr:execution.memoryLimitMb - memory limit not specified",
+    "cr:execution.allowedExternalData - external data usage policy not specified"
+  ]
+}

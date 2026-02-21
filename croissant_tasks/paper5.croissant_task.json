@@ -1,0 +1,80 @@
+{
+  "@context": {
+    "@vocab": "http://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "sc": "http://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "@id": "erasing-invisible-task",
+  "name": "Erasing the Invisible",
+  "description": "Evaluate robustness of invisible watermarks embedded in AI-generated images against adversarial attacks. Participants aim to remove or degrade watermarks while preserving image quality.",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Dataset consists of 600 PNG images divided equally between two tracks: Beige-box (Gaussian Shading, StegaStamp) and Black-box (JigMark, PRC, StableSignature, Trufo, and combinations like Gaussian Shading + JigMark). Metadata includes image_index and watermarked_image.",
+      "url": "https://huggingface.co/datasets/furonghuang-lab/ETI_Competition_Data",
+      "distribution": null,
+      "recordSet": null
+    }
+  ],
+  "cr:output": {
+    "name": "attacked_images",
+    "description": "Modified PNG images minimizing watermark detection while preserving visual quality. Output includes 300 images per submission.",
+    "cr:schema": {
+      "name": "output_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "image_index",
+          "description": "Unique identifier for each image, e.g., image_001.",
+          "dataType": "sc:Text",
+          "source": null
+        },
+        {
+          "name": "attacked_image",
+          "description": "URL or file path to the modified PNG image.",
+          "dataType": "sc:URL",
+          "source": null
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "PyTorch",
+        "ONNXRuntime-GPU",
+        "Transformers",
+        "Diffusers"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "attack(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "final_score",
+    "metrics": [
+      "final_score",
+      "watermark_removal_metric",
+      "image_quality_metric"
+    ],
+    "higherIsBetter": false,
+    "notes": "Final score is computed as Euclidean distance in Q-A space: sqrt(Q\u00b2 + A\u00b2). Lower scores indicate better performance. Q aggregates eight IQMs normalized to [0.1, 0.9], and A is derived from TPR@0.1%FPR."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 2400,
+    "memoryLimitMb": 8192,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper5",
+  "open_questions": [
+    "Exact Docker image used for evaluation is unclear. Paper mentions 'johnding1996/codabench-erasinginvisible:latest', but further verification is needed.",
+    "Allowed external data usage is unspecified. Are participants permitted to use pre-trained models beyond those mentioned?"
+  ],
+  "fill_in_the_blank": [
+    "cr:execution.allowedExternalData - external data usage policy not specified in paper"
+  ]
+}

@@ -5,42 +5,67 @@
     "sc": "http://schema.org/"
   },
   "@type": "cr:TaskProblem",
-  "@id": "belka-task",
-  "name": "Small Molecule Binding Prediction",
-  "description": "Predict whether a small molecule binds to one of three protein targets (BRD4, EPHX2/sEH, ALB/HSA) based on its chemical representation.",
+  "@id": "airfoil-cfd-task",
+  "name": "Airfoil CFD Surrogate Modeling",
+  "description": "Predict steady-state 2D velocity and pressure fields around airfoils in subsonic, incompressible flow regimes, along with derived quantities such as lift and drag coefficients.",
+  "paper_id": "paper1",
   "cr:input": [
     {
       "name": "competition_dataset",
-      "description": "CSV with columns: id (string), smiles (SMILES string like CC(=O)Oc1ccccc1C(=O)O), protein_name (one of BRD4, EPHX2/sEH, ALB/HSA), label (binary: 0=no binding, 1=binding). Includes 98M training examples per protein, 200K validation examples per protein, and 360K test molecules per protein.",
-      "url": "[FILL IN THE BLANK]",
-      "distribution": null,
-      "recordSet": null
+      "description": "Dataset derived from CFD simulations using OpenFOAM, validated against NASA TMR experimental data. Includes airfoil geometry in unstructured mesh format, boundary conditions (e.g., Angle of Attack), and point cloud data with features such as positions, inlet_velocity, distance_to_airfoil, and normals.",
+      "url": "[FILL IN THE BLANK]"
     }
   ],
   "cr:output": {
     "name": "predictions",
-    "description": "Binary binding predictions for each molecule and protein target: 0=no binding, 1=binding. Includes predicted probabilities between 0.0 and 1.0.",
+    "description": "Predictions for velocity components (ux, uy), pressure fields (ps), turbulent viscosity (\u03bdt), and derived quantities (drag coefficient CD, lift coefficient CL, density-related metrics \u03c1D, \u03c1L). Outputs must adhere to physical laws and align with expected CFD behavior.",
     "cr:schema": {
       "name": "prediction_schema",
-      "description": null,
       "field": [
         {
           "name": "id",
-          "description": "Unique sample identifier, e.g., molecule_001",
           "dataType": "sc:Text",
-          "source": null
+          "description": "Unique sample identifier, e.g., airfoil_001"
         },
         {
-          "name": "protein_name",
-          "description": "Protein target name, e.g., BRD4, EPHX2/sEH, ALB/HSA",
-          "dataType": "sc:Text",
-          "source": null
-        },
-        {
-          "name": "pred",
-          "description": "Predicted binding probability between 0.0 and 1.0",
+          "name": "ux",
           "dataType": "sc:Float",
-          "source": null
+          "description": "Predicted x-velocity component (numerical)"
+        },
+        {
+          "name": "uy",
+          "dataType": "sc:Float",
+          "description": "Predicted y-velocity component (numerical)"
+        },
+        {
+          "name": "ps",
+          "dataType": "sc:Float",
+          "description": "Predicted pressure divided by specific mass (numerical)"
+        },
+        {
+          "name": "\u03bdt",
+          "dataType": "sc:Float",
+          "description": "Predicted turbulent kinematic viscosity (numerical)"
+        },
+        {
+          "name": "CD",
+          "dataType": "sc:Float",
+          "description": "Predicted drag coefficient (numerical)"
+        },
+        {
+          "name": "CL",
+          "dataType": "sc:Float",
+          "description": "Predicted lift coefficient (numerical)"
+        },
+        {
+          "name": "\u03c1D",
+          "dataType": "sc:Float",
+          "description": "Predicted density-related drag metric (numerical)"
+        },
+        {
+          "name": "\u03c1L",
+          "dataType": "sc:Float",
+          "description": "Predicted density-related lift metric (numerical)"
         }
       ]
     }
@@ -49,41 +74,38 @@
     "cr:environment": {
       "language": "Python",
       "packages": [
-        "pandas",
+        "tensorflow",
+        "torch",
         "numpy",
-        "scikit-learn",
-        "rdkit"
-      ],
-      "dockerImage": null
+        "pandas"
+      ]
     },
-    "cr:tests": null,
     "entryPoint": "solution.py",
     "interface": "predict(input_dir, output_dir)"
   },
   "cr:evaluation": {
-    "primaryMetric": "mean_average_precision",
+    "primaryMetric": "global_score",
     "metrics": [
-      "mean_average_precision",
-      "top_k_precision",
-      "auc_roc"
+      "mean_squared_error",
+      "speed_up",
+      "spearman_correlation",
+      "mean_relative_error"
     ],
     "higherIsBetter": true,
-    "notes": "Mean Average Precision computed per protein target and averaged across all three targets. Top-k precision evaluated for k=100 and k=1000."
+    "notes": "Global score is a weighted combination of ML-related metrics, OOD generalization, and physics compliance. Speed-up is normalized using log10 scaling."
   },
   "cr:execution": {
-    "runtimeLimitSec": 600,
-    "memoryLimitMb": 4096,
+    "runtimeLimitSec": 259200,
+    "memoryLimitMb": "[FILL IN THE BLANK]",
     "allowedExternalData": "unknown"
   },
-  "paper_id": "paper1",
   "open_questions": [
-    "What is the exact URL for the competition dataset?",
-    "What are the exact versions of Python packages required for compatibility?",
-    "What are the specific rules for allowed external data usage during the competition?"
+    "Exact memory limits are not specified in the paper.",
+    "Dataset URL is not provided.",
+    "Details on acceptable ranges for derived quantities (e.g., thresholds T1, T2) are missing."
   ],
   "fill_in_the_blank": [
     "cr:input[0].url - dataset URL not specified in paper",
-    "cr:implementation.cr:environment.packages - exact package versions not specified",
-    "cr:execution.allowedExternalData - external data usage rules not specified"
+    "cr:execution.memoryLimitMb - memory limits not specified"
   ]
 }

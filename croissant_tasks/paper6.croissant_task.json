@@ -1,0 +1,113 @@
+{
+  "@context": {
+    "@vocab": "http://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "sc": "http://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "@id": "fairness-face-detection-task",
+  "name": "Fairness-Aware AI-Generated Face Detection",
+  "description": "Detect whether a facial image is real or AI-generated while ensuring fairness across demographic groups.",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Cropped face images and associated demographic annotations in CSV format. Example columns: id (string), image_path (path to cropped face image), real_or_fake (binary label: 0=real, 1=fake), generation_method (Deepfake, GAN, DM), skin_tone (Tone 1-10), gender (binary: 1=male, 0=female), age (categorical: 0=child, 1=youth, 2=adult, 3=middle-age adult, 4=senior).",
+      "url": "[FILL IN THE BLANK]",
+      "distribution": null,
+      "recordSet": null
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predictions for real/fake classification, generation method classification, and demographic attributes (skin tone, gender, age). Example values: real_or_fake=1, generation_method=GAN, skin_tone=5, gender=1, age=2.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "id",
+          "description": "Unique sample identifier, e.g., image_001",
+          "dataType": "sc:Text",
+          "source": null
+        },
+        {
+          "name": "real_or_fake",
+          "description": "Binary classification: 0=real, 1=fake",
+          "dataType": "sc:Integer",
+          "source": null
+        },
+        {
+          "name": "generation_method",
+          "description": "Generation method classification: Deepfake, GAN, DM",
+          "dataType": "sc:Text",
+          "source": null
+        },
+        {
+          "name": "skin_tone",
+          "description": "Skin tone classification (Tone 1-10)",
+          "dataType": "sc:Integer",
+          "source": null
+        },
+        {
+          "name": "gender",
+          "description": "Gender classification: 1=male, 0=female",
+          "dataType": "sc:Integer",
+          "source": null
+        },
+        {
+          "name": "age",
+          "description": "Age classification: 0=child, 1=youth, 2=adult, 3=middle-age adult, 4=senior",
+          "dataType": "sc:Integer",
+          "source": null
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "torch",
+        "numpy",
+        "pandas"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "auc_roc",
+    "metrics": [
+      "auc_roc",
+      "accuracy",
+      "average_precision",
+      "equal_error_rate",
+      "false_positive_rate",
+      "fairness_disparity_percentage",
+      "fairness_mean_error_overall",
+      "fairness_error_overall",
+      "fairness_overall_absolute_error",
+      "individual_fairness"
+    ],
+    "higherIsBetter": true,
+    "notes": "Utility metrics (e.g., AUC, accuracy) are higher-is-better, while fairness metrics (e.g., FDP, FMEO) are lower-is-better."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper6",
+  "open_questions": [
+    "What is the exact URL for the AI-Face dataset?",
+    "What are the exact versions of PyTorch and other packages required?",
+    "Are participants allowed to use external data for training or fine-tuning?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].url - dataset URL not specified in paper",
+    "cr:implementation.cr:environment.packages[0] - exact PyTorch version not specified",
+    "cr:execution.allowedExternalData - external data usage policy not specified"
+  ]
+}

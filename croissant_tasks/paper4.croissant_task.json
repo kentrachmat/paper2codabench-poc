@@ -1,0 +1,86 @@
+{
+  "@context": {
+    "@vocab": "http://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "sc": "http://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "@id": "concordia-task",
+  "name": "Cooperative Intelligence in Mixed-Motive Text-Mediated Environments",
+  "description": "Develop autonomous language model agents capable of cooperative intelligence in mixed-motive, text-mediated environments. Agents must navigate complex social scenarios requiring reasoning, communication, and decision-making skills while balancing individual goals with collective welfare.",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Dataset consists of diverse, open-ended scenarios generated using the Concordia framework. Scenarios include natural language descriptions of the game state, agent actions, and GM-generated event outcomes. Example inputs include: 'The fishery is overharvested; propose a solution,' or 'Village elder A offers 10 units of gold for treaty compliance.'",
+      "url": "[FILL IN THE BLANK]",
+      "distribution": null,
+      "recordSet": null
+    }
+  ],
+  "cr:output": {
+    "name": "agent_responses",
+    "description": "Free-form natural language descriptions of the agent's intended actions or responses. Example outputs include: 'I propose reducing fishing quotas to ensure sustainability,' or 'I accept the treaty terms and offer 5 units of gold as compensation.'",
+    "cr:schema": {
+      "name": "response_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "scenario_id",
+          "description": "Unique identifier for the scenario, e.g., scenario_001",
+          "dataType": "sc:Text",
+          "source": null
+        },
+        {
+          "name": "response",
+          "description": "Agent's free-form response to the scenario",
+          "dataType": "sc:Text",
+          "source": null
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "transformers",
+        "numpy",
+        "pandas"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "cooperative_intelligence_score",
+    "metrics": [
+      "cooperative_intelligence_score",
+      "social_welfare_score"
+    ],
+    "higherIsBetter": true,
+    "notes": "Cooperative intelligence score is calculated using an LM-based reward model. Social welfare outcomes are computed using various welfare functions derived from GM-determined outcomes."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper4",
+  "open_questions": [
+    "What is the exact format of the dataset (e.g., JSON, CSV)?",
+    "What are the token limits for input/output per round?",
+    "What are the exact computation limits for LM calls per round?",
+    "What is the URL for the dataset?",
+    "What are the specific welfare functions used for social welfare score computation?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].url - dataset URL not specified in paper",
+    "cr:execution.allowedExternalData - external data usage rules not specified",
+    "open_questions[0] - dataset format not specified",
+    "open_questions[1] - token limits for input/output not specified",
+    "open_questions[2] - LM call limits not specified",
+    "open_questions[4] - specific welfare functions not described"
+  ]
+}

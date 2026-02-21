@@ -5,42 +5,32 @@
     "sc": "http://schema.org/"
   },
   "@type": "cr:TaskProblem",
-  "@id": "uncertainty-quantification-task",
-  "name": "Uncertainty Quantification in Particle Physics",
-  "description": "Estimate the 68% Confidence Interval (CI) for the signal strength parameter (\u00b5) in simulated particle physics data, addressing aleatoric and epistemic uncertainties.",
+  "@id": "neurips2024-llm-privacy-challenge",
+  "name": "NeurIPS 2024 LLM Privacy Challenge",
+  "description": "Address privacy risks in large language models (LLMs) through attacking privacy vulnerabilities (Red Team) or defending against privacy attacks (Blue Team).",
+  "paper_id": "paper2",
   "cr:input": [
     {
       "name": "competition_dataset",
-      "description": "Tabular dataset with 32 features describing collision events. Includes labeled training data (BaselineTrain) and unlabeled test data with randomized \u00b5true values and systematic distortions. Example features: 'pt', 'eta', 'phi', 'mass'.",
-      "url": "[FILL IN THE BLANK]",
-      "distribution": null,
-      "recordSet": null
+      "description": "Synthetic datasets inspired by real-world private datasets, such as Enron emails, with sensitive fields replaced by random strings. Example: Original data: 'John Doe, johndoe@example.com'; Synthetic version: 'RandomName123, randomemail456@example.com'. Includes training, validation, and test splits.",
+      "url": "[FILL IN THE BLANK]"
     }
   ],
   "cr:output": {
     "name": "predictions",
-    "description": "Predicted 68% Confidence Interval (CI) for the signal strength parameter \u00b5. Includes lower bound (\u00b516) and upper bound (\u00b584). Example: \u00b516=0.8, \u00b584=1.2.",
+    "description": "Outputs depend on the track: Red Team outputs extracted sensitive information (e.g., names, email addresses); Blue Team outputs enhanced LLMs or defense methods evaluated for privacy protection and utility.",
     "cr:schema": {
       "name": "prediction_schema",
-      "description": null,
       "field": [
         {
           "name": "id",
-          "description": "Unique pseudo-experiment identifier, e.g., experiment_001",
           "dataType": "sc:Text",
-          "source": null
+          "description": "Unique identifier for the sample, e.g., 'sample_001'"
         },
         {
-          "name": "mu16",
-          "description": "Lower bound of the 68% CI for \u00b5, e.g., 0.8",
-          "dataType": "sc:Float",
-          "source": null
-        },
-        {
-          "name": "mu84",
-          "description": "Upper bound of the 68% CI for \u00b5, e.g., 1.2",
-          "dataType": "sc:Float",
-          "source": null
+          "name": "output",
+          "dataType": "sc:Text",
+          "description": "Red Team: Extracted sensitive information (e.g., 'John Doe, johndoe@example.com'). Blue Team: Defense method or enhanced LLM description."
         }
       ]
     }
@@ -49,46 +39,39 @@
     "cr:environment": {
       "language": "Python",
       "packages": [
+        "torch",
+        "transformers",
         "numpy",
-        "scipy",
-        "pandas",
-        "PyTorch",
-        "TensorFlow",
-        "scikit-learn"
-      ],
-      "dockerImage": null
+        "pandas"
+      ]
     },
-    "cr:tests": null,
     "entryPoint": "solution.py",
     "interface": "predict(input_dir, output_dir)"
   },
   "cr:evaluation": {
-    "primaryMetric": "coverage_score",
+    "primaryMetric": "attack_accuracy",
     "metrics": [
-      "coverage_score",
-      "precision",
-      "coverage"
+      "attack_accuracy",
+      "defense_effectiveness",
+      "efficiency",
+      "model_effectiveness"
     ],
     "higherIsBetter": true,
-    "notes": "Coverage Score combines precision (interval width) and coverage (proportion of intervals containing \u00b5truth). Under-coverage is penalized more than over-coverage."
+    "notes": "Attack accuracy measures success rate of extracting sensitive information (Red Team). Defense effectiveness measures reduction in attack accuracy (Blue Team). Efficiency evaluates computational overhead. Model effectiveness assesses LLM utility post-defense."
   },
   "cr:execution": {
-    "runtimeLimitSec": 3600,
-    "memoryLimitMb": 512000,
+    "runtimeLimitSec": "[FILL IN THE BLANK]",
+    "memoryLimitMb": "[FILL IN THE BLANK]",
     "allowedExternalData": "unknown"
   },
-  "paper_id": "paper2",
   "open_questions": [
-    "What is the exact format of the dataset files (e.g., CSV, HDF5)?",
-    "What are the precise column names and data types in the dataset?",
-    "What are the exact systematic distortions applied to the test data?",
-    "What is the URL or access method for the dataset?",
-    "What is the Docker image or environment specification for the competition?"
+    "What are the exact runtime and memory limits for submissions?",
+    "What are the specific dataset URLs for downloading the synthetic datasets?",
+    "What are the exact software versions required for the standardized environment?"
   ],
   "fill_in_the_blank": [
     "cr:input[0].url - dataset URL not specified in paper",
-    "cr:execution.allowedExternalData - external data usage policy not specified",
-    "cr:implementation.cr:environment - Docker image or exact environment specification not provided",
-    "cr:input[0].description - precise column names and data types not fully detailed"
+    "cr:execution.runtimeLimitSec - runtime limit not specified in paper",
+    "cr:execution.memoryLimitMb - memory limit not specified in paper"
   ]
 }
