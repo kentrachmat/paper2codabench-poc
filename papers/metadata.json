@@ -14,7 +14,8 @@
       "title": "The NeurIPS 2024 LLM Privacy Challenge",
       "link": "https://openreview.net/pdf?id=2cRnDwpF6D",
       "codabench_link": "https://www.codabench.org/competitions/3288/",
-      "description": "Red Team develops attacks to extract private data from LLMs, Blue Team develops defenses. Evaluated on attack success rate and defense robustness for data privacy in large language models.",
+      "codabench_link_red_team": "https://www.codabench.org/competitions/3283/",
+      "description": "Red Team develops attacks to extract private data from LLMs (competition 3283), Blue Team develops defenses (competition 3288). Evaluated on attack success rate and defense robustness for data privacy in large language models.",
       "task_type": "generation",
       "track": "NeurIPS 2024 Competition Track"
     },
@@ -60,6 +61,26 @@
       "link": "https://arxiv.org/pdf/2506.19141",
       "codabench_link": "https://www.codabench.org/competitions/9975/",
       "description": "Build models that zero-shot decode new tasks and new subjects from high-density EEG (128 channels, 3000+ subjects). Transfer challenge and psychopathology factor prediction from the HBN-EEG dataset.",
+      "task_type": "classification",
+      "track": "NeurIPS 2025 Competition Track"
+    },
+    {
+      "paper_id": "paper8",
+      "title": "FAIR Universe – Handling Uncertainties and Distribution Shifts for Precision Cosmology",
+      "link": "https://openreview.net/pdf?id=SPSgA3fL6B",
+      "codabench_link": "https://www.codabench.org/competitions/8934/",
+      "codabench_link_phase2": "https://www.codabench.org/competitions/10902/",
+      "description": "Infer cosmological parameters (Ω_m and S_8) from weak gravitational lensing convergence maps while handling imperfect simulators and distribution shifts. Phase 1 (8934): regression with uncertainty quantification. Phase 2 (10902): OoD detection via p-values. Targets next-gen survey pipelines like LSST, Euclid, and the Roman Space Telescope.",
+      "task_type": "regression",
+      "track": "NeurIPS 2025 Competition Track",
+      "note": "PDF requires OpenReview login — no public arxiv preprint available as of 2026-02-25"
+    },
+    {
+      "paper_id": "paper9",
+      "title": "NeurIPS 2025 E2LM Competition: Early Training Evaluation of Language Models",
+      "link": "https://arxiv.org/pdf/2506.07731",
+      "codabench_link": "https://www.codabench.org/competitions/9118/",
+      "description": "Design evaluation benchmarks for measuring early training progress of small LLMs (0.5B–3B parameters, checkpoints up to 200B tokens). Submissions scored on signal quality (discriminative power), model ranking consistency at 1T tokens, and scientific knowledge alignment.",
       "task_type": "classification",
       "track": "NeurIPS 2025 Competition Track"
     }
