@@ -1,0 +1,92 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "paper3-task",
+  "name": "Signal Strength Estimation and Classification in High-Energy Physics Data",
+  "description": "Develop machine learning models to estimate the signal strength parameter (\u00b5) and classify particle collision events as Signal or Background, while accounting for systematic and random uncertainties.",
+  "paper_id": "paper3",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "The input data consists of tabular features derived from proton-proton collision events at the LHC. Features include raw measurements (e.g., energy, momentum, transverse momentum, azimuthal angle, pseudorapidity, missing transverse energy) and derived quantities (e.g., transverse mass, invariant mass, pseudorapidity separations). Labels include binary classification (Signal or Background) and detailed event types (e.g., htautau, ztautau). Systematic biases are introduced via nuisance parameters simulating detector miscalibration and background shifts.",
+      "url": "[FILL IN THE BLANK]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The output should include the 68.27% confidence interval for the signal strength parameter \u00b5, represented by its lower (mu_16) and upper (mu_84) bounds, as well as binary classification labels (1 for Signal, 0 for Background). \u00b5 values range from 0.1 to 3, and classification labels are integers (0 or 1).",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "field": [
+        {
+          "name": "id",
+          "dataType": "sc:Text",
+          "description": "unique identifier for the collision event, e.g., event_001"
+        },
+        {
+          "name": "mu_16",
+          "dataType": "sc:Float",
+          "description": "lower bound of the 68.27% confidence interval for \u00b5"
+        },
+        {
+          "name": "mu_84",
+          "dataType": "sc:Float",
+          "description": "upper bound of the 68.27% confidence interval for \u00b5"
+        },
+        {
+          "name": "classification",
+          "dataType": "sc:Integer",
+          "description": "binary classification label: 1 for Signal, 0 for Background"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "xgboost",
+        "minuit"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Final Quantile Score",
+    "metrics": [
+      "Average Interval Width (w)",
+      "Coverage (c)",
+      "Final Quantile Score",
+      "Classification Accuracy"
+    ],
+    "higherIsBetter": true,
+    "notes": "The Final Quantile Score is computed as -ln((w + \u03b5)f(c)), where \u03b5 = 10^-2 and f(c) penalizes deviations from 68.27% coverage asymmetrically. Smaller interval widths (w) and accurate coverage (c) improve the score."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 20,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact memory limit for the competition?",
+    "Are participants allowed to use GPU acceleration, and if so, what are the constraints?",
+    "Should classification accuracy be explicitly included in the final evaluation metric?",
+    "What is the exact penalty function f(c) used in the Final Quantile Score computation?"
+  ],
+  "fill_in_the_blank": [
+    "Exact memory limit",
+    "Details on GPU usage",
+    "Exact implementation of the penalty function f(c)"
+  ]
+}

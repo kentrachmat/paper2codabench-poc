@@ -1,0 +1,41 @@
+# Codabench Competition Configuration
+# Auto-generated from Croissant Task: SLM Early-Stage Evaluation
+
+title: "SLM Early-Stage Evaluation"
+description: |
+  Evaluate Small Language Models (SLMs) during early training stages (0-200 billion tokens) using benchmarks for reasoning, scientific knowledge, and training dynamics.
+
+# Task details
+task_type: other
+
+# Phases (single phase for POC)
+phases:
+  - id: 1
+    name: "Evaluation Phase"
+    description: "Main evaluation phase"
+    start: "2024-01-01"
+    end: "2025-12-31"
+
+    # Scoring
+    tasks:
+      - name: "SLM Early-Stage Evaluation"
+        scoring_program: "scoring_program.zip"
+        reference_data: "reference_data.zip"
+        ingestion_program: "ingestion_program.zip"
+        input_data: "input_data.zip"
+
+# Leaderboard
+leaderboard:
+  - title: "Results"
+    key: "Signal Quality (ScoreSQ)"
+    sorting: "desc"
+    computation: "average"
+
+# Resource limits
+resource_limits:
+  time_limit: 600
+  memory_limit_mb: 4096
+
+# Metadata
+created_by: "Paper2Codabench POC"
+version: "1.0"

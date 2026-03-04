@@ -1,0 +1,15 @@
+{
+  "seal_type": "bundle_creation",
+  "bundle_id": "paper2",
+  "timestamp": "2026-02-25T14:05:56.421233Z",
+  "data": {
+    "task_name": "NeurIPS 2024 LLM Privacy Challenge",
+    "task_type": "classification",
+    "paper_id": "paper2",
+    "primary_metric": "Attack Accuracy",
+    "pipeline": "B"
+  },
+  "bundle_hash": "defe527ae7824e736477cae3888e03007261a2aebd89c7ae0969814928fbe3d8",
+  "signature": "0230f77741b13a96a3a3c5bb7b3d0c75ca8e1ac7fba9269b10300207650068345d8e13f4d45353d94644df5707afd79458e8c4a629b806b41da83c2363caa00f1d71298f17ec275b95556531f3671d56dafcfcc7f62b334a7f600bbf7f3c729089cdf5799a7a41e862b35633f3ff5a1c94b498fd6e81df3a70e325c93bb7c1a901ae5ee9d655d310e866cc0d5c5cb9e70c0df401807132a0f8874848a1560bd0982a051c38bde957f07059f7ba3fa1a0becf7d2d42e165ddb1101e592dc81bd8ddf29e91e3ecfec45f80cb126b288861a239eb2a36dda46668ed7608b32b7a2bf583b10c151862348b0b1c0d8ffcd28e28864eeef1b396164aa392d13ae8e0af",
+  "seal_id": "ae2f7ebdefade052"
+}

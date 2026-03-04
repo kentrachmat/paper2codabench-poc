@@ -1,0 +1,27 @@
+{
+  "seal_type": "evaluation_run",
+  "bundle_id": "paper6",
+  "timestamp": "2026-02-25T14:38:56.317708Z",
+  "data": {
+    "scores": {
+      "AUC": 0.585,
+      "ACC": 0.0,
+      "AP": 0.6180497198879552,
+      "EER": 0.5,
+      "FPR": 0.5,
+      "FDP": NaN,
+      "FEO": NaN,
+      "FOAE": NaN,
+      "FMEO": NaN,
+      "FIND": NaN
+    },
+    "submission": {
+      "filename": "solution.py",
+      "type": "code",
+      "timestamp": "2026-02-25T14:38:56.265117Z"
+    }
+  },
+  "bundle_hash": "e2673dc5c9124869a033e906102e1900f010f4687d5ea9e81e7dfdf67135fd6a",
+  "signature": "6d4820ed21ebaeff350892488e3a6879bd10f9598a2f79796003e335e22fc4e13c1d7672de42a2a69769bf8a7ece285d28ad0a5c9d471e040e8148b23caca657ca95bea0bc840b68452d6d8273797203943da66c2c2cc9e0164094aae92128f7601149c4e47061eb31d52ba53ca4d1c435dad3f3a29ef12f2c979eb5c5e2471c885e78230aa26d6ff5907493f39a07fc14cef4a90157af5636a5bbdf913fb7b6dcd83f1c2a22e573a8f54de204edd6c941424b828d56e74e880079b7b33dd289c542b097b89e141b0707bd800d5012869d12e1b41a7c08b437b3b11e9318ceda7865825e844ab0e67b85d62a23fe964c7a8b2cf8dd6ef121d8a8b6d2b9ec39a2",
+  "seal_id": "f6f2baa1bdb1ee70"
+}

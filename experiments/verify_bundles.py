@@ -2,10 +2,10 @@
 """
 Verify all generated bundles by running local simulation.
 
-Scans bundles/ for all paper directories, runs local_run.py with solution.py,
-captures exit code and scores, and reports pass/fail.
+Scans both bundles/ (Pipeline A) and bundles_pipelineB/ (Pipeline B),
+runs local_run.py with solution.py, captures exit code and scores.
 
-Outputs a markdown table to stdout and saves JSON to experiments/results/verification_results.json.
+Outputs a comparison markdown table and saves JSON to experiments/results/verification_results.json.
 """
 import json
 import subprocess
@@ -13,7 +13,8 @@ import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-BUNDLES_DIR = PROJECT_ROOT / "bundles"
+BUNDLES_DIR_A = PROJECT_ROOT / "bundles"
+BUNDLES_DIR_B = PROJECT_ROOT / "bundles_pipelineB"
 METADATA_PATH = PROJECT_ROOT / "papers" / "metadata.json"
 LOCAL_RUN = PROJECT_ROOT / "src" / "local_run.py"
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
@@ -78,27 +79,30 @@ def run_bundle(bundle_path):
         return {"status": "FAIL", "scores": {}, "error": str(e)}
 
 
-def main():
-    metadata = load_metadata()
+def scan_bundles_dir(directory: Path, metadata: dict) -> list:
+    """
+    Scan a bundles directory and verify each bundle.
 
-    # Find all bundle directories
+    Args:
+        directory: Path to bundles directory
+        metadata: Paper metadata dict keyed by paper_id
+
+    Returns:
+        List of result dicts per bundle
+    """
+    if not directory.exists():
+        return []
+
     bundle_dirs = sorted(
-        [d for d in BUNDLES_DIR.iterdir() if d.is_dir() and not d.name.startswith(".")],
+        [d for d in directory.iterdir() if d.is_dir() and not d.name.startswith(".")],
         key=lambda d: d.name,
     )
 
-    if not bundle_dirs:
-        print("No bundles found in", BUNDLES_DIR)
-        sys.exit(1)
-
     results = []
-    pass_count = 0
-    fail_count = 0
-
     for bundle_dir in bundle_dirs:
         paper_id = bundle_dir.name
         meta = metadata.get(paper_id, {})
-        print(f"Testing {paper_id}...", end=" ", flush=True)
+        print(f"  Testing {paper_id} ({directory.name})...", end=" ", flush=True)
 
         result = run_bundle(bundle_dir)
         result["paper_id"] = paper_id
@@ -107,29 +111,71 @@ def main():
         results.append(result)
 
         if result["status"] == "PASS":
-            pass_count += 1
             scores_str = ", ".join(f"{k}={v:.4f}" for k, v in result["scores"].items())
             print(f"PASS  [{scores_str}]")
         else:
-            fail_count += 1
             print(f"{result['status']}  [{result.get('error', '')[:80]}]")
 
-    # Print markdown summary table
+    return results
+
+
+def main():
+    metadata = load_metadata()
+
+    # Scan Pipeline A
+    print("\n=== Pipeline A (bundles/) ===")
+    results_a = scan_bundles_dir(BUNDLES_DIR_A, metadata)
+
+    # Scan Pipeline B
+    print("\n=== Pipeline B (bundles_pipelineB/) ===")
+    results_b = scan_bundles_dir(BUNDLES_DIR_B, metadata)
+
+    if not results_a and not results_b:
+        print("No bundles found in either directory.")
+        sys.exit(1)
+
+    # Build lookup
+    a_by_id = {r["paper_id"]: r for r in results_a}
+    b_by_id = {r["paper_id"]: r for r in results_b}
+    all_paper_ids = sorted(set(list(a_by_id.keys()) + list(b_by_id.keys())))
+
+    # Print comparison table
     print()
-    print("## Bundle Verification Summary")
+    print("## Bundle Verification Comparison: Pipeline A vs Pipeline B")
     print()
-    print(f"| Paper | Title | Task Type | Status | Scores |")
-    print(f"|-------|-------|-----------|:------:|--------|")
-    for r in results:
-        short_title = r["title"][:50] + ("..." if len(r["title"]) > 50 else "")
-        status_icon = "PASS" if r["status"] == "PASS" else "FAIL"
-        if r["scores"]:
-            scores_str = ", ".join(f"{k}={v:.4f}" for k, v in r["scores"].items())
+    print(f"| Paper | Title | A_status | A_scores | B_status | B_scores |")
+    print(f"|-------|-------|:--------:|----------|:--------:|----------|")
+    for pid in all_paper_ids:
+        a = a_by_id.get(pid, {})
+        b = b_by_id.get(pid, {})
+        title = a.get("title", b.get("title", "Unknown"))
+        short_title = title[:40] + ("..." if len(title) > 40 else "")
+
+        a_status = a.get("status", "-")
+        b_status = b.get("status", "-")
+
+        if a.get("scores"):
+            a_scores = ", ".join(f"{k}={v:.4f}" for k, v in a["scores"].items())
         else:
-            scores_str = r.get("error", "")[:60]
-        print(f"| {r['paper_id']} | {short_title} | {r['task_type']} | {status_icon} | {scores_str} |")
+            a_scores = a.get("error", "-") if a else "-"
+            a_scores = a_scores[:50] if isinstance(a_scores, str) else "-"
+
+        if b.get("scores"):
+            b_scores = ", ".join(f"{k}={v:.4f}" for k, v in b["scores"].items())
+        else:
+            b_scores = b.get("error", "-") if b else "-"
+            b_scores = b_scores[:50] if isinstance(b_scores, str) else "-"
+
+        print(f"| {pid} | {short_title} | {a_status} | {a_scores} | {b_status} | {b_scores} |")
     print()
-    print(f"**Results:** {pass_count} passed, {fail_count} failed out of {len(results)} bundles")
+
+    pass_a = sum(1 for r in results_a if r["status"] == "PASS")
+    fail_a = sum(1 for r in results_a if r["status"] != "PASS")
+    pass_b = sum(1 for r in results_b if r["status"] == "PASS")
+    fail_b = sum(1 for r in results_b if r["status"] != "PASS")
+
+    print(f"**Pipeline A:** {pass_a} passed, {fail_a} failed out of {len(results_a)} bundles")
+    print(f"**Pipeline B:** {pass_b} passed, {fail_b} failed out of {len(results_b)} bundles")
     print()
 
     # Save JSON results
@@ -137,10 +183,18 @@ def main():
     output_path = RESULTS_DIR / "verification_results.json"
     with open(output_path, "w") as f:
         json.dump({
-            "results": results,
-            "total": len(results),
-            "passed": pass_count,
-            "failed": fail_count,
+            "pipeline_a": {
+                "results": results_a,
+                "total": len(results_a),
+                "passed": pass_a,
+                "failed": fail_a,
+            },
+            "pipeline_b": {
+                "results": results_b,
+                "total": len(results_b),
+                "passed": pass_b,
+                "failed": fail_b,
+            },
         }, f, indent=2)
     print(f"Results saved to {output_path}")
 

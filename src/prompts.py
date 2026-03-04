@@ -11,61 +11,96 @@ Uses Croissant Task (cr:TaskProblem) JSON-LD as the intermediate format.
 # CROISSANT TASK EXTRACTION PROMPTS
 # ============================================================================
 
-CROISSANT_TASK_SCHEMA = """{
+CROISSANT_TASK_SCHEMA_STRUCTURE = """
+The output must be valid JSON-LD following the Croissant (MLCommons) vocabulary.
+Croissant uses schema.org as its base vocabulary and extends it with the "cr:" namespace.
+
+Required JSON-LD structure:
+
+{
   "@context": {
-    "@vocab": "http://schema.org/",
+    "@language": "en",
+    "@vocab": "https://schema.org/",
     "cr": "http://mlcommons.org/croissant/",
-    "sc": "http://schema.org/"
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
   },
   "@type": "cr:TaskProblem",
-  "@id": "paper1-task",
-  "name": "Molecule Binding Prediction",
-  "description": "Predict whether a molecule binds to a target protein based on its SMILES representation.",
-  "paper_id": "paper1",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "<paper_id>-task",
+  "name": "<short task name from the paper>",
+  "description": "<1-2 sentence problem statement from the paper>",
+  "paper_id": "<paper identifier>",
+
   "cr:input": [
     {
-      "name": "competition_dataset",
-      "description": "IMPORTANT: Include CONCRETE EXAMPLES from the paper. E.g., 'CSV with columns: id (string), smiles (SMILES string like CC(=O)Oc1ccccc1C(=O)O), protein_name (one of BRD4, HSA, sEH)'",
-      "url": "[FILL IN THE BLANK]"
+      "@type": "cr:FileObject",
+      "name": "<dataset name>",
+      "description": "<describe the input data: format, columns, data types, concrete examples from the paper>",
+      "encodingFormat": "<e.g. text/csv, application/json>",
+      "contentUrl": "<dataset URL>"
     }
   ],
+
   "cr:output": {
     "name": "predictions",
-    "description": "IMPORTANT: Include CONCRETE EXAMPLES and value ranges. E.g., 'Binary binding predictions: 0=no binding, 1=binding'",
+    "description": "<describe expected output: format, value ranges, concrete examples>",
     "cr:schema": {
+      "@type": "cr:RecordSet",
       "name": "prediction_schema",
       "field": [
-        {"name": "id", "dataType": "sc:Text", "description": "Unique sample identifier, e.g. molecule_001"},
-        {"name": "pred", "dataType": "sc:Float", "description": "Predicted binding probability between 0.0 and 1.0"}
+        {
+          "@type": "cr:Field",
+          "name": "<field name>",
+          "dataType": "<sc:Text | sc:Integer | sc:Float | sc:Boolean | sc:URL | sc:ImageObject>",
+          "description": "<what this field represents, with example values>"
+        }
       ]
     }
   },
+
   "cr:implementation": {
     "cr:environment": {
       "language": "Python",
-      "packages": ["pandas", "numpy", "scikit-learn"]
+      "packages": ["<list packages needed to solve the task>"]
     },
     "entryPoint": "solution.py",
     "interface": "predict(input_dir, output_dir)"
   },
+
   "cr:evaluation": {
-    "primaryMetric": "mean_average_precision",
-    "metrics": ["mean_average_precision", "auc_roc"],
-    "higherIsBetter": true,
-    "notes": "MAP computed per protein target, then averaged"
+    "primaryMetric": "<exact metric name from the paper>",
+    "metrics": ["<list all metrics mentioned in the paper>"],
+    "higherIsBetter": <true or false>,
+    "notes": "<any special computation details for the metrics>"
   },
+
   "cr:execution": {
-    "runtimeLimitSec": 600,
-    "memoryLimitMb": 4096,
-    "allowedExternalData": "unknown"
+    "runtimeLimitSec": <integer seconds, or 600 if not specified>,
+    "memoryLimitMb": <integer MB, or 4096 if not specified>,
+    "allowedExternalData": "<yes | no | unknown>"
   },
+
   "open_questions": [
-    "list unclear details here"
+    "<list any unclear or ambiguous details from the paper>"
   ],
+
   "fill_in_the_blank": [
-    "cr:input[0].url - dataset URL not specified in paper"
+    "<path.to.field - reason it could not be determined from the paper>"
   ]
-}"""
+}
+
+IMPORTANT RULES:
+- Use actual Croissant/schema.org data types for fields (sc:Text, sc:Integer, sc:Float, etc.)
+- Each cr:Field in cr:output must have @type, name, dataType, and description
+- Use domain-appropriate identifiers (e.g. molecule_001 for chemistry, image_001 for vision)
+- Use [FILL IN THE BLANK] for ANY value you cannot determine from the paper, and track it in fill_in_the_blank
+- Extract the EXACT metric names used in the paper, do not substitute generic ones
+- Include CONCRETE examples from the paper in descriptions (sample data values, column names, value ranges)
+"""
+
+# Keep backward-compatible alias
+CROISSANT_TASK_SCHEMA = CROISSANT_TASK_SCHEMA_STRUCTURE
 
 
 # ============================================================================
@@ -653,3 +688,111 @@ def infer_task_type(croissant_task: dict) -> str:
         return 'segmentation'
 
     return 'other'
+
+
+# ============================================================================
+# PIPELINE B: DIRECT BUNDLE GENERATION PROMPTS (Paper → Bundle)
+# ============================================================================
+
+DIRECT_BUNDLE_SYSTEM = """You are a senior ML engineer converting a research paper directly into a Codabench competition specification.
+Your job is to extract enough detail to build a working competition bundle.
+
+You must:
+- Be precise
+- Avoid guessing
+- Use [FILL IN THE BLANK] for any information you cannot determine from the paper
+- Output MUST be valid JSON only"""
+
+
+def create_direct_bundle_prompt(paper_text: str) -> str:
+    """Create prompt for direct bundle generation from paper text (Pipeline B Step 1)."""
+    return f"""Read the research paper below and produce a JSON object with these keys:
+
+{{
+  "name": "short task name",
+  "description": "1-2 sentence problem statement",
+  "task_type": "classification|regression|ranking|generation|segmentation|other",
+  "primary_metric": "exact metric name from paper (e.g. mean_average_precision)",
+  "metrics": ["list", "of", "all", "metrics"],
+  "higher_is_better": true,
+  "metric_notes": "any special computation details",
+  "output_schema": [
+    {{"name": "id", "dataType": "sc:Text", "description": "unique identifier e.g. sample_001"}},
+    {{"name": "pred", "dataType": "sc:Float", "description": "prediction value 0.0-1.0"}}
+  ],
+  "input_description": "concrete description of input data with examples",
+  "output_description": "concrete description of expected output with value ranges",
+  "runtime_limit_sec": 600,
+  "memory_limit_mb": 4096,
+  "packages": ["pandas", "numpy", "scikit-learn"],
+  "open_questions": ["list of unclear details"],
+  "fill_in_the_blank": ["fields that could not be determined"]
+}}
+
+Rules:
+- Output ONLY valid JSON.
+- Extract the EXACT metric names from the paper.
+- For output_schema, define exact output columns with realistic example values.
+- Use domain-appropriate IDs (molecule_001 for chemistry, image_001 for vision, etc.).
+- Use [FILL IN THE BLANK] for anything not found in the paper.
+
+Paper text:
+{paper_text}"""
+
+
+# ============================================================================
+# PIPELINE B: BUNDLE-TO-CROISSANT EXTRACTION PROMPTS (Bundle → Croissant Task)
+# ============================================================================
+
+BUNDLE_TO_CROISSANT_SYSTEM = """You are a senior ML engineer reverse-engineering a Codabench competition bundle into a Croissant Task (cr:TaskProblem) JSON-LD.
+Your job is to extract structured metadata from the bundle files.
+
+You must:
+- Be precise
+- Avoid guessing
+- Use [FILL IN THE BLANK] for any information you cannot determine from the bundle files
+- Track all [FILL IN THE BLANK] fields in the fill_in_the_blank array
+- Output MUST be valid JSON only (JSON-LD format with Croissant vocabulary)"""
+
+
+def create_bundle_to_croissant_prompt(bundle_context: str) -> str:
+    """Create prompt for extracting Croissant Task from bundle files (Pipeline B Step 2)."""
+    return f"""Extract a Croissant Task (cr:TaskProblem) JSON-LD from the competition bundle files below.
+
+Rules:
+- Output ONLY valid JSON matching the Croissant Task schema.
+- Use [FILL IN THE BLANK] for anything not inferrable from the bundle files (e.g. original paper details, dataset URLs).
+- Track ALL [FILL IN THE BLANK] usages in the fill_in_the_blank array.
+
+Croissant Task schema (fill all fields):
+{CROISSANT_TASK_SCHEMA}
+
+Bundle files:
+{bundle_context}"""
+
+
+# ============================================================================
+# ERROR PLANTING PROMPTS (Hallucination Detection)
+# ============================================================================
+
+ERROR_PLANTING_SYSTEM = """You are a senior ML engineer extracting a Croissant Task (cr:TaskProblem) from a scientific paper.
+You must be precise and avoid guessing. Use [FILL IN THE BLANK] for unknown information.
+Output MUST be valid JSON only (JSON-LD format with Croissant vocabulary)."""
+
+
+def create_error_planting_extraction_prompt(modified_paper_text: str) -> str:
+    """Create prompt for Croissant Task extraction from a modified paper (error planting).
+    Same as standard extraction but used with planted-error text."""
+    return f"""Extract a Croissant Task (cr:TaskProblem) JSON-LD from the paper below.
+
+Rules:
+- Output ONLY valid JSON matching the schema.
+- Do NOT invent dataset details.
+- Use [FILL IN THE BLANK] for any information not found in the paper.
+- Track ALL [FILL IN THE BLANK] usages in the fill_in_the_blank array.
+
+Croissant Task schema:
+{CROISSANT_TASK_SCHEMA}
+
+Paper text:
+{modified_paper_text}"""

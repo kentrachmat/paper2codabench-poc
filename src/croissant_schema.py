@@ -115,11 +115,16 @@ class CroissantTaskProblem(BaseModel):
     """
     context: Optional[Dict[str, Any]] = Field(
         default_factory=lambda: {
-            "@vocab": "http://schema.org/",
+            "@language": "en",
+            "@vocab": "https://schema.org/",
             "cr": "http://mlcommons.org/croissant/",
-            "sc": "http://schema.org/"
+            "dct": "http://purl.org/dc/terms/",
+            "sc": "https://schema.org/"
         },
         alias="@context"
+    )
+    conforms_to: Optional[str] = Field(
+        "http://mlcommons.org/croissant/1.0", alias="conformsTo"
     )
     type: str = Field("cr:TaskProblem", alias="@type")
     id: Optional[str] = Field(None, alias="@id")

@@ -26,6 +26,8 @@ class Config:
     PAPERS_DIR = project_root / "papers"
     CROISSANT_DIR = project_root / "croissant_tasks"
     BUNDLES_DIR = project_root / "bundles"
+    BUNDLES_PIPELINE_B_DIR = project_root / "bundles_pipelineB"
+    CROISSANT_PIPELINE_B_DIR = project_root / "croissant_tasks_pipelineB"
     EXAMPLES_DIR = project_root / "examples"
     TEMPLATES_DIR = project_root / "src" / "templates"
 
@@ -55,6 +57,8 @@ class Config:
         for dir_path in [
             cls.CROISSANT_DIR,
             cls.BUNDLES_DIR,
+            cls.BUNDLES_PIPELINE_B_DIR,
+            cls.CROISSANT_PIPELINE_B_DIR,
             cls.EXAMPLES_DIR,
             cls.TEMPLATES_DIR
         ]:

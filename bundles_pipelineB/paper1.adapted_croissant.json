@@ -1,0 +1,119 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "paper1-task",
+  "name": "ML-Driven Surrogate Modeling for Airfoil Design",
+  "description": "Develop machine learning models to predict steady-state 2D velocity and pressure fields around airfoils, compute aerodynamic properties, and optimize lift-over-drag ratios while ensuring physical consistency and generalization to out-of-distribution scenarios.",
+  "paper_id": "paper1",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Participants receive point cloud data representing the simulation mesh, including node positions, inlet velocity, distance to the airfoil, normals, and the airfoil geometry as an unstructured mesh. For example, a sample input may include numerical arrays for node positions and inlet velocity, along with mesh data representing the airfoil geometry.",
+      "url": "[FILL IN THE BLANK]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predictions include numerical values for physical fields (ux, uy, p, \u03bdt, ps) and derived quantities (CL, CD, \u03c1D, \u03c1L). Values must adhere to physical consistency and calibrated thresholds for evaluation.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "field": [
+        {
+          "name": "id",
+          "dataType": "sc:Text",
+          "description": "unique identifier for the sample, e.g., airfoil_001"
+        },
+        {
+          "name": "ux",
+          "dataType": "sc:Float",
+          "description": "predicted velocity component in the x direction"
+        },
+        {
+          "name": "uy",
+          "dataType": "sc:Float",
+          "description": "predicted velocity component in the y direction"
+        },
+        {
+          "name": "p",
+          "dataType": "sc:Float",
+          "description": "predicted pressure field"
+        },
+        {
+          "name": "\u03bdt",
+          "dataType": "sc:Float",
+          "description": "predicted turbulent kinematic viscosity"
+        },
+        {
+          "name": "ps",
+          "dataType": "sc:Float",
+          "description": "predicted pressure divided by specific mass"
+        },
+        {
+          "name": "CL",
+          "dataType": "sc:Float",
+          "description": "predicted lift coefficient"
+        },
+        {
+          "name": "CD",
+          "dataType": "sc:Float",
+          "description": "predicted drag coefficient"
+        },
+        {
+          "name": "\u03c1D",
+          "dataType": "sc:Float",
+          "description": "predicted Spearman correlation for drag"
+        },
+        {
+          "name": "\u03c1L",
+          "dataType": "sc:Float",
+          "description": "predicted Spearman correlation for lift"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "global_score",
+    "metrics": [
+      "mean_squared_error",
+      "spearman_correlation",
+      "mean_relative_error",
+      "speedup"
+    ],
+    "higherIsBetter": true,
+    "notes": "The global score is a weighted linear combination of ML-related metrics (40%), physics compliance metrics (30%), and OOD generalization metrics (30%). Accuracy scores are calibrated with thresholds, and speedup is normalized to a maximum score of 1."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What are the exact thresholds for scoring derived quantities like CL, CD, \u03c1D, and \u03c1L?",
+    "Are there specific preprocessing steps required for the unstructured mesh input?",
+    "What are the exact formats and ranges for the derived quantities in the output?"
+  ],
+  "fill_in_the_blank": [
+    "Exact thresholds for scoring derived quantities",
+    "Details on preprocessing unstructured mesh inputs",
+    "Specific ranges for derived quantities in the output"
+  ]
+}

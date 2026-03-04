@@ -1,0 +1,10 @@
+{
+  "overall_score": 3.5,
+  "criteria_scores": {
+    "clarity": 4,
+    "metric_appropriateness": 3,
+    "data_quality": 3,
+    "feasibility": 4
+  },
+  "feedback": "The task description is clear and provides a good overview of the objectives, but could benefit from more detailed examples or explanations of expected outputs. The evaluation metrics are somewhat appropriate but lack clarity on how 'speedup' is calculated, which may confuse participants. The toy data is formatted correctly but appears overly simplistic and may not reflect real-world scenarios. The task interface and constraints are reasonable, though runtime and memory limits could be challenging for larger models."
+}

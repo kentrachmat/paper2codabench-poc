@@ -1,0 +1,41 @@
+# Codabench Competition Configuration
+# Auto-generated from Croissant Task: Erasing the Invisible
+
+title: "Erasing the Invisible"
+description: |
+  Evaluate the robustness of invisible watermarking techniques in AI-generated images against adversarial attacks, focusing on watermark removal while preserving image quality.
+
+# Task details
+task_type: generation
+
+# Phases (single phase for POC)
+phases:
+  - id: 1
+    name: "Evaluation Phase"
+    description: "Main evaluation phase"
+    start: "2024-01-01"
+    end: "2025-12-31"
+
+    # Scoring
+    tasks:
+      - name: "Erasing the Invisible"
+        scoring_program: "scoring_program.zip"
+        reference_data: "reference_data.zip"
+        ingestion_program: "ingestion_program.zip"
+        input_data: "input_data.zip"
+
+# Leaderboard
+leaderboard:
+  - title: "Results"
+    key: "final score"
+    sorting: "asc"
+    computation: "average"
+
+# Resource limits
+resource_limits:
+  time_limit: 2400
+  memory_limit_mb: 4096
+
+# Metadata
+created_by: "Paper2Codabench POC"
+version: "1.0"

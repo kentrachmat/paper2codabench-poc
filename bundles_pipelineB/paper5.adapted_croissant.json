@@ -1,0 +1,88 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "paper5-task",
+  "name": "Erasing the Invisible",
+  "description": "Evaluate the robustness of invisible watermarking techniques in AI-generated images against adversarial attacks, focusing on watermark removal while preserving image quality.",
+  "paper_id": "paper5",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Participants are provided with 300 watermarked images in PNG format per submission. These images are embedded with watermarks using techniques such as Gaussian Shading, StegaStamp, JigMark, PRC, StableSignature, and Trufo. Some images may have double watermarks (e.g., Gaussian Shading + JigMark).",
+      "url": "[FILL IN THE BLANK]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Participants must submit 300 attacked images in PNG format where the watermarks have been removed or disrupted. The output is evaluated based on watermark detection performance and image quality degradation.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "field": [
+        {
+          "name": "image_id",
+          "dataType": "sc:Text",
+          "description": "Unique identifier for each image, e.g., image_001."
+        },
+        {
+          "name": "attacked_image",
+          "dataType": "sc:Image",
+          "description": "PNG image with the watermark removed or disrupted."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "PyTorch",
+        "ONNXRuntime-GPU",
+        "Transformers",
+        "Diffusers"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "final score",
+    "metrics": [
+      "final score",
+      "TPR@0.1%FPR",
+      "PSNR",
+      "SSIM",
+      "FID",
+      "CLIP-FID",
+      "LPIPS",
+      "NMI",
+      "Delta Aesthetics Score",
+      "Delta Artifacts Score"
+    ],
+    "higherIsBetter": false,
+    "notes": "The final score is calculated as the Euclidean distance in a 2D space: sqrt(Q^2 + A^2), where A = 1 - TPR@0.1%FPR and Q is a weighted average of eight image quality metrics normalized to [0.1, 0.9]. Lower scores indicate better performance."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 2400,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What specific preprocessing steps (e.g., median blur, JPEG compression) are applied during evaluation?",
+    "Are there any constraints on the file size or resolution of the output images?",
+    "What is the exact formula or weights used for the composite image quality score (Q)?"
+  ],
+  "fill_in_the_blank": [
+    "Exact weights for the composite image quality score (Q).",
+    "Specific details on the preprocessing pipeline applied during evaluation."
+  ]
+}

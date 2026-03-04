@@ -1,0 +1,109 @@
+{
+  "pipeline_a": {
+    "results": [
+      {
+        "paper_id": "paper1",
+        "title": "NeurIPS 2024 ML4CFD Competition: Harnessing Machine Learning for Computational Fluid Dynamics in Airfoil Design",
+        "task_type": "regression",
+        "fitb_array_count": 2,
+        "fitb_array_items": [
+          "cr:input[0].url - dataset URL not specified in paper",
+          "cr:execution.memoryLimitMb - memory limits not specified"
+        ],
+        "deep_search_count": 2,
+        "deep_search_paths": [
+          "cr:input[0].url",
+          "cr:execution.memoryLimitMb"
+        ]
+      },
+      {
+        "paper_id": "paper2",
+        "title": "The NeurIPS 2024 LLM Privacy Challenge",
+        "task_type": "generation",
+        "fitb_array_count": 3,
+        "fitb_array_items": [
+          "cr:input[0].url - dataset URL not specified in paper",
+          "cr:execution.runtimeLimitSec - runtime limit not specified in paper",
+          "cr:execution.memoryLimitMb - memory limit not specified in paper"
+        ],
+        "deep_search_count": 3,
+        "deep_search_paths": [
+          "cr:input[0].url",
+          "cr:execution.runtimeLimitSec",
+          "cr:execution.memoryLimitMb"
+        ]
+      },
+      {
+        "paper_id": "paper3",
+        "title": "FAIR Universe HiggsML Uncertainty Challenge",
+        "task_type": "ranking",
+        "fitb_array_count": 4,
+        "fitb_array_items": [
+          "cr:input[0].url - dataset URL not specified in paper",
+          "cr:implementation.cr:environment.packages[4] - exact package versions not specified",
+          "cr:execution.memoryLimitMb - memory limit not specified",
+          "cr:execution.allowedExternalData - external data usage policy not specified"
+        ],
+        "deep_search_count": 3,
+        "deep_search_paths": [
+          "cr:input[0].url",
+          "cr:implementation.cr:environment.packages[4]",
+          "cr:execution.memoryLimitMb"
+        ]
+      },
+      {
+        "paper_id": "paper4",
+        "title": "The Concordia Contest: Advancing the Cooperative Intelligence of Language Agents",
+        "task_type": "generation",
+        "fitb_array_count": 6,
+        "fitb_array_items": [
+          "cr:input[0].url - dataset URL not specified in paper",
+          "cr:execution.allowedExternalData - external data usage rules not specified",
+          "open_questions[0] - dataset format not specified",
+          "open_questions[1] - token limits for input/output not specified",
+          "open_questions[2] - LM call limits not specified",
+          "open_questions[4] - specific welfare functions not described"
+        ],
+        "deep_search_count": 1,
+        "deep_search_paths": [
+          "cr:input[0].url"
+        ]
+      },
+      {
+        "paper_id": "paper5",
+        "title": "Erasing the Invisible: A Stress-Test Challenge for Image Watermarks",
+        "task_type": "generation",
+        "fitb_array_count": 1,
+        "fitb_array_items": [
+          "cr:execution.allowedExternalData - external data usage policy not specified in paper"
+        ],
+        "deep_search_count": 0,
+        "deep_search_paths": []
+      },
+      {
+        "paper_id": "paper6",
+        "title": "AI-Face: A Million-Scale Demographically Annotated AI-Generated Face Dataset and Fairness Benchmark",
+        "task_type": "classification",
+        "fitb_array_count": 3,
+        "fitb_array_items": [
+          "cr:input[0].url - dataset URL not specified in paper",
+          "cr:implementation.cr:environment.packages[0] - exact PyTorch version not specified",
+          "cr:execution.allowedExternalData - external data usage policy not specified"
+        ],
+        "deep_search_count": 1,
+        "deep_search_paths": [
+          "cr:input[0].url"
+        ]
+      }
+    ],
+    "total_papers": 6,
+    "total_fitb_array": 19,
+    "total_fitb_deep": 10
+  },
+  "pipeline_b": {
+    "results": [],
+    "total_papers": 0,
+    "total_fitb_array": 0,
+    "total_fitb_deep": 0
+  }
+}

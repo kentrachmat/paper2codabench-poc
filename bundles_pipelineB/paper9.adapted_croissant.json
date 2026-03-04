@@ -1,0 +1,79 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "paper9-task",
+  "name": "SLM Early-Stage Evaluation",
+  "description": "Evaluate Small Language Models (SLMs) during early training stages (0-200 billion tokens) using benchmarks for reasoning, scientific knowledge, and training dynamics.",
+  "paper_id": "paper9",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Participants receive reformulated prompts for benchmarks like MMLU-var, pre-trained SLMs (0.5B, 1B, 3B parameters) with intermediate checkpoints, and a starting kit with Jupyter notebooks and evaluation scripts. Example input: A question with multiple-choice options (A, B, C, D) or a question-answer pair in text format.",
+      "url": "[FILL IN THE BLANK]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "For benchmark tasks, the output is the predicted answer (e.g., 'B' or a continuation). For binary classification, the output is 'Accept' or 'Reject'.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "field": [
+        {
+          "name": "id",
+          "dataType": "sc:Text",
+          "description": "unique identifier for the benchmark or classification task, e.g., benchmark_001"
+        },
+        {
+          "name": "pred",
+          "dataType": "sc:Text",
+          "description": "predicted output, e.g., 'B' for multiple-choice or 'Accept'/'Reject' for classification"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "lm-evaluation-harness"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Signal Quality (ScoreSQ)",
+    "metrics": [
+      "Signal Quality (ScoreSQ)",
+      "Ranking Consistency (ScoreRC)",
+      "Compliance Score (ScoreCS)",
+      "Classification Accuracy"
+    ],
+    "higherIsBetter": true,
+    "notes": "Signal Quality (ScoreSQ) combines Monotonicity Score and Autocorrelation Strength. Ranking Consistency (ScoreRC) uses Kendall\u2019s Tau. Compliance Score (ScoreCS) measures alignment with scientific domains. Total score is a weighted sum of these metrics."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact runtime limit for model evaluation?",
+    "Are there specific hardware requirements beyond GPU memory (~6GB)?",
+    "What is the exact format for the reformulated prompts in MMLU-var?"
+  ],
+  "fill_in_the_blank": [
+    "Exact runtime limit for model evaluation",
+    "Detailed format of reformulated prompts for MMLU-var"
+  ]
+}

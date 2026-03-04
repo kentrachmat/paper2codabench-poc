@@ -1,0 +1,41 @@
+# Codabench Competition Configuration
+# Auto-generated from Croissant Task: Signal Strength Estimation and Classification in High-Energy Physics Data
+
+title: "Signal Strength Estimation and Classification in High-Energy Physics Data"
+description: |
+  Develop machine learning models to estimate the signal strength parameter (µ) and classify particle collision events as Signal or Background, while accounting for systematic and random uncertainties.
+
+# Task details
+task_type: classification
+
+# Phases (single phase for POC)
+phases:
+  - id: 1
+    name: "Evaluation Phase"
+    description: "Main evaluation phase"
+    start: "2024-01-01"
+    end: "2025-12-31"
+
+    # Scoring
+    tasks:
+      - name: "Signal Strength Estimation and Classification in High-Energy Physics Data"
+        scoring_program: "scoring_program.zip"
+        reference_data: "reference_data.zip"
+        ingestion_program: "ingestion_program.zip"
+        input_data: "input_data.zip"
+
+# Leaderboard
+leaderboard:
+  - title: "Results"
+    key: "Final Quantile Score"
+    sorting: "desc"
+    computation: "average"
+
+# Resource limits
+resource_limits:
+  time_limit: 20
+  memory_limit_mb: 4096
+
+# Metadata
+created_by: "Paper2Codabench POC"
+version: "1.0"

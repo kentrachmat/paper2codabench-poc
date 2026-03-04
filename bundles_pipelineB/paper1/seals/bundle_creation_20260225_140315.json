@@ -1,0 +1,15 @@
+{
+  "seal_type": "bundle_creation",
+  "bundle_id": "paper1",
+  "timestamp": "2026-02-25T14:03:15.472944Z",
+  "data": {
+    "task_name": "ML-Driven Surrogate Modeling for Airfoil Design",
+    "task_type": "other",
+    "paper_id": "paper1",
+    "primary_metric": "global_score",
+    "pipeline": "B"
+  },
+  "bundle_hash": "ad5e8f63a35d951f4764a4de531fa02a0f9361a60071fb4da067bbad1c69ffcb",
+  "signature": "90b3db8e9356527adec2ce3db6cf75f2f6eddcc5acfa2063a1aaaa813d940e407b4561e28775415079ee1a075c5415b4aabba22cbd3574409633fe7a548f4b30c6603cb73e0ff77636b2cf1ec480356ba3824400132c9b092732c876205f0e1c05199e336903097c68ada3aaf6f3017e098ff86e96a432c5cccd167282c50c087ffd2d27de5145519994c4b0a40e4bdc85b0a68f15ce6091988eae66c3e0b64e8b18c4c830c597567fc42f957fe56223a50b96d12664013258bbc0f93f32cb675e318e32a947d57b8c072be074230523849af59261d85e349d49e290914c998e6bdd48a286cf8588d0652d1d93ff9337854db0cb679b71289bf6710f4ddb8e34",
+  "seal_id": "3d1a751a67a3c27e"
+}

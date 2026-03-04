@@ -1,0 +1,101 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "paper6-task",
+  "name": "Fairness and Utility in AI-Generated Face Detection",
+  "description": "Develop machine learning models to detect AI-generated face images while ensuring fairness across demographic groups and robustness to post-processing transformations.",
+  "paper_id": "paper6",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "The input consists of cropped face images annotated with demographic attributes: skin tone (1-10), gender (Male: 1, Female: 0), age (0-4), and generation method (Real or AI-generated, with specific AI method labels). Example: An image with Tone 6, Male, Adult, and AI-generated using GAN.",
+      "url": "[FILL IN THE BLANK]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The output includes a binary classification prediction (0 for real, 1 for AI-generated), along with predicted demographic labels: skin tone (1-10), gender (0 or 1), and age category (0-4). Example: For an input image, the model might output 1 (AI-generated), Tone 6, Male, and Adult.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "field": [
+        {
+          "name": "id",
+          "dataType": "sc:Text",
+          "description": "Unique identifier for the image, e.g., image_001."
+        },
+        {
+          "name": "pred",
+          "dataType": "sc:Float",
+          "description": "Prediction value for binary classification (0.0 for real, 1.0 for AI-generated)."
+        },
+        {
+          "name": "skin_tone",
+          "dataType": "sc:Integer",
+          "description": "Predicted skin tone on a scale of 1 to 10 (Tone1-Tone10)."
+        },
+        {
+          "name": "gender",
+          "dataType": "sc:Integer",
+          "description": "Predicted gender (1 for Male, 0 for Female)."
+        },
+        {
+          "name": "age",
+          "dataType": "sc:Integer",
+          "description": "Predicted age category (0: Child, 1: Youth, 2: Adult, 3: Middle-age Adult, 4: Senior)."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "mediapipe",
+        "torch"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Area Under the ROC Curve (AUC)",
+    "metrics": [
+      "Area Under the ROC Curve (AUC)",
+      "Accuracy (ACC)",
+      "Average Precision (AP)",
+      "Equal Error Rate (EER)",
+      "False Positive Rate (FPR)",
+      "Fairness Demographic Parity (FDP)",
+      "Fairness Equal Opportunity (FEO)",
+      "Fairness Overall Accuracy Equality (FOAE)",
+      "Fairness Maximum Equalized Odds (FMEO)",
+      "Fairness Individual Disparity (FIND)"
+    ],
+    "higherIsBetter": true,
+    "notes": "Metrics are computed across demographic subgroups and post-processed images to evaluate fairness, robustness, and generalization. Lower is better for EER and FPR."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact weighting or trade-off between fairness and utility metrics in evaluation?",
+    "How should post-processing transformations be applied during inference?",
+    "Are participants required to predict the specific AI generation method, or just binary classification?"
+  ],
+  "fill_in_the_blank": [
+    "Exact hardware requirements beyond NVIDIA RTX A6000 GPU.",
+    "Specific details on how fairness metrics are aggregated for final evaluation."
+  ]
+}

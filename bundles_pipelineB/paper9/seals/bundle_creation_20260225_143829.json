@@ -1,0 +1,15 @@
+{
+  "seal_type": "bundle_creation",
+  "bundle_id": "paper9",
+  "timestamp": "2026-02-25T14:38:29.540013Z",
+  "data": {
+    "task_name": "SLM Early-Stage Evaluation",
+    "task_type": "other",
+    "paper_id": "paper9",
+    "primary_metric": "Signal Quality (ScoreSQ)",
+    "pipeline": "B"
+  },
+  "bundle_hash": "8ec0c75a62d47a18d3e18263e90fd5bca392984d79094f1008d843eda342dbb9",
+  "signature": "6b3bc0653044b0f18885f57808293911e093e3e421e0d059ae50103a9c785d0d993f248058765045fd8dcb57b685d42972fe2d5092c914f5a26f26ee65cb7e7a1600c2409cacb273b0bea1a6aacfcf11f43282d647f371a179e57cd59e8a412420f3544c155fee0369f7b212440b28ba8bef1530a376a2e7c3943fa2ce032e189d669ff292a3edaa8fd304895f1a4cc629777277567bf462b234ba7a1fc46f2c26f6440a09d79f18f2d91bd0d1cb717177b1151b1cbe46620eebe37b3a394f0c7cbf37111c5aea4a9d32a070a823bf4618d45c8c686efc31531d27166e302086a59cacdc708c32d956597c4e8a1e14419ce63d08fbfeb32a5a88c8f7c33727d5",
+  "seal_id": "e32a9142ea229816"
+}

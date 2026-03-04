@@ -1,0 +1,80 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "paper2-task",
+  "name": "NeurIPS 2024 LLM Privacy Challenge",
+  "description": "A competition to explore vulnerabilities and defenses in Large Language Models (LLMs), focusing on privacy preservation, model utility, and computational efficiency.",
+  "paper_id": "paper2",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Participants receive queries or prompts to interact with LLMs fine-tuned on synthetic private data. For the Red Team, the input is designed to extract sensitive information, while for the Blue Team, the input includes the same LLMs with the ability to apply defense mechanisms.",
+      "url": "[FILL IN THE BLANK]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "For the Red Team, the output includes extracted sensitive information or indicators of successful breaches. For the Blue Team, the output includes enhanced LLMs or structured reports detailing the applied defenses.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "field": [
+        {
+          "name": "id",
+          "dataType": "sc:Text",
+          "description": "unique identifier for the sample, e.g., query_001 or defense_001"
+        },
+        {
+          "name": "pred",
+          "dataType": "sc:Text",
+          "description": "output sensitive information (Red Team) or a description of the defense mechanism applied (Blue Team)"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "torch",
+        "tensorflow"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Attack Accuracy",
+    "metrics": [
+      "Attack Accuracy",
+      "Efficiency",
+      "Model Effectiveness",
+      "Error Bars and Significance Testing"
+    ],
+    "higherIsBetter": false,
+    "notes": "Attack Accuracy is higher-is-better for the Red Team but lower-is-better for the Blue Team. Efficiency is measured as fewer tokens or computational overhead being better. Model Effectiveness ensures minimal degradation in LLM utility."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What are the exact formats and value ranges for the outputs of both tracks?",
+    "What specific metrics are used for Model Effectiveness?",
+    "Are there any additional constraints on the defense mechanisms for the Blue Team?"
+  ],
+  "fill_in_the_blank": [
+    "Exact value ranges for outputs",
+    "Specific computation details for Model Effectiveness metric"
+  ]
+}
