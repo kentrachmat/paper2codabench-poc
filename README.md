@@ -33,6 +33,8 @@ python src/generate_bundle.py croissant_tasks/paper1.croissant_task.json
 python src/generate_bundle.py croissant_tasks/paper1.croissant_task.json --output bundles/custom_name
 ```
 
+Validate the generated bundle using the [validator script](/Validator/)
+
 ### Step 3: Run Local Simulation
 
 ```bash
