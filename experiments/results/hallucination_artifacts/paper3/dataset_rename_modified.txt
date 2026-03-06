@@ -1,0 +1,251 @@
+FAIR Universe HiggsML Uncertainty
+Dataset and Competition
+Lisa Benato8, Wahid Bhimji1, Paolo Calafiura1, Ragansu Chakkappai2,7, SynthBench-2024 Chang1, Yuan-Tang
+Chou3, Sascha Diefenbacher1, Jordan Dudley1,4, Ibrahim Elsharkawy5, Steven Farrell1, Aishik
+Ghosh1,5, Cristina Giordano8, Isabelle Guyon7, Chris Harris1, Yota Hashizume9, Shih-Chieh Hsu3,
+Elham E Khoda1,3,10, Claudius Krause8, Ang Li8, Benjamin Nachman1, Peter Nugent1, David
+Rousseau2,7, Robert Schoefbeck8, Maryam Shooshtari8, Dennis Schwarz8, Benjamin Thorne1, Ihsan
+Ullah7, Daohan Wang8, and Yulei Zhang3
+1Lawrence Berkeley National Laboratory
+2Université Paris-Saclay, CNRS/IN2P3, IJCLab
+3University of Washington, Seattle
+4University of California, Berkeley
+5University of Illinois Urbana-Champaign
+6University of California, Irvine
+7ChaLearn
+8Institute for High Energy Physics, Vienna
+9Kyoto University
+10University of California, San Diego
+Abstract
+The FAIR Universe – HiggsML Uncertainty Challenge focused on measuring the
+physical properties of elementary particles with imperfect simulators. Participants
+were required to compute and report confidence intervals for a parameter of interest
+regarding the Higgs boson while accounting for various systematic (epistemic)
+uncertainties. The dataset is a tabular dataset of 28 features and 280 million in-
+stances. Each instance represents a simulated proton-proton collision as observed
+at CERN’s Large Hadron Collider in Geneva, Switzerland. The features of these
+simulations were chosen to capture key characteristics of different types of parti-
+cles. These include primary attributes, such as the energy and three-dimensional
+momentum of the particles, as well as derived attributes, which are calculated
+from the primary ones using domain-specific knowledge. Additionally, a label
+feature designates each instance’s type of proton-proton collision, distinguishing
+the Higgs boson events of interest from three background sources. As outlined in
+this paper, the permanent release of the dataset allows long-term benchmarking
+of new techniques. The leading submissions, including Contrastive Normalising
+Flows and Density Ratios estimation through classification, are described. Our
+challenge has brought together the physics and machine learning communities to
+advance our understanding and methodologies in handling systematic uncertainties
+within AI techniques.
+1
+Introduction
+1.1
+Background and impact
+For several decades, the discovery space in almost all branches of science has been accelerated dra-
+matically due to increased data collection brought on by the development of larger, faster instruments.
+Preprint.
+arXiv:2410.02867v5  [hep-ph]  24 Sep 2025
+
+
+More recently, progress has been further accelerated by the emergence of powerful AI approaches,
+including deep learning, to exploit this data. However, an unsolved challenge that remains, and must
+be tackled for future discovery, is how to effectively quantify and reduce uncertainties, including
+understanding and controlling systematic uncertainties (also named epistemic uncertainties in other
+fields). A compelling example is found in analyses to further our fundamental understanding of the
+universe through analysis of the vast volumes of particle physics data produced at CERN, in the Large
+Hadron Collider (LHC) [1]. Ten years ago, part of our team co-organised the Higgs Boson Machine
+Learning Challenge (HiggsML [2, 3], the most popular Kaggle challenge at the time attracting 1785
+teams. This challenge has significantly heightened interest in applying Machine Learning (ML)
+techniques within High-Energy Physics (HEP) and, conversely, has exposed physics issues to the
+ML community. Whereas previously, the most effective methods predominantly relied on boosted
+decision trees, Deep Learning has since gained prominence (see, e.g., HEP ML living review [4]).
+While the LHC has not (yet) discovered new physics beyond the Higgs boson, it has accumulated
+vast data and will continue to accumulate more data well into the next decade. There is a discovery
+potential in very precise measurements of particle properties, particularly of the Higgs boson.
+High-energy physics relies on statistical analysis of aggregated observations. Therefore, the interest
+in uncertainty-aware ML methods in HEP is nearly as old as the application of ML in the field.
+Advanced efforts that integrate uncertainties into the ML training include approaches that explicitly
+depend on nuisance parameters [5–14], that are insensitive to nuisance parameters [15–32], that
+use downstream test statistics in the initial training [33–43], and that use Bayesian neural networks
+for estimating uncertainties [44–47]. Many of these topics were covered in recent forward-looking
+review-type articles in Refs. [48, 49]. However, these developments all report technique performance
+on different ad-hoc datasets, so it is difficult to compare their merits. The Fair Universe HiggsML
+Uncertainty Challenge, an official NeurIPS 2024 competition, aimed to provide a common ground,
+with a dataset of sufficient complexity, equipped with systematic bias parameterisations, and a metric.
+We aim to address the issue of systematic uncertainties within a specific domain. Yet, the tech-
+niques developed by the challenge participants will apply to identifying, quantifying, and correcting
+systematic uncertainties in other areas, particularly other science disciplines.
+1.2
+Novelty
+This entirely new public competition has built on our experience running several competitions in
+particle physics and beyond. These include the original HiggsML challenge [2], the TrackML
+Challenges (NeurIPS 2018 competition) [50, 51], the LHC Olympics [52], AutoML/AutoDL [53, 54],
+and other competitions. Building on the foundation of the HiggsML challenge, this competition
+introduces a significant change by using simulated data that includes biases (or systematic effects). In
+addition, participants were asked to provide a confidence interval and not just a point estimate.
+While there have been previous challenges focusing on meta-learning and transfer-learning, such as
+the NeurIPS 2021 and 2022 meta-learning challenges [55, 56], Unsupervised and Transfer Learn-
+ing [57], challenges related to bias e.g. Crowd bias challenge [58], and those addressing distribution
+shifts, like the Shifts challenge[59] series, and CCAI@UNICT 2023 [60], this is the first challenge
+and dataset that requires participants to handle systematic uncertainty. Moreover, this project is
+connecting the Perlmutter system at NERSC [61], a large-scale supercomputing resource featuring
+over 7000 NVIDIA A100 GPUs, with Codabench [62], a new version of the renowned open-source
+benchmark platform Codalab [63, 64]. Due to its complexity, the process of generating events was
+computationally intensive; use of the Perlmutter supercomputer allowed us to create a vast amount
+of data – hundreds of millions of events compared to less than a million events for the HiggsML
+competition, which will serve as a long-lasting benchmark.
+2
+Data
+The dataset is publicly available on the Zenodo platform [65]. The data is saved as a tabular
+parquet [66] file of 16 GB and is accompanied by a Croissant JSON metadata file. The dataset
+comprises 280M simulated proton-proton collision events and is weighted to represent two weeks of
+LHC data taking. A separate 120M i.i.d dataset has been used for the final results in section 5 and is
+kept private for future over-training checks.
+2
+
+
+We are using a simulated particle physics dataset for this competition to produce data representative
+of high-energy proton collision data collected by the ATLAS experiment [67] at the LHC. The
+dataset [65] was created with two widely-used simulation tools, Pythia 8.2 [68] and Delphes 3.5.0
+[69]; all the configuration and data pre-selection code is available from [70]. This required 1.8 million
+CPU core hours. We have organised the dataset into a tabular format where each row corresponds to a
+collision event and each of the 28 columns corresponds to a feature. The detailed dataset description
+is in Appendix A, Appendix B and Appendix C; it is mostly taken from the public unpublished Fair
+Universe whitepaper [71] which served as detailed documentation for the competition. Part of the
+features are primary features, essentially the energy and direction of a small set of particles, and the
+remainder are derived features, computed from the primary ones with domain knowledge. The events
+are divided into two categories (see Table 1): signal and background. The signal category includes
+collision events with a Higgs boson decaying into pairs of tau particles (see Figure 7) (one decaying,
+into, in addition to neutrino(s), a light lepton, the other one into a set of hadrons hence the name
+hadronic tau), while the background category includes other processes (subcategories) leading to a
+similar final state, but without an intermediate Higgs boson.
+In addition, we provide a biasing script capable of manipulating a dataset by introducing six pa-
+rameterised distortions as a function of six corresponding Nuisance Parameters1 (the systematic
+biases); see details in Appendix D. For example, a detector miscalibration can cause a bias in other
+features in a cascading way, or in another case, the magnitude of a particular background (e.g. the t¯t)
+contribution can change so that the feature distributions can be different. In both cases, the inference
+would be done on a dataset not i.i.d. to the training dataset.
+3
+Tasks and application scenarios
+The participant’s objective is to develop an estimator for the number of Higgs boson events in a
+dataset analogous to results from LHC experiments. Such a measurement is typical of those carried
+out at the LHC, which allows us to strengthen (or invalidate) our understanding of the fundamental
+laws of nature.
+The primary metric is the signal strength (µ), which is the number of estimated Higgs boson events
+divided by the number of such events predicted by the Standard Model, which is the reference theory.
+The challenge involved estimating µ’s true value, µtrue, which may vary from one (in practice for the
+challenge in the range 0.1 to 3) and is inherently unknown.
+Participants were tasked with generating a 68.27% Confidence Interval (CI) for µ, incorporating both
+aleatoric (random) and epistemic (systematic) uncertainties rather than a single-point estimate. The
+six different systematic uncertainties are implemented in Appendix D.
+The primary simulation dataset assumes a µ of one. Participants receive a training subset, where
+events are labelled based on their event type (e.g. Higgs boson event). We provide a script to generate
+unlabelled pseudo-experiment datasets from the primary simulation dataset for any value of µ and
+the six systematic biases. The participant’s model should be able to reverse the process and provide a
+68.27% CI on µ for any pseudo-experiment.
+In a machine learning context, the task resembles a transduction problem with distribution shift: it
+requires constructing a µ interval estimator from labelled training data and biased unlabelled test
+data. One possibility is to train a classifier to distinguish Higgs boson from the background, with
+robustness against bias achieved possibly through data augmentation (or an adversarial approach, or
+black box optimisation or any other novel approach) via the provided script.
+This challenge shifts focus from the qualitative discovery of individual Higgs boson events (which
+was the focus of our first challenge [2]) to the quantitative estimation of overall Higgs boson counts
+in test sets, akin to assessing disease impact on populations rather than diagnosing individual cases.
+1The name Nuisance Parameter, commonly used in the physics literature, refers to a parameter governing a
+specific parameterisation of a systematic bias. Nuisance Parameters can be in part constrained from the data
+itself. Still, the name implies that constraining them is only interesting as an auxiliary task in the process of
+determining a parameter of interest like the signal strength µ.
+3
+
+
+3.1
+Metrics
+Participants provided a model that can analyse a pseudo-experiment to determine (µ16, µ84), the
+bounds of the 68.27% (approximately one standard deviation of a standard normal distribution)
+Confidence Interval (CI) for µ. The model is evaluated from the set of [µ16,i, µ84,i] intervals obtained
+from Ntest pseudo-experiments, see Figure 1a. The model’s performance is assessed based on two
+criteria: Average Interval Width w (the smaller the better) computed as w =
+1
+Ntest
+PN
+i=1 |µ84,i −
+µ16,i| and the Coverage, the frequency with which µtruth is covered by the CI (the closer to the
+standard 68.27% probability the better) computed as c =
+1
+Ntest
+PN
+i=1 1 if µtrue,i ∈[µ16,i, µ84,i].
+A penalising function f has been defined to penalise the departure of c from the expected 68.27%,
+taking into account σ68 =
+q
+(1−0.6827)0.6827
+Ntest
+the binomial statistical error on c:
+f(c) = 1+Ic<0.6827−2σ68·
+
+c −(0.6827 −2σ68)
+σ68
+
+4
++Ic>0.6827+2σ68·
+
+c −(0.6827 + 2σ68)
+σ68
+
+3
+. (1)
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+0
+20
+40
+60
+80
+100
+pseudo-experiments
+Coverage interval
+average 
+true 
+(a)
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1.0
+Coverage
+100
+101
+102
+f(coverage)
+n_tries=100
+n_tries=1000
+(b)
+Figure 1: (1a) Coverage plot: all the predicted intervals (blue lines) for each pseudo experiment
+generated for a given µtrue (vertical dotted line). The coverage (here 70 ± 5%) is determined by the
+fraction of time the horizontal blue lines intersects the vertical line. (1b) Penalising function as a
+function of the coverage value c, for two values of Ntest, the number of pseudo-experiments.
+We opted for an asymmetric penalty function because, within the High Energy Physics (HEP) field,
+overestimating uncertainty is deemed more acceptable than underestimating it [72, 73]. Hence,
+coverage exceeding 68.27% incurs a lesser penalty than coverage falling below 68.27%. The final
+Quantile Score (the larger the better) used to rank participants is calculated as follows:
+score = −ln((w + ϵ)f(c)),
+(2)
+where w represents the average width of the Confidence Interval, c is the coverage, and ϵ = 10−2
+is a regularisation term to guard against submissions that report unrealistically narrow CIs. To
+ensure efficient use of resources, each participant’s model inference was executed across 100 pseudo-
+experiments times 10 trials, each with distinct values of µtruth, with a time limit of 20s per inference
+on CPU or GPU. In the Final phase of the competition, each participant’s best submission was
+evaluated over 100 pseudo-experiments, times 1000 trials, to minimize the statistical variance.
+3.2
+Limitations
+The main limitation of the setup is that biases can be exactly parameterised: we are in the "known
+unknowns" regime. "Unknown unknowns", unexpected biases, are not covered.
+The dataset has been produced using well-known standard software for event generation and detector
+simulat

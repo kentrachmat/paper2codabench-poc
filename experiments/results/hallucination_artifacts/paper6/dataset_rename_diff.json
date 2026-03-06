@@ -1,0 +1,17 @@
+{
+  "plant_record": {
+    "plant_type": "dataset_rename",
+    "original": "AI-Face",
+    "replacement": "SynthBench-2024",
+    "planted": true
+  },
+  "detection": {
+    "plant_type": "dataset_rename",
+    "planted": true,
+    "original": "AI-Face",
+    "replacement": "SynthBench-2024",
+    "propagated": true,
+    "original_found": false,
+    "details": "Planted value 'SynthBench-2024' found in LLM output"
+  }
+}

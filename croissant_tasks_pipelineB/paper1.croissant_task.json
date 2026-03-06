@@ -1,0 +1,128 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "airfoil_design_simulation-task",
+  "name": "Airfoil Design Simulation Challenge",
+  "description": "Develop machine learning surrogate models to predict steady-state 2D velocity fields, pressure fields, turbulent viscosity, and derived aerodynamic coefficients around airfoils, approximating high-fidelity CFD simulations.",
+  "cr:input": [
+    {
+      "name": "Airfoil Input Dataset",
+      "description": "The input data consists of columns: ['id', 'ux', 'uy', 'ps', 'nu_t', 'cd']. These represent identifiers and numerical values for velocity components (ux, uy), pressure (ps), turbulent viscosity (nu_t), and drag coefficient (cd). Example row: {'id': 'sample_000', 'ux': 'value_0', 'uy': 'value_0', 'ps': 'value_0', 'nu_t': 'value_0', 'cd': 'value_0'}.",
+      "url": null,
+      "distribution": null,
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "text/csv",
+      "contentUrl": "[FILL IN THE BLANK: dataset source URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The output predictions include columns: ['id', 'ux', 'uy', 'ps', 'nu_t', 'cd', 'cl']. The 'cl' column represents the predicted lift coefficient, which is a numerical value ranging between 0 and 1. Example row: {'id': 'sample_000', 'ux': 'value_0', 'uy': 'value_0', 'ps': 'value_0', 'nu_t': 'value_0', 'cd': 'value_0', 'cl': 0.9561909464418537}.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "id",
+          "description": "Unique identifier for each sample, e.g., 'sample_000'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "ux",
+          "description": "X-component of velocity, e.g., 'value_0'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "uy",
+          "description": "Y-component of velocity, e.g., 'value_0'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "ps",
+          "description": "Pressure field value, e.g., 'value_0'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "nu_t",
+          "description": "Turbulent viscosity value, e.g., 'value_0'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "cd",
+          "description": "Drag coefficient value, e.g., 'value_0'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "cl",
+          "description": "Predicted lift coefficient, e.g., 0.9561909464418537.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        }
+      ],
+      "@type": "cr:RecordSet"
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "numpy",
+        "pandas",
+        "scipy",
+        "sklearn"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Global Score",
+    "metrics": [
+      "Global Score",
+      "Mean Squared Error (MSE)",
+      "Speedup",
+      "Spearman correlation (\u03c1_D)",
+      "Spearman correlation (\u03c1_L)",
+      "Mean Relative Error"
+    ],
+    "higherIsBetter": true,
+    "notes": "Global Score is computed as a weighted combination of metrics: inverse MSE, log10 speedup, and Spearman correlations for drag and lift coefficients."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper1",
+  "open_questions": [
+    "The dataset source URL is missing.",
+    "The original paper DOI is missing."
+  ],
+  "fill_in_the_blank": [
+    "paper_id - original paper DOI is not provided in the bundle files.",
+    "cr:input[0].contentUrl - dataset source URL is not provided in the bundle files."
+  ]
+}

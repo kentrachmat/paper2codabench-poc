@@ -1,0 +1,38 @@
+title: "Erasing the Invisible"
+description: |
+  The task evaluates the robustness of invisible watermarking techniques embedded in AI-generated images against adversarial attacks. Participants must design methods to remove or degrade watermarks while preserving the visual quality of the images.
+image: logo.png
+docker_image: "codalab/codalab-legacy:py3"
+tasks:
+  - index: 0
+    name: "Erasing the Invisible"
+    description: "The task evaluates the robustness of invisible watermarking techniques embedded in AI-generated images against adversarial attacks. Participants must design methods to remove or degrade watermarks while preserving the visual quality of the images."
+    scoring_program: scoring_program
+    ingestion_program: ingestion_program
+    reference_data: reference_data
+    input_data: input_data
+phases:
+  - index: 0
+    name: "Evaluation Phase"
+    description: "Main evaluation phase"
+    start: "2026-01-01"
+    end: "2027-12-31"
+    max_submissions_per_day: 5
+    max_submissions: 100
+    tasks: [0]
+leaderboards:
+  - index: 0
+    title: "Results"
+    key: "results"
+    submission_rule: "force_last"
+    columns:
+      - index: 0
+        title: "Final Score (Euclidean distance in Q-A space)"
+        key: "Final Score (Euclidean distance in Q-A space)"
+        sorting: "asc"
+pages:
+  - title: "Overview"
+    file: overview.html
+  - title: "Evaluation"
+    file: evaluation.html
+terms: terms.html

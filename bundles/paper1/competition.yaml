@@ -1,0 +1,38 @@
+title: "Airfoil Design Optimization via ML-Based Surrogate Models"
+description: |
+  Develop machine learning models to simulate computational fluid dynamics (CFD) for airfoil design, replacing computationally expensive numerical methods. The goal is to predict physical simulation outputs (e.g., velocity, pressure, lift, drag) based on input geometries and boundary conditions, while optimizing computational efficiency, accuracy, and physical consistency.
+image: logo.png
+docker_image: "codalab/codalab-legacy:py3"
+tasks:
+  - index: 0
+    name: "Airfoil Design Optimization via ML-Based Surrogate Models"
+    description: "Develop machine learning models to simulate computational fluid dynamics (CFD) for airfoil design, replacing computationally expensive numerical methods. The goal is to predict physical simulation outputs (e.g., velocity, pressure, lift, drag) based on input geometries and boundary conditions, while optimizing computational efficiency, accuracy, and physical consistency."
+    scoring_program: scoring_program
+    ingestion_program: ingestion_program
+    reference_data: reference_data
+    input_data: input_data
+phases:
+  - index: 0
+    name: "Evaluation Phase"
+    description: "Main evaluation phase"
+    start: "2026-01-01"
+    end: "2027-12-31"
+    max_submissions_per_day: 5
+    max_submissions: 100
+    tasks: [0]
+leaderboards:
+  - index: 0
+    title: "Results"
+    key: "results"
+    submission_rule: "force_last"
+    columns:
+      - index: 0
+        title: "Global Score"
+        key: "Global Score"
+        sorting: "desc"
+pages:
+  - title: "Overview"
+    file: overview.html
+  - title: "Evaluation"
+    file: evaluation.html
+terms: terms.html

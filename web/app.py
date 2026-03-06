@@ -5,7 +5,6 @@ Flask web interface for Paper2Codabench.
 Shows:
 - Croissant Tasks extracted from papers
 - Generated bundles
-- Verification seals
 
 Usage:
     python web/app.py
@@ -26,16 +25,12 @@ from flask import Flask, render_template, jsonify, send_file, request
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from config import Config
-from seal import VerificationSeal
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB max file size
 
 # Track processing status
 processing_status = {}
-
-# Initialize seal verifier
-seal_verifier = VerificationSeal()
 
 
 def load_papers_metadata():
@@ -72,15 +67,6 @@ def get_bundle_info(paper_id: str):
     # Check for README
     readme_exists = (bundle_path / "README.md").exists()
 
-    # Get creation time from seal
-    seals = load_seals(paper_id)
-    creation_time = None
-    if seals:
-        for seal in seals:
-            if seal.get('seal_type') == 'bundle_creation':
-                creation_time = seal.get('timestamp')
-                break
-
     return {
         'exists': True,
         'path': bundle_path,
@@ -88,33 +74,7 @@ def get_bundle_info(paper_id: str):
         'size_bytes': total_size,
         'size_mb': total_size / (1024 * 1024),
         'readme_exists': readme_exists,
-        'creation_time': creation_time,
     }
-
-
-def load_seals(paper_id: str):
-    """Load all seals for a bundle"""
-    bundle_path = Config.BUNDLES_DIR / paper_id
-    seals_dir = bundle_path / "seals"
-
-    if not seals_dir.exists():
-        return []
-
-    seals = []
-    for seal_file in sorted(seals_dir.glob("*.json")):
-        try:
-            with open(seal_file, 'r') as f:
-                seal_data = json.load(f)
-
-            is_valid = seal_verifier.verify_seal(seal_data.copy())
-            seal_data['verified'] = is_valid
-            seal_data['seal_file'] = seal_file.name
-
-            seals.append(seal_data)
-        except Exception as e:
-            print(f"Error loading seal {seal_file}: {e}")
-
-    return seals
 
 
 @app.route('/')
@@ -165,7 +125,6 @@ def view_bundle(paper_id):
         return f"Bundle not found for {paper_id}", 404
 
     croissant_task = load_croissant_task(paper_id)
-    seals = load_seals(paper_id)
 
     papers = load_papers_metadata()
     paper_info = next((p for p in papers if p['paper_id'] == paper_id), None)
@@ -175,11 +134,10 @@ def view_bundle(paper_id):
     for item in sorted(bundle_path.rglob("*")):
         if item.is_file():
             rel_path = item.relative_to(bundle_path)
-            if not str(rel_path).startswith('seals'):
-                file_tree.append({
-                    'path': str(rel_path),
-                    'size': item.stat().st_size,
-                })
+            file_tree.append({
+                'path': str(rel_path),
+                'size': item.stat().st_size,
+            })
 
     return render_template(
         'bundle.html',
@@ -187,32 +145,8 @@ def view_bundle(paper_id):
         paper_info=paper_info,
         croissant_task=croissant_task,
         bundle_info=bundle_info,
-        seals=seals,
         file_tree=file_tree
     )
-
-
-@app.route('/api/verify_seal/<paper_id>/<seal_file>')
-def api_verify_seal(paper_id, seal_file):
-    """API endpoint to verify a seal"""
-    seal_path = Config.BUNDLES_DIR / paper_id / "seals" / seal_file
-
-    if not seal_path.exists():
-        return jsonify({'error': 'Seal not found'}), 404
-
-    try:
-        seal_data = seal_verifier.load_seal(seal_path)
-        is_valid = seal_verifier.verify_seal(seal_data.copy())
-
-        return jsonify({
-            'valid': is_valid,
-            'seal_id': seal_data.get('seal_id'),
-            'timestamp': seal_data.get('timestamp'),
-            'seal_type': seal_data.get('seal_type'),
-        })
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/api/stats')
@@ -224,7 +158,6 @@ def api_stats():
         'total_papers': len(papers),
         'croissant_tasks_extracted': 0,
         'bundles_generated': 0,
-        'total_seals': 0,
     }
 
     for paper in papers:
@@ -235,9 +168,6 @@ def api_stats():
 
         if get_bundle_info(paper_id):
             stats['bundles_generated'] += 1
-
-        seals = load_seals(paper_id)
-        stats['total_seals'] += len(seals)
 
     return jsonify(stats)
 

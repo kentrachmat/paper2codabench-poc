@@ -1,0 +1,119 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "neurips2025-eeg-competition-task",
+  "name": "EEG Foundation Challenge",
+  "description": "The task involves developing models for two challenges: (1) zero-shot decoding of new tasks and subjects from EEG data, and (2) predicting mental health-relevant psychopathology factors from EEG data. The goal is to create models that generalize across tasks and individuals, leveraging a large-scale, high-density EEG dataset.",
+  "paper_id": "arXiv:2506.19141v2",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "HBN-EEG Dataset",
+      "description": "High-density (128-channel) EEG recordings from over 3,000 participants aged 5-21 years, engaging in six distinct cognitive tasks (three passive: Resting State, Surround Suppression, Movie Watching; and three active: Contrast Change Detection, Sequence Learning, Symbol Search). Data includes demographic attributes (age, gender, handedness) and four psychopathology factors (internalization, externalization, attention, and p-factor). Data is formatted according to the Brain Imaging Data Structure (BIDS) standard and includes event annotations using Hierarchical Event Descriptors (HED).",
+      "encodingFormat": "[FILL IN THE BLANK: dataset encoding format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predicted outputs include labels for cognitive tasks or conditions (Challenge 1) and regression outputs for four psychopathology factors (internalization, externalization, attention, and p-factor) and demographic attributes (age, gender, handedness) for Challenge 2.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "task_label",
+          "dataType": "sc:Text",
+          "description": "Predicted task or condition label for Challenge 1. Example: 'Resting State', 'Contrast Change Detection'."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "internalization",
+          "dataType": "sc:Float",
+          "description": "Predicted internalization psychopathology factor. Example: 1.5."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "externalization",
+          "dataType": "sc:Float",
+          "description": "Predicted externalization psychopathology factor. Example: 2.3."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "attention",
+          "dataType": "sc:Float",
+          "description": "Predicted attention psychopathology factor. Example: 0.8."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "p_factor",
+          "dataType": "sc:Float",
+          "description": "Predicted p-factor representing a transdiagnostic psychopathology factor. Example: 1.2."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "age",
+          "dataType": "sc:Integer",
+          "description": "Predicted age of the participant. Example: 15."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "gender",
+          "dataType": "sc:Text",
+          "description": "Predicted gender of the participant. Example: 'Male', 'Female'."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "handedness",
+          "dataType": "sc:Text",
+          "description": "Predicted handedness of the participant based on the Edinburg Inventory. Example: 'Right-handed', 'Left-handed'."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "[FILL IN THE BLANK: list of required Python packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "[FILL IN THE BLANK: list of all metrics mentioned in the paper]"
+    ],
+    "higherIsBetter": "[FILL IN THE BLANK: true or false]",
+    "notes": "[FILL IN THE BLANK: any special computation details for the metrics]"
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "yes"
+  },
+  "open_questions": [
+    "What is the exact dataset download URL for the HBN-EEG dataset?",
+    "What is the encoding format of the dataset?",
+    "What are the exact metrics used for evaluation in the competition?",
+    "What Python packages are required to implement the solution?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset encoding format not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL not provided in the paper",
+    "cr:implementation.cr:environment.packages - required Python packages not specified in the paper",
+    "cr:evaluation.primaryMetric - primary evaluation metric not specified in the paper",
+    "cr:evaluation.metrics - exact metrics not specified in the paper",
+    "cr:evaluation.higherIsBetter - unclear whether higher metric values are better"
+  ]
+}

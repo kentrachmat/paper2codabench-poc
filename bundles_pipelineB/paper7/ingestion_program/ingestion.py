@@ -45,7 +45,7 @@ def main():
     try:
         solution.predict(str(input_dir), str(output_dir))
     except Exception as e:
-        print(f"ERROR: Exception occurred while running predict function: {e}")
+        print(f"ERROR: Exception occurred while running predict: {e}")
         sys.exit(1)
 
     # Verify output was created
@@ -53,8 +53,6 @@ def main():
     if not predictions_file.exists():
         print("ERROR: Solution did not create predictions.csv")
         sys.exit(1)
-
-    print("Ingestion completed successfully. Predictions saved to predictions.csv.")
 
 if __name__ == "__main__":
     main()

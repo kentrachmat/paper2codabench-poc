@@ -13,7 +13,7 @@ def predict(input_dir, output_dir):
 
     # Build predictions dataframe with all required columns
     predictions = input_df.copy()
-    predictions['age'] = np.random.randint(18, 60, size=len(predictions))  # Random baseline for 'age'
+    predictions['age'] = np.random.randint(18, 60, size=len(predictions))  # Simple random baseline for 'age'
 
     # Save predictions with exact columns: ['id', 'pred', 'skin_tone', 'gender', 'age']
     predictions[['id', 'pred', 'skin_tone', 'gender', 'age']].to_csv(output_dir / 'predictions.csv', index=False)

@@ -3,43 +3,17 @@ from typing import Dict
 from sklearn.metrics import mean_squared_error
 from scipy.stats import spearmanr
 
-def mean_relative_error(y_true: np.ndarray, y_pred: np.ndarray) -> float:
-    """Compute the mean relative error."""
-    with np.errstate(divide='ignore', invalid='ignore'):
-        relative_error = np.abs((y_true - y_pred) / np.where(y_true != 0, y_true, np.nan))
-    return np.nanmean(relative_error)
-
-def compute_spearman_correlation(y_true: np.ndarray, y_pred: np.ndarray) -> float:
-    """Compute the Spearman correlation."""
-    correlations = []
-    for i in range(y_true.shape[1]):
-        if np.all(y_true[:, i] == y_true[0, i]) or np.all(y_pred[:, i] == y_pred[0, i]):
-            correlations.append(0.0)  # Handle constant arrays
-        else:
-            corr, _ = spearmanr(y_true[:, i], y_pred[:, i], nan_policy='omit')
-            correlations.append(corr)
-    return np.nanmean(correlations)
-
-def compute_speedup(y_true: np.ndarray, y_pred: np.ndarray) -> float:
-    """Compute the speedup metric (normalized to a max score of 1)."""
-    # Placeholder: Replace with actual speedup computation logic
-    return min(1.0, np.random.random())  # Random value for demonstration
-
-def compute_global_score(ml_score: float, physics_score: float, ood_score: float) -> float:
-    """Compute the global score as a weighted combination of metrics."""
-    return 0.4 * ml_score + 0.3 * physics_score + 0.3 * ood_score
-
 def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, task_type: str) -> Dict[str, float]:
     """
     Compute evaluation metrics for the competition.
 
     Parameters:
-        y_true (np.ndarray): Ground truth values.
-        y_pred (np.ndarray): Predicted values.
-        task_type (str): Task type (not used in this implementation).
+    - y_true (np.ndarray): Ground truth values.
+    - y_pred (np.ndarray): Predicted values.
+    - task_type (str): Task type (not used in this implementation).
 
     Returns:
-        Dict[str, float]: Dictionary of computed metrics.
+    - Dict[str, float]: Dictionary of computed metrics.
     """
     # Reshape 1D arrays to 2D
     if y_true.ndim == 1:
@@ -47,28 +21,51 @@ def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, task_type: str) -> D
     if y_pred.ndim == 1:
         y_pred = y_pred.reshape(-1, 1)
 
-    # Validate input shapes
+    # Validate inputs
     if y_true.shape != y_pred.shape:
         raise ValueError("Shape mismatch: y_true and y_pred must have the same shape.")
     if y_true.size == 0 or y_pred.size == 0:
-        raise ValueError("Empty arrays are not allowed for y_true or y_pred.")
+        raise ValueError("Empty input: y_true and y_pred must not be empty.")
     if np.any(np.isnan(y_true)) or np.any(np.isnan(y_pred)):
-        raise ValueError("NaN values detected in y_true or y_pred.")
+        raise ValueError("NaN values detected: y_true and y_pred must not contain NaNs.")
 
-    # Compute individual metrics
+    # Compute Mean Squared Error (MSE)
     mse = mean_squared_error(y_true, y_pred)
-    spearman_corr = compute_spearman_correlation(y_true, y_pred)
-    mre = mean_relative_error(y_true, y_pred)
-    speedup = compute_speedup(y_true, y_pred)
 
-    # Compute global score
-    global_score = compute_global_score(ml_score=1 - mse, physics_score=spearman_corr, ood_score=1 - mre)
+    # Compute Speedup (log10 normalization)
+    # Assuming speedup is the ratio of baseline time to model time, provided in y_pred[:, -1]
+    # Here, we use a placeholder calculation for demonstration purposes
+    baseline_time = 1.0  # Placeholder for baseline time
+    model_time = 0.1     # Placeholder for model time
+    speedup = np.log10(baseline_time / model_time)
+
+    # Compute Spearman correlation for drag coefficient (cd) and lift coefficient (cl)
+    rho_d, _ = spearmanr(y_true[:, -2], y_pred[:, -2])  # Assuming cd is the second-to-last column
+    rho_l, _ = spearmanr(y_true[:, -1], y_pred[:, -1])  # Assuming cl is the last column
+
+    # Compute Mean Relative Error
+    relative_error = np.abs((y_true - y_pred) / np.maximum(np.abs(y_true), 1e-8))
+    mean_relative_error = np.mean(relative_error)
+
+    # Compute Global Score (weighted combination of metrics)
+    # Placeholder weights for demonstration purposes
+    w_mse = 0.4
+    w_speedup = 0.2
+    w_rho_d = 0.2
+    w_rho_l = 0.2
+    global_score = (
+        w_mse * (1 / (1 + mse)) +  # Inverse MSE (higher is better)
+        w_speedup * speedup +
+        w_rho_d * rho_d +
+        w_rho_l * rho_l
+    )
 
     # Return metrics dictionary with primary metric first
     return {
-        "global_score": global_score,
-        "mean_squared_error": mse,
-        "spearman_correlation": spearman_corr,
-        "mean_relative_error": mre,
-        "speedup": speedup
+        "Global Score": global_score,
+        "Mean Squared Error (MSE)": mse,
+        "Speedup": speedup,
+        "Spearman correlation (ρ_D)": rho_d,
+        "Spearman correlation (ρ_L)": rho_l,
+        "Mean Relative Error": mean_relative_error
     }

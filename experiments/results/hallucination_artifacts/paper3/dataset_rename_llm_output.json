@@ -1,0 +1,83 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "arxiv:2410.02867v5-task",
+  "name": "HiggsML Uncertainty Challenge",
+  "description": "The task is to estimate the signal strength (\u00b5) of Higgs boson events and provide a 68.27% confidence interval, accounting for systematic and random uncertainties in simulated proton-proton collision data.",
+  "paper_id": "arxiv:2410.02867v5",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "FAIR Universe HiggsML Dataset",
+      "description": "A tabular dataset containing 280 million simulated proton-proton collision events with 28 features. Features include primary attributes like energy and momentum of particles and derived attributes calculated using domain knowledge. Each instance is labeled as signal (Higgs boson events) or background (three subcategories).",
+      "encodingFormat": "application/parquet",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The output consists of a 68.27% confidence interval for the signal strength (\u00b5), represented as two bounds (\u00b516, \u00b584).",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "mu_16",
+          "dataType": "sc:Float",
+          "description": "Lower bound of the 68.27% confidence interval for the signal strength \u00b5. Example: 0.8."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "mu_84",
+          "dataType": "sc:Float",
+          "description": "Upper bound of the 68.27% confidence interval for the signal strength \u00b5. Example: 1.2."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "numpy",
+        "scipy",
+        "pandas",
+        "tensorflow",
+        "pytorch"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Quantile Score",
+    "metrics": [
+      "Quantile Score",
+      "Average Interval Width (w)",
+      "Coverage (c)"
+    ],
+    "higherIsBetter": true,
+    "notes": "Quantile Score is calculated as -ln((w + \u03f5)f(c)), where w is the average width of the confidence interval, c is the coverage, and f(c) is a penalizing function for deviations from the expected coverage of 68.27%."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 20,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "The exact implementation details of the penalizing function f(c) are not fully clear from the paper.",
+    "The dataset's exact download URL is not provided in the paper."
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].contentUrl - dataset download URL is not provided in the paper",
+    "cr:evaluation.primaryMetric - exact formula for the Quantile Score is unclear due to missing details in the paper"
+  ]
+}

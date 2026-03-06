@@ -1,0 +1,120 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "fairness-ai-face-detection-task",
+  "name": "Fairness-Aware AI-Generated Face Detection",
+  "description": "Detect whether a facial image is real or AI-generated (binary classification) while ensuring fairness across demographic groups defined by skin tone, gender, and age. The task also evaluates robustness under various post-processing conditions and cross-domain scenarios.",
+  "cr:input": [
+    {
+      "name": "Input Dataset",
+      "description": "The input dataset contains facial image metadata with columns: 'id', 'pred', 'skin_tone', 'gender'. Example: id='sample_000', pred='value_0', skin_tone='value_0', gender='value_0'.",
+      "url": null,
+      "distribution": null,
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "text/csv",
+      "contentUrl": "[FILL IN THE BLANK: dataset source URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The output predictions include columns: 'id', 'pred', 'skin_tone', 'gender', 'age'. Example: id='sample_000', pred='value_0', skin_tone='value_0', gender='value_0', age=0.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "id",
+          "description": "Unique identifier for each sample. Example: 'sample_000'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "pred",
+          "description": "Predicted value for the sample. Example: 'value_0'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "skin_tone",
+          "description": "Skin tone category for the sample. Example: 'value_0'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "gender",
+          "description": "Gender category for the sample. Example: 'value_0'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "age",
+          "description": "Predicted age for the sample. Example: 0.",
+          "dataType": "sc:Integer",
+          "source": null,
+          "@type": "cr:Field"
+        }
+      ],
+      "@type": "cr:RecordSet"
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "numpy",
+        "pandas",
+        "scikit-learn",
+        "scipy"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "AUC",
+    "metrics": [
+      "AUC",
+      "ACC",
+      "AP",
+      "EER",
+      "FPR",
+      "TPR",
+      "FEO",
+      "FMEO",
+      "FDP",
+      "FOAE",
+      "FIND"
+    ],
+    "higherIsBetter": true,
+    "notes": "Metrics include utility metrics such as AUC, ACC, AP, and EER, as well as fairness metrics (FPR, TPR, FEO, FMEO, FDP, FOAE, FIND). Fairness metrics are placeholders and require subgroup information for computation."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper6",
+  "open_questions": [
+    "How are fairness metrics computed in detail? Subgroup information is required but not provided in the bundle.",
+    "What is the source of the input dataset?",
+    "What is the identifier or DOI of the original paper?"
+  ],
+  "fill_in_the_blank": [
+    "paper_id - original paper identifier could not be determined from the bundle files",
+    "cr:input[0].contentUrl - dataset source URL could not be determined from the bundle files"
+  ]
+}

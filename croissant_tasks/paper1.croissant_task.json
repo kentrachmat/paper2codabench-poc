@@ -1,0 +1,122 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "airfoil-design-optimization-task",
+  "name": "Airfoil Design Optimization via ML-Based Surrogate Models",
+  "description": "Develop machine learning models to simulate computational fluid dynamics (CFD) for airfoil design, replacing computationally expensive numerical methods. The goal is to predict physical simulation outputs (e.g., velocity, pressure, lift, drag) based on input geometries and boundary conditions, while optimizing computational efficiency, accuracy, and physical consistency.",
+  "cr:input": [
+    {
+      "name": "AirfRANS dataset",
+      "description": "Unstructured mesh data representing 2D simulation domains. Includes positions (x, y coordinates of mesh nodes), inlet velocity (scalar, e.g., 10 m/s), distance to the airfoil (scalar), normals (vector values representing surface orientation), and boundary conditions (e.g., angle of attack, Reynolds number).",
+      "url": null,
+      "distribution": null,
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "[FILL IN THE BLANK: dataset file format, e.g., text/csv, application/json]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predictions for velocity components (u_x, u_y), pressure divided by specific mass (p_s), turbulent kinematic viscosity (nu_t), and derived quantities (lift coefficient C_L, drag coefficient C_D).",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "u_x",
+          "description": "Velocity component in the x direction. Example: 0.5.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "u_y",
+          "description": "Velocity component in the y direction. Example: -0.3.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "p_s",
+          "description": "Pressure divided by specific mass. Example: 101325.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "nu_t",
+          "description": "Turbulent kinematic viscosity. Example: 1.5e-5.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "C_L",
+          "description": "Lift coefficient. Example: 1.2.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "C_D",
+          "description": "Drag coefficient. Example: 0.03.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        }
+      ],
+      "@type": "cr:RecordSet"
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "TensorFlow",
+        "PyTorch",
+        "[FILL IN THE BLANK: other required packages]"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Global Score",
+    "metrics": [
+      "Mean Squared Error (MSE)",
+      "Speedup (logarithmic scale)",
+      "Spearman correlation (rho_D, rho_L)",
+      "Mean Relative Error (C_D, C_L)"
+    ],
+    "higherIsBetter": true,
+    "notes": "Global Score is a weighted combination of ML-related metrics (40%), physics compliance (30%), and OOD generalization (30%). Metrics are scored based on thresholds (e.g., T1, T2) for unacceptable, acceptable, and great results."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 259200,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper1",
+  "open_questions": [
+    "What is the exact dataset download URL?",
+    "What is the exact file format of the dataset (e.g., text/csv, application/json)?",
+    "What are the exact package versions required for TensorFlow, PyTorch, and other dependencies?",
+    "Are participants allowed to use external data for training?"
+  ],
+  "fill_in_the_blank": [
+    "paper_id - reason it could not be determined from the paper",
+    "cr:input[0].encodingFormat - reason it could not be determined from the paper",
+    "cr:input[0].contentUrl - reason it could not be determined from the paper",
+    "cr:implementation.cr:environment.packages[2] - reason it could not be determined from the paper"
+  ]
+}

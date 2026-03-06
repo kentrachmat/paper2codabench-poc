@@ -1,4 +1,4 @@
-# EEG Transfer and Psychopathology Prediction
+# EEG-Based Machine Learning Challenges
 
 Auto-generated Codabench bundle (Pipeline B: direct from paper).
 
@@ -7,7 +7,7 @@ Auto-generated Codabench bundle (Pipeline B: direct from paper).
 **Type:** other
 **Primary Metric:** Normalized Root Mean Square Error (nRMSE)
 
-Develop models for zero-shot decoding of cognitive tasks from EEG data and predicting latent psychological constructs as biomarkers for mental health.
+Develop models to predict response times and psychopathology scores using EEG data, emphasizing transfer learning and regression tasks.
 
 ## Submission Format
 

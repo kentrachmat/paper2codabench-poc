@@ -1,41 +1,38 @@
-# Codabench Competition Configuration
-# Auto-generated from Croissant Task: Fairness and Utility in AI-Generated Face Detection
-
-title: "Fairness and Utility in AI-Generated Face Detection"
+title: "Fairness-Aware AI-Generated Face Detection"
 description: |
-  Develop machine learning models to detect AI-generated face images while ensuring fairness across demographic groups and robustness to post-processing transformations.
-
-# Task details
-task_type: classification
-
-# Phases (single phase for POC)
+  This task involves detecting whether a facial image is real or AI-generated (binary classification) while ensuring fairness across demographic groups defined by skin tone, gender, and age. The task also evaluates robustness under various post-processing conditions and cross-domain scenarios.
+image: logo.png
+docker_image: "codalab/codalab-legacy:py3"
+tasks:
+  - index: 0
+    name: "Fairness-Aware AI-Generated Face Detection"
+    description: "This task involves detecting whether a facial image is real or AI-generated (binary classification) while ensuring fairness across demographic groups defined by skin tone, gender, and age. The task also evaluates robustness under various post-processing conditions and cross-domain scenarios."
+    scoring_program: scoring_program
+    ingestion_program: ingestion_program
+    reference_data: reference_data
+    input_data: input_data
 phases:
-  - id: 1
+  - index: 0
     name: "Evaluation Phase"
     description: "Main evaluation phase"
-    start: "2024-01-01"
-    end: "2025-12-31"
-
-    # Scoring
-    tasks:
-      - name: "Fairness and Utility in AI-Generated Face Detection"
-        scoring_program: "scoring_program.zip"
-        reference_data: "reference_data.zip"
-        ingestion_program: "ingestion_program.zip"
-        input_data: "input_data.zip"
-
-# Leaderboard
-leaderboard:
-  - title: "Results"
-    key: "Area Under the ROC Curve (AUC)"
-    sorting: "desc"
-    computation: "average"
-
-# Resource limits
-resource_limits:
-  time_limit: 600
-  memory_limit_mb: 4096
-
-# Metadata
-created_by: "Paper2Codabench POC"
-version: "1.0"
+    start: "2026-01-01"
+    end: "2027-12-31"
+    max_submissions_per_day: 5
+    max_submissions: 100
+    tasks: [0]
+leaderboards:
+  - index: 0
+    title: "Results"
+    key: "results"
+    submission_rule: "force_last"
+    columns:
+      - index: 0
+        title: "AUC"
+        key: "AUC"
+        sorting: "desc"
+pages:
+  - title: "Overview"
+    file: overview.html
+  - title: "Evaluation"
+    file: evaluation.html
+terms: terms.html

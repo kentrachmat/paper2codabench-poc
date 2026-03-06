@@ -1,13 +1,13 @@
-# Fairness and Utility in AI-Generated Face Detection
+# Fairness-Aware AI-Generated Face Detection
 
 Auto-generated Codabench bundle (Pipeline B: direct from paper).
 
 ## Task Overview
 
 **Type:** classification
-**Primary Metric:** Area Under the ROC Curve (AUC)
+**Primary Metric:** AUC
 
-Develop machine learning models to detect AI-generated face images while ensuring fairness across demographic groups and robustness to post-processing transformations.
+This task involves detecting whether a facial image is real or AI-generated (binary classification) while ensuring fairness across demographic groups defined by skin tone, gender, and age. The task also evaluates robustness under various post-processing conditions and cross-domain scenarios.
 
 ## Submission Format
 
@@ -17,7 +17,7 @@ Develop machine learning models to detect AI-generated face images while ensurin
 
 ## Evaluation
 
-Primary metric: Area Under the ROC Curve (AUC)
+Primary metric: AUC
 Higher is better: True
 
 ## Resource Limits

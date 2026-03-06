@@ -11,9 +11,9 @@ import json
 import sys
 from pathlib import Path
 import pymupdf  # PyMuPDF
-from openai import OpenAI
 from tqdm import tqdm
 from config import Config
+from llm_client import call_azure_openai, call_azure_openai_text
 from croissant_schema import CroissantTaskProblem
 from prompts import (
     CROISSANT_TASK_EXTRACTION_SYSTEM,
@@ -59,81 +59,6 @@ def extract_pdf_text(pdf_path: Path, max_pages: int = 50) -> tuple[str, list[str
     except Exception as e:
         print(f"  Error extracting PDF: {e}")
         raise
-
-
-def call_azure_openai(prompt_messages: list, max_retries: int = 3, max_tokens: int = 16000) -> str:
-    """Call Azure OpenAI API with retry logic"""
-    # Validate configuration
-    try:
-        Config.validate()
-    except ValueError as e:
-        print(f"  Configuration error: {e}")
-        sys.exit(1)
-
-    # Use OpenAI client with base_url for Azure
-    client = OpenAI(
-        base_url=Config.AZURE_OPENAI_ENDPOINT,
-        api_key=Config.AZURE_OPENAI_KEY
-    )
-
-    # Progress bar for API call attempts
-    with tqdm(total=1, desc="Calling Azure OpenAI", unit="call") as pbar:
-        for attempt in range(max_retries):
-            try:
-                response = client.chat.completions.create(
-                    model=Config.AZURE_OPENAI_DEPLOYMENT,
-                    messages=prompt_messages,
-                    max_tokens=max_tokens,
-                    temperature=0.3,
-                    response_format={"type": "json_object"}
-                )
-
-                content = response.choices[0].message.content
-                finish_reason = response.choices[0].finish_reason
-
-                if finish_reason == "length":
-                    print(f"\n  Warning: Response truncated due to token limit!")
-                    print(f"  Consider reducing paper length or splitting into chunks")
-
-                pbar.update(1)
-                pbar.set_description(f"  Received response ({len(content)} chars)")
-                return content
-
-            except Exception as e:
-                if attempt < max_retries - 1:
-                    pbar.set_description(f"  Attempt {attempt + 1}/{max_retries} failed, retrying")
-                else:
-                    pbar.set_description("  All retries failed")
-                    print(f"\n  Error: {e}")
-                    raise
-
-
-def call_azure_openai_text(prompt_messages: list, max_retries: int = 3, max_tokens: int = 4000) -> str:
-    """Call Azure OpenAI API for plain text responses (no JSON mode)"""
-    try:
-        Config.validate()
-    except ValueError as e:
-        print(f"  Configuration error: {e}")
-        sys.exit(1)
-
-    client = OpenAI(
-        base_url=Config.AZURE_OPENAI_ENDPOINT,
-        api_key=Config.AZURE_OPENAI_KEY
-    )
-
-    for attempt in range(max_retries):
-        try:
-            response = client.chat.completions.create(
-                model=Config.AZURE_OPENAI_DEPLOYMENT,
-                messages=prompt_messages,
-                max_tokens=max_tokens,
-                temperature=0.3,
-            )
-            return response.choices[0].message.content
-        except Exception as e:
-            if attempt < max_retries - 1:
-                continue
-            raise
 
 
 # Threshold for chunked summarization (number of pages)

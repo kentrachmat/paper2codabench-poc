@@ -5,33 +5,30 @@
         "paper_id": "paper1",
         "title": "NeurIPS 2024 ML4CFD Competition: Harnessing Machine Learning for Computational Fluid Dynamics in Airfoil Design",
         "task_type": "regression",
-        "fitb_array_count": 2,
+        "fitb_array_count": 4,
         "fitb_array_items": [
-          "cr:input[0].url - dataset URL not specified in paper",
-          "cr:execution.memoryLimitMb - memory limits not specified"
+          "paper_id - reason it could not be determined from the paper",
+          "cr:input[0].encodingFormat - reason it could not be determined from the paper",
+          "cr:input[0].contentUrl - reason it could not be determined from the paper",
+          "cr:implementation.cr:environment.packages[2] - reason it could not be determined from the paper"
         ],
-        "deep_search_count": 2,
-        "deep_search_paths": [
-          "cr:input[0].url",
-          "cr:execution.memoryLimitMb"
-        ]
+        "deep_search_count": 0,
+        "deep_search_paths": []
       },
       {
         "paper_id": "paper2",
         "title": "The NeurIPS 2024 LLM Privacy Challenge",
         "task_type": "generation",
-        "fitb_array_count": 3,
+        "fitb_array_count": 5,
         "fitb_array_items": [
-          "cr:input[0].url - dataset URL not specified in paper",
-          "cr:execution.runtimeLimitSec - runtime limit not specified in paper",
-          "cr:execution.memoryLimitMb - memory limit not specified in paper"
+          "cr:input[0].contentUrl - dataset download URL not provided in the paper",
+          "cr:implementation.cr:environment.packages - exact package versions for privacy toolkit not specified",
+          "cr:evaluation.primaryMetric - primary evaluation metric not explicitly clarified in the paper",
+          "cr:execution.runtimeLimitSec - runtime limit not explicitly mentioned in the paper",
+          "cr:execution.memoryLimitMb - memory limit not explicitly mentioned in the paper"
         ],
-        "deep_search_count": 3,
-        "deep_search_paths": [
-          "cr:input[0].url",
-          "cr:execution.runtimeLimitSec",
-          "cr:execution.memoryLimitMb"
-        ]
+        "deep_search_count": 0,
+        "deep_search_paths": []
       },
       {
         "paper_id": "paper3",
@@ -39,43 +36,37 @@
         "task_type": "ranking",
         "fitb_array_count": 4,
         "fitb_array_items": [
-          "cr:input[0].url - dataset URL not specified in paper",
-          "cr:implementation.cr:environment.packages[4] - exact package versions not specified",
-          "cr:execution.memoryLimitMb - memory limit not specified",
-          "cr:execution.allowedExternalData - external data usage policy not specified"
+          "paper_id - exact paper identifier is not provided in the text",
+          "cr:input[0].contentUrl - dataset download URL is not provided in the text",
+          "cr:execution.memoryLimitMb - memory limit is not explicitly stated in the paper",
+          "cr:implementation.cr:environment.packages[5] - additional required packages are not explicitly listed in the paper"
         ],
-        "deep_search_count": 3,
-        "deep_search_paths": [
-          "cr:input[0].url",
-          "cr:implementation.cr:environment.packages[4]",
-          "cr:execution.memoryLimitMb"
-        ]
+        "deep_search_count": 0,
+        "deep_search_paths": []
       },
       {
         "paper_id": "paper4",
         "title": "The Concordia Contest: Advancing the Cooperative Intelligence of Language Agents",
         "task_type": "generation",
-        "fitb_array_count": 6,
+        "fitb_array_count": 4,
         "fitb_array_items": [
-          "cr:input[0].url - dataset URL not specified in paper",
-          "cr:execution.allowedExternalData - external data usage rules not specified",
-          "open_questions[0] - dataset format not specified",
-          "open_questions[1] - token limits for input/output not specified",
-          "open_questions[2] - LM call limits not specified",
-          "open_questions[4] - specific welfare functions not described"
+          "cr:input[0].contentUrl - dataset download URL is not provided in the paper",
+          "cr:implementation.cr:environment.packages - exact package versions for Concordia framework and dependencies are not provided in the paper",
+          "cr:execution.runtimeLimitSec - specific runtime limit is not provided in the paper, defaulting to 600 seconds",
+          "cr:execution.memoryLimitMb - specific memory limit is not provided in the paper, defaulting to 4096 MB"
         ],
-        "deep_search_count": 1,
-        "deep_search_paths": [
-          "cr:input[0].url"
-        ]
+        "deep_search_count": 0,
+        "deep_search_paths": []
       },
       {
         "paper_id": "paper5",
         "title": "Erasing the Invisible: A Stress-Test Challenge for Image Watermarks",
         "task_type": "generation",
-        "fitb_array_count": 1,
+        "fitb_array_count": 3,
         "fitb_array_items": [
-          "cr:execution.allowedExternalData - external data usage policy not specified in paper"
+          "cr:execution.allowedExternalData - The paper does not specify whether external data is allowed.",
+          "cr:output.cr:schema.field[0].description - No specific examples of attacked images are provided in the paper.",
+          "cr:evaluation.notes - The exact calibration process for detection thresholds is not described in detail."
         ],
         "deep_search_count": 0,
         "deep_search_paths": []
@@ -84,26 +75,155 @@
         "paper_id": "paper6",
         "title": "AI-Face: A Million-Scale Demographically Annotated AI-Generated Face Dataset and Fairness Benchmark",
         "task_type": "classification",
-        "fitb_array_count": 3,
+        "fitb_array_count": 6,
         "fitb_array_items": [
-          "cr:input[0].url - dataset URL not specified in paper",
-          "cr:implementation.cr:environment.packages[0] - exact PyTorch version not specified",
-          "cr:execution.allowedExternalData - external data usage policy not specified"
+          "paper_id - reason it could not be determined from the paper",
+          "cr:input[0].contentUrl - reason it could not be determined from the paper",
+          "cr:implementation.cr:environment.packages[4] - reason it could not be determined from the paper",
+          "cr:execution.runtimeLimitSec - defaulted to 600 as not specified in the paper",
+          "cr:execution.memoryLimitMb - defaulted to 4096 as not specified in the paper",
+          "cr:execution.allowedExternalData - reason it could not be determined from the paper"
         ],
-        "deep_search_count": 1,
-        "deep_search_paths": [
-          "cr:input[0].url"
-        ]
+        "deep_search_count": 0,
+        "deep_search_paths": []
+      },
+      {
+        "paper_id": "paper7",
+        "title": "EEG Foundation Challenge: From Cross-Task to Cross-Subject EEG Decoding",
+        "task_type": "classification",
+        "fitb_array_count": 4,
+        "fitb_array_items": [
+          "cr:input[0].contentUrl - dataset download URL is not provided in the paper.",
+          "cr:implementation.cr:environment.packages[5] - exact package versions are not specified in the paper.",
+          "cr:execution.runtimeLimitSec - runtime limit for the test phase is not explicitly stated in the paper.",
+          "cr:execution.memoryLimitMb - memory limit for the test phase is not explicitly stated in the paper."
+        ],
+        "deep_search_count": 0,
+        "deep_search_paths": []
+      },
+      {
+        "paper_id": "paper9",
+        "title": "NeurIPS 2025 E2LM Competition: Early Training Evaluation of Language Models",
+        "task_type": "classification",
+        "fitb_array_count": 4,
+        "fitb_array_items": [
+          "cr:input[0].encodingFormat - dataset format is not specified in the paper",
+          "cr:input[0].contentUrl - dataset download URL is not provided in the paper",
+          "paper_id - paper identifier is not mentioned in the provided text",
+          "cr:implementation.cr:environment.packages[1] - additional required packages are not listed in the paper"
+        ],
+        "deep_search_count": 0,
+        "deep_search_paths": []
       }
     ],
-    "total_papers": 6,
-    "total_fitb_array": 19,
-    "total_fitb_deep": 10
+    "total_papers": 8,
+    "total_fitb_array": 34,
+    "total_fitb_deep": 0
   },
   "pipeline_b": {
-    "results": [],
-    "total_papers": 0,
-    "total_fitb_array": 0,
+    "results": [
+      {
+        "paper_id": "paper1",
+        "title": "NeurIPS 2024 ML4CFD Competition: Harnessing Machine Learning for Computational Fluid Dynamics in Airfoil Design",
+        "task_type": "regression",
+        "fitb_array_count": 2,
+        "fitb_array_items": [
+          "paper_id - original paper DOI is not provided in the bundle files.",
+          "cr:input[0].contentUrl - dataset source URL is not provided in the bundle files."
+        ],
+        "deep_search_count": 0,
+        "deep_search_paths": []
+      },
+      {
+        "paper_id": "paper2",
+        "title": "The NeurIPS 2024 LLM Privacy Challenge",
+        "task_type": "generation",
+        "fitb_array_count": 2,
+        "fitb_array_items": [
+          "paper_id - reason it could not be determined from the paper",
+          "cr:input[0].contentUrl - reason it could not be determined from the paper"
+        ],
+        "deep_search_count": 0,
+        "deep_search_paths": []
+      },
+      {
+        "paper_id": "paper3",
+        "title": "FAIR Universe HiggsML Uncertainty Challenge",
+        "task_type": "ranking",
+        "fitb_array_count": 2,
+        "fitb_array_items": [
+          "paper_id - original paper DOI is missing from the bundle files.",
+          "cr:input[0].contentUrl - dataset source URL is missing from the bundle files."
+        ],
+        "deep_search_count": 0,
+        "deep_search_paths": []
+      },
+      {
+        "paper_id": "paper4",
+        "title": "The Concordia Contest: Advancing the Cooperative Intelligence of Language Agents",
+        "task_type": "generation",
+        "fitb_array_count": 2,
+        "fitb_array_items": [
+          "paper_id - reason it could not be determined from the bundle files",
+          "dataset.sourceUrl - reason it could not be determined from the bundle files"
+        ],
+        "deep_search_count": 0,
+        "deep_search_paths": []
+      },
+      {
+        "paper_id": "paper5",
+        "title": "Erasing the Invisible: A Stress-Test Challenge for Image Watermarks",
+        "task_type": "generation",
+        "fitb_array_count": 3,
+        "fitb_array_items": [
+          "paper_id - reason it could not be determined from the bundle files",
+          "cr:input[0].contentUrl - reason it could not be determined from the bundle files",
+          "@id - reason it could not be determined from the bundle files"
+        ],
+        "deep_search_count": 0,
+        "deep_search_paths": []
+      },
+      {
+        "paper_id": "paper6",
+        "title": "AI-Face: A Million-Scale Demographically Annotated AI-Generated Face Dataset and Fairness Benchmark",
+        "task_type": "classification",
+        "fitb_array_count": 2,
+        "fitb_array_items": [
+          "paper_id - original paper identifier could not be determined from the bundle files",
+          "cr:input[0].contentUrl - dataset source URL could not be determined from the bundle files"
+        ],
+        "deep_search_count": 0,
+        "deep_search_paths": []
+      },
+      {
+        "paper_id": "paper7",
+        "title": "EEG Foundation Challenge: From Cross-Task to Cross-Subject EEG Decoding",
+        "task_type": "classification",
+        "fitb_array_count": 3,
+        "fitb_array_items": [
+          "paper_id - reason it could not be determined from the bundle files",
+          "dataset.sourceUrl - reason it could not be determined from the bundle files",
+          "paper_id - reason it could not be determined from the bundle files"
+        ],
+        "deep_search_count": 0,
+        "deep_search_paths": []
+      },
+      {
+        "paper_id": "paper9",
+        "title": "NeurIPS 2025 E2LM Competition: Early Training Evaluation of Language Models",
+        "task_type": "classification",
+        "fitb_array_count": 3,
+        "fitb_array_items": [
+          "paper_id - reason it could not be determined from the bundle files",
+          "cr:input[0].contentUrl - reason it could not be determined from the bundle files",
+          "@id - reason it could not be determined from the bundle files"
+        ],
+        "deep_search_count": 0,
+        "deep_search_paths": []
+      }
+    ],
+    "total_papers": 8,
+    "total_fitb_array": 19,
     "total_fitb_deep": 0
   }
 }

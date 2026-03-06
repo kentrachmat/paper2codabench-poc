@@ -1,0 +1,99 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "neurips2024-erasing-invisible-task",
+  "name": "Stress Testing Image Watermarks",
+  "description": "A benchmark and competition designed to evaluate the robustness of invisible watermarking techniques against removal attacks while preserving image quality.",
+  "paper_id": "neurips2024-erasing-invisible",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "ETI Benchmark Dataset",
+      "description": "A dataset of 600 images, including 300 for the Black-box track and 300 for the Beige-box track. Images were generated using Stable Diffusion 2.1 and Flux 1 [dev], with watermarks applied using in-processing and post-processing techniques such as Gaussian Shading, StegaStamp, JigMark, PRC, StableSignature, and Trufo.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset encoding format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predicted images after watermark removal attacks. Outputs are evaluated for watermark detection performance (True Positive Rate at 0.1% FPR) and image quality degradation using multiple metrics.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "image_id",
+          "dataType": "sc:Text",
+          "description": "Unique identifier for each image, e.g., 'image_001'."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "watermark_detection_score",
+          "dataType": "sc:Float",
+          "description": "Post-attack watermark detection score, with lower values indicating better watermark removal."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "image_quality_score",
+          "dataType": "sc:Float",
+          "description": "Image quality degradation score, with lower values indicating better preservation of visual quality."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "numpy",
+        "scipy",
+        "torch",
+        "opencv-python",
+        "[FILL IN THE BLANK: additional packages]"
+      ]
+    },
+    "entryPoint": "[FILL IN THE BLANK: entry point script]",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Euclidean distance between image quality degradation (Q) and watermark detection performance (A)",
+    "metrics": [
+      "True Positive Rate at 0.1% FPR (TPR@0.1%FPR)",
+      "Peak Signal-to-Noise Ratio (PSNR)",
+      "Structural Similarity Index (SSIM)",
+      "Normalized Mutual Information (NMI)",
+      "Frechet Inception Distance (FID)",
+      "CLIP Image Fidelity (CLIP-FID)",
+      "Learned Perceptual Image Patch Similarity (LPIPS)",
+      "Delta Aesthetics Score (\u2206Aesthetics)",
+      "Delta Artifacts Score (\u2206Artifacts)"
+    ],
+    "higherIsBetter": false,
+    "notes": "The primary metric minimizes the Euclidean distance between Q and A, where Q aggregates eight image quality metrics and A represents the TPR at 0.1% FPR."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact encoding format of the dataset?",
+    "What is the download URL for the dataset?",
+    "What additional Python packages are required for implementation?",
+    "What is the exact entry point script for the solution?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset encoding format not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL not provided in the paper",
+    "cr:implementation.cr:environment.packages[4] - additional required packages not listed in the paper",
+    "cr:implementation.entryPoint - entry point script not mentioned in the paper"
+  ]
+}

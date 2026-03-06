@@ -1,0 +1,207 @@
+EEG Foundation Challenge:
+From Cross-Task to Cross-Subject EEG Decoding
+Bruno Aristimunha∗†♠
+Dung Truong‡
+Pierre Guetschel§
+Seyed Yahya Shirazi‡
+Isabelle Guyon¶
+Alexandre R. Franco∥
+Michael P. Milham∥
+Aviv Dotan♣
+Scott Makeig‡
+Alexandre Gramfort✠
+Jean-Remi King✠
+Marie-Constance Corsi†
+Pedro A. Valdés-Sosa♡
+Amit Majumdar‡
+Alan Evans♢
+Terrence J Sejnowski‡
+Oren Shriki♣
+Sylvain Chevallier∗
+Arnaud Delorme‡♢
+neurips2025-eeg-competition@googlegroups.com
+Abstract
+Current electroencephalogram (EEG) decoding models are typically trained on
+small numbers of subjects performing a single task. Here, we introduce a large-
+scale, code-submission-based competition comprising two challenges. First, the
+Transfer Challenge asks participants to build and test a model that can zero-shot de-
+code new tasks and new subjects from their EEG data. Second, The Psychopathol-
+ogy factor prediction Challenge asks participants to infer subject measures of
+mental health from EEG data. For this, we use an unprecedented, multi-terabyte
+dataset of high-density EEG signals (128 channels) recorded from over 3,000 child
+to young adult subjects engaged in multiple active and passive tasks. We provide
+several tunable neural network baselines for each of these two challenges, including
+a simple network and demographic-based regression models. Developing models
+that generalize across tasks and individuals will pave the way for ML network
+architectures capable of adapting to EEG data collected from diverse tasks and in-
+dividuals. Similarly, predicting mental health-relevant personality trait values from
+EEG might identify objective biomarkers useful for clinical diagnosis and design
+of personalized treatment for psychological conditions. Ultimately, the advances
+spurred by this challenge could contribute to the development of computational
+psychiatry and useful neurotechnology, and contribute to breakthroughs in both
+fundamental neuroscience and applied clinical research.
+Keywords
+Transfer Learning, Biosignal, Brain Decoding, Electroencephalogram, Time Series
+1
+Competition description
+We propose the EEG Foundation Challenge to advance research on developing generalized and
+transferable neural representations for EEG decoding (Figure 1). This initiative focuses on identifying
+mental biomarkers and decoding cognitive tasks across large number of subjects, addressing the
+fundamental challenge of interpreting complex brain signals associated with key psychopathological
+factors and experimental stimuli.
+∗A&O, LISN, Université Paris-Saclay, CNRS, Inria TAU, France
+†Inria NERV, Paris Brain Institute, France
+‡SCCN, INC, SDSC, University of California San Diego, USA
+♢CNRS, France
+§Donders Institute, Radboud University, Netherlands
+¶Google DeepMind, ChaLearn, USA
+∥Child Mind/Nathan Kline Institutes, New York, USA
+♣Ben-Gurion University of the Negev, Israel
+✠FAIR Brain & AI team/Reality Labs, Meta, France
+♠Federal University of ABC, Brazil
+♡Cuban Neuroscience Center, Cuba and China
+♢McGill University, Canada
+Preprint. Under review.
+arXiv:2506.19141v2  [eess.SP]  5 Sep 2025
+
+
+Figure 1: HBN-EEG Dataset and Data split. A. EEG is recorded using a 128-channel system during
+active tasks (i.e., with user input) or passive tasks. B. The psychopathology and demographic factors.
+C. The datasets split into Train, Test and Validation. Details in subsection 1.2.
+In recent years, the neuroscience community has increasingly looked toward Large Language-Model-
+style architectures to advance brain activity decoding [57]. However, this paradigm shift remains
+limited by the data scale and structure of currently available data [8, 22]. Unlike the massive,
+richly annotated corpora used to train language models, EEG datasets are relatively small and lack
+comparable hierarchical organization. Moreover, brain signal data present intrinsic challenges,
+including differences in electrode montages, recording protocols, various methods for splitting the
+data, and underlying neurological factors [6, 11, 17, 31, 51]. These challenges have hindered the
+development of broad, generalizable, and cross-task models that extend beyond simple classification,
+highlighting the need for larger, more integrated EEG datasets to support next-generation research.
+A given EEG dataset usually corresponds to one specific cognitive task or condition with only a single
+type of ground-truth label, often requiring a separate model to be trained for each task. In practice,
+models are frequently developed and tuned in isolation on each dataset—and sometimes even on
+each individual subject—due to pronounced physiological differences between subjects [3, 36, 44].
+This conventional single-task, -subject training and evaluation fails to leverage commonalities across
+datasets and yields models that struggle to generalize beyond the context in which they were trained.
+For these reasons, we argue that a general-purpose EEG foundation competition is needed to move
+beyond the one-task-per-model paradigm. A unified model could simultaneously decode both endur-
+ing mental traits and dynamic cognitive states, bridging traditionally separate objectives. For instance,
+it could infer a participant’s latent mental health score while also predicting task performance from
+the same EEG stream. Training on diverse tasks and subjects would enable the model to learn
+robust representations that generalize across users and adapt to different electrode configurations. As
+model capacity and data diversity scale, we expect more reliable regression of cognitive and clinical
+biomarkers, even in the presence of noise.
+Previous EEG decoding challenges have shown that well-designed competitions can drive progress
+in brain decoding. Our BEETL Motor Imagery Challenge at NeurIPS 2021 [54] gathered 130+
+contestants from 40 research groups and over 1,382 submissions. Our Brain Age Prediction Challenge
+2022 [37] attracted 200+ participants from 40 countries, generating 30–100 daily submissions.
+In 2023, our Sleep States Competition [26] engaged 80 teams from 20 countries. In 2024, we
+co-organized a large-scale challenge with the Child Mind Institute [46], focusing on predicting
+problematic internet use in youth using accelerometry, assessments, and questionnaires. It drew
+12,912 registrants, 2,436 active contestants across 1,877 teams, and 38,329 submissions. This year,
+2
+
+
+we are currently running additional challenges on the Healthy Brain Network’s fMRI and actigraphy.
+The ongoing WiDS Datathon 2025 [10], part of the Women in Data Science initiative, has already
+reached 5,062 contestants, with 1,614 active contestants across 703 teams and 9,470 submissions to
+date. These results highlight our strong track record of organizing impactful, large-scale challenges
+and mobilizing the machine learning research community for an appealing NeurIPS competition.
+1.1
+Novelty
+The EEG Foundation Challenge is inspired by and builds up on our NeurIPS 2021 BEETL challenge,
+with a bigger scope and ambition. Unlike BEETL, which focuses on specific tasks (sleep staging
+and motor imagery), the present competition introduces an unprecedented combination of scale,
+complexity, and objectives. The competition features three major innovations:
+1) Unprecedented Scale and Complexity: The competition’s dataset encompasses over 3,000
+participants with high-density 128-channel EEG recordings – an order of magnitude larger than
+typical EEG challenge datasets. Each participant engaged in six distinct cognitive tasks (ranging
+from resting-state to active learning and attention tasks), providing a rich multi-task, multi-condition
+collection of neural data. This participant, metadata, and recording breadth and diversity far exceeds
+that of any prior EEG competition [26, 54, 37]. So, models should handle heterogeneous time-series
+data conditions, learn generalizable representations across tasks and participants. EEG decoding
+research has progressed beyond traditional discrete classification methods, with novel approaches now
+addressing more complex representational challenges at this large scale [57, 8, 7, 53, 52, 32, 16, 23].
+2) Zero-Shot Cross-Domain Generalization: The cross-task transfer learning scenario in EEG
+decoding is remarkably underexplored [5]. Our Challenge 1 addresses a key goal in neurotechnology:
+decoding cognitive function from EEG without explicit behavioural labels. Participants must develop
+models capable of zero-shot generalization across both novel tasks and novel subjects. The compe-
+tition is structured to reward models that learn domain-invariant and subject-invariant representations.
+This means a submitted model might be trained on a subset of tasks and then tested on data from
+a held-out task or condition, evaluating its capacity to generalize without task-specific fine-tuning.
+Notably, no existing benchmarks or datasets have been developed to address these issues [14, 20].
+3) Prediction of Latent Psychological Constructs: In contrast to past challenges, our Challenge 2
+targets latent psychological constructs as prediction outputs. Specifically, participants will predict
+transdiagnostic psychopathology factors (such as the p-factor) derived from standardized clinical
+questionnaires [48, 12]. While the p-factor is intended to reflect a psychological trait [12], EEG
+could also be modulated by fluctuating “states” such as engagement, fatigue, and other time-variant
+components [9, 43]. These components may be implicitly encoded in neural activity, helping to
+account for such variabilities in the data. The challenge holds considerable potential for scientific
+impact, particularly if participating teams could improve decoding of psychopathology factors from
+EEG data, thereby offering empirical support for EEG-based biomarkers for mental health [27].
+By combining unexplored targets, fundamental scientific questions, and a large-scale, high-
+dimensional dataset, this competition is a unique opportunity to advance the state of EEG-based
+predictive modelling and to use machine learning in the discovery of psychiatric biomarkers. Beyond
+its methodological and scientific contributions, this challenge has meaningful societal implications:
+identification of psychopathology metrics through accessible, non-invasive measures like EEG could
+contribute to earlier detection, more precise monitoring, and ultimately more effective interventions
+for mental health conditions. As mental health continues to emerge as a global public health priority,
+innovations in scalable and data-driven assessment methods can inform clinical practice and policy,
+reduce stigma, and improve outcomes for individuals affected by psychiatric disorders.
+1.2
+Data
+The competition leverages the Healthy Brain Network Electroencephalography (HBN-EEG)
+datasets [49]. It is made of 12 dataset releases in total, grouped according to the time of release,
+11 releases shared, and one withheld and unreleased for competitions. This large-scale collection
+contains high-density (128-channel) EEG recordings from children and young adults aged 5-21 years
+with more details described at [49]. The dataset is formatted according to the Brain Imaging Data
+Structure (BIDS) standard [24, 40] and includes comprehensive event annotations using Hierarchical
+3
+
+
+Event Descriptors (HED) [42, 35], making it particularly suitable for cross-task analysis and machine
+learning applications.
+Formally, let X ∈Rc×t be an EEG recording segment (Figure 1), with c = 128 the number of
+electrodes and t the time steps, Y ∈Rk×t be the associated labels, with k the number of event
+labels, and P ∈R7 be subject’s traits including 3 demographic attributes and 4 psychological factors,
+e.g., p-factor pfac. A dataset is defined as (X, Y, P), with N EEG recording from S subjects,
+X = {Xi}N with their associated labels Y = {Y i}N and psychological factors and demographic
+attributes P = {p}7 for each s subject.
+We consider here different datasets with different types of labels. In this competition, the trial timing
+is assumed to be known, targeting offline applications that are common in the medical context, leaving
+real-time decoders outside the scope of this competition. We assume that the dataset is randomly
+split into a training set of size Ntrain, a validation set of size Nvalid and a test set of size Ntest. For
+training and validation sets, both X and Y are available, while for test sets, only X is available to the
+contestant. The general decoding problem amounts to using the training set X train to learn a model
+fθ with parameters θ mapping each trial X to the associated label Y.
+1.2.1
+Dataset Description
+The competition data set includes EEG recordings from more than 3, 000 participants in six distinct
+cognitive tasks, divided into passive – Resting State (RS), Surround Suppression (SuS), Movie
+Watching (MW) – and active – Contrast Change Detection (CCD), Sequence Learning (SL), Symbol
+Search (SyS) – categories. SuS and CDD rely on stimulus that are similar to those employed in
+SSVEP tasks.
+The data of each participant are accompanied by four dimensions of psychopathology (internalization,
+externalization, attention, and p-factor) derived from a bifactor model of parent-reported questionnaire
+responses to the Child Behavior Checklist (CBCL) [1, 48]. These psychopathology factors represent
+orthogonal dimensions of mental health and serve as target variables for the regression component for
+Challenge 2 [48]. Additionally, the age, gender, and handedness (scored using the Edinburg Inventory,
+EHQ-Total) [38] are included as part of the demographic information for each participant. While
+some psychopathology factors, like internalizing and externalizing, are influenced by a participant’s
+age, other factors such as the p-factor and attention, are largely unaffected by age Figure 1B.
+Data Access and Ethics
+The first 11 releases of the HBN-EEG dataset are freely available under
+CC-BY-SA-4.0 licence through NEMAR [18]. Testing set use release 12 that is currently unreleased.
+The Chesapeake Institutional Review Board approved the data collection, with written informed
+consent obtained from participants 18 years or older and from legal guardians of younger participants.
+All participants were anonymized using the NIMH’s Global Unique Identifier Tool (GUID) [30] to
+ensure no exposure to personally identifiable information.
+1.2.2
+Competition Data Split
+For this competition, we provide contestants with a Training set, complete EEG recordings and
+psychopathology measures from approximately 3, 000 subjects, releases 1-11, except for the Release
+5. The Validation set, Release 5 comprises data from the remaining subjects for the teams to test their
+models. This split ensures sufficient data for model training while maintaining a robust evaluation
+set for assessing cross-task generalization and psychopathology prediction performance. The final
+evaluation will be performed using the withheld test set, the Release 12 that is not available publicly,
+but will be released publi

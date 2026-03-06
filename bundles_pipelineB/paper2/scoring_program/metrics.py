@@ -1,66 +1,78 @@
 import numpy as np
 from typing import Dict
 from sklearn.metrics import accuracy_score
-from scipy.stats import ttest_ind
+from scipy.stats import ttest_ind, f_oneway
 
 def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, task_type: str) -> Dict[str, float]:
     """
-    Compute evaluation metrics for classification tasks.
+    Compute evaluation metrics for the Codabench competition.
 
     Parameters:
-    - y_true (np.ndarray): Ground truth labels (1D or 2D array).
-    - y_pred (np.ndarray): Predicted labels (1D or 2D array).
-    - task_type (str): Type of task, e.g., 'classification'.
+    - y_true (np.ndarray): Ground truth labels or values.
+    - y_pred (np.ndarray): Predicted labels or values.
+    - task_type (str): The task type, either 'red_team' or 'blue_team'.
 
     Returns:
-    - Dict[str, float]: Dictionary of computed metrics.
+    - Dict[str, float]: Dictionary of computed metrics with the primary metric first.
     """
-    # Reshape 1D arrays to 2D for consistency
+    # Reshape 1D arrays to 2D
     if y_true.ndim == 1:
         y_true = y_true.reshape(-1, 1)
     if y_pred.ndim == 1:
         y_pred = y_pred.reshape(-1, 1)
 
     # Validate input shapes
-    if y_true.shape[0] != y_pred.shape[0]:
-        raise ValueError("Mismatch in number of samples between y_true and y_pred.")
-    if y_true.shape[1] != y_pred.shape[1]:
-        raise ValueError("Mismatch in number of targets between y_true and y_pred.")
+    if y_true.shape != y_pred.shape:
+        raise ValueError("Shape mismatch: y_true and y_pred must have the same shape.")
     if y_true.size == 0 or y_pred.size == 0:
-        raise ValueError("Empty arrays provided for y_true or y_pred.")
+        raise ValueError("Empty input: y_true and y_pred must not be empty.")
+    if np.any(np.isnan(y_true)) or np.any(np.isnan(y_pred)):
+        raise ValueError("NaN values detected: y_true and y_pred must not contain NaN values.")
 
-    # Handle NaN values
-    if np.isnan(y_true).any() or np.isnan(y_pred).any():
-        raise ValueError("NaN values detected in y_true or y_pred.")
-
-    # Metrics computation
+    # Initialize metrics dictionary
     metrics = {}
 
-    # Primary Metric: Attack Accuracy
-    attack_accuracy = accuracy_score(y_true, y_pred)
-    metrics["Attack Accuracy"] = attack_accuracy
+    # Compute metrics based on task type
+    if task_type == "red_team":
+        # Primary Metric: Attack Accuracy
+        attack_accuracy = accuracy_score(y_true, y_pred)
+        metrics["Attack Accuracy"] = attack_accuracy
 
-    # Efficiency: Measure computational overhead (example: fewer tokens is better)
-    # Assuming efficiency is inversely proportional to the number of tokens in predictions
-    efficiency = 1 / np.mean([len(str(pred)) for pred in y_pred.flatten()])
-    metrics["Efficiency"] = efficiency
+        # Efficiency: Number of tokens/queries required (lower is better)
+        efficiency = np.mean([len(str(pred)) for pred in y_pred.flatten()])
+        metrics["Efficiency"] = efficiency
 
-    # Model Effectiveness: Ensure minimal degradation in utility
-    # Example: Compare utility scores (mock implementation)
-    utility_scores = np.random.rand(y_true.shape[0])  # Mock utility scores
-    effectiveness = np.mean(utility_scores)  # Higher utility is better
-    metrics["Model Effectiveness"] = effectiveness
+    elif task_type == "blue_team":
+        # Primary Metric: Defense Effectiveness
+        defense_effectiveness = accuracy_score(y_true, y_pred)
+        metrics["Defense Effectiveness"] = defense_effectiveness
 
-    # Error Bars: Compute standard deviation of Attack Accuracy
-    error_bars = np.std([accuracy_score(y_true, np.random.choice(y_pred.flatten(), len(y_pred.flatten()))) for _ in range(100)])
-    metrics["Error Bars"] = error_bars
+        # Model Effectiveness: Same as Defense Effectiveness for simplicity
+        model_effectiveness = defense_effectiveness
+        metrics["Model Effectiveness"] = model_effectiveness
 
-    # Significance Testing: Compare Attack Accuracy with random baseline
-    random_baseline = np.random.choice(y_true.flatten(), len(y_true.flatten()))
-    _, p_value = ttest_ind(y_true.flatten(), random_baseline, equal_var=False)
-    metrics["Significance Testing"] = p_value
+        # Efficiency: Computational overhead (lower is better)
+        efficiency = np.mean([len(str(pred)) for pred in y_pred.flatten()])
+        metrics["Efficiency"] = efficiency
+
+    else:
+        raise ValueError("Invalid task_type. Must be 'red_team' or 'blue_team'.")
+
+    # Statistical Significance: Perform t-test and ANOVA
+    try:
+        t_stat, t_p_value = ttest_ind(y_true.flatten(), y_pred.flatten(), equal_var=False)
+        metrics["Statistical Significance (t-test p-value)"] = t_p_value
+
+        f_stat, f_p_value = f_oneway(y_true.flatten(), y_pred.flatten())
+        metrics["Statistical Significance (ANOVA p-value)"] = f_p_value
+    except Exception as e:
+        metrics["Statistical Significance (t-test p-value)"] = np.nan
+        metrics["Statistical Significance (ANOVA p-value)"] = np.nan
 
     # Ensure primary metric is first in the dictionary
-    metrics = {k: metrics[k] for k in sorted(metrics.keys(), key=lambda x: x != "Attack Accuracy")}
+    if task_type == "red_team":
+        metrics = {k: metrics[k] for k in ["Attack Accuracy", "Efficiency", "Statistical Significance (t-test p-value)", "Statistical Significance (ANOVA p-value)"]}
+    elif task_type == "blue_team":
+        metrics = {k: metrics[k] for k in ["Defense Effectiveness", "Model Effectiveness", "Efficiency", "Statistical Significance (t-test p-value)", "Statistical Significance (ANOVA p-value)"]}
 
     return metrics

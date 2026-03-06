@@ -1,4 +1,4 @@
-# NeurIPS 2024 LLM Privacy Challenge
+# Privacy in Large Language Models (LLM-PBE)
 
 Auto-generated Codabench bundle (Pipeline B: direct from paper).
 
@@ -7,7 +7,7 @@ Auto-generated Codabench bundle (Pipeline B: direct from paper).
 **Type:** classification
 **Primary Metric:** Attack Accuracy
 
-A competition to explore vulnerabilities and defenses in Large Language Models (LLMs), focusing on privacy preservation, model utility, and computational efficiency.
+A competition to identify and mitigate privacy vulnerabilities in large language models, focusing on sensitive information leakage and defense mechanisms.
 
 ## Submission Format
 
@@ -18,7 +18,7 @@ A competition to explore vulnerabilities and defenses in Large Language Models (
 ## Evaluation
 
 Primary metric: Attack Accuracy
-Higher is better: False
+Higher is better: True
 
 ## Resource Limits
 

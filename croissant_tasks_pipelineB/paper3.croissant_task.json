@@ -1,0 +1,97 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "fair_universe_higgsml_uncertainty-task",
+  "name": "FAIR Universe HiggsML Uncertainty Challenge",
+  "description": "The task involves estimating the signal strength parameter (\u00b5) for Higgs boson events relative to the Standard Model prediction, along with a 68.27% Confidence Interval (CI), accounting for systematic uncertainties and distribution shifts.",
+  "cr:input": [
+    {
+      "name": "input_data",
+      "description": "Input dataset containing columns 'id' and 'mu16'. 'id' represents sample identifiers, and 'mu16' represents the lower bound of the signal strength parameter \u00b5. Example: 'id' = sample_000, 'mu16' = value_0.",
+      "url": null,
+      "distribution": null,
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "text/csv",
+      "contentUrl": "[FILL IN THE BLANK: dataset source URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predictions include columns 'id', 'mu16', and 'mu84'. 'id' matches the input sample identifiers, 'mu16' matches the lower bound from the input, and 'mu84' represents the predicted upper bound of the signal strength parameter \u00b5. Example: 'id' = sample_000, 'mu16' = value_0, 'mu84' = 0.7036028427066264.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "id",
+          "description": "Sample identifier matching the input dataset. Example: sample_000.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "mu16",
+          "description": "Lower bound of the signal strength parameter \u00b5, matching the input dataset. Example: value_0.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "mu84",
+          "description": "Predicted upper bound of the signal strength parameter \u00b5. Example: 0.7036028427066264.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        }
+      ],
+      "@type": "cr:RecordSet"
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "numpy",
+        "pandas",
+        "scipy"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Quantile Score",
+    "metrics": [
+      "Quantile Score",
+      "Average Interval Width (w)",
+      "Coverage (c)",
+      "Penalty Function (f(c))"
+    ],
+    "higherIsBetter": true,
+    "notes": "Quantile Score is computed as -log((average_interval_width + epsilon) * penalty_function(c, target_coverage, sigma68)). Average Interval Width (w) is the mean width of the predicted intervals. Coverage (c) measures the proportion of true intervals covered by the predicted intervals. Penalty Function (f(c)) penalizes deviations from the target coverage of 68.27%."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper3",
+  "open_questions": [
+    "Dataset source URL is unclear.",
+    "Original paper DOI is missing."
+  ],
+  "fill_in_the_blank": [
+    "paper_id - original paper DOI is missing from the bundle files.",
+    "cr:input[0].contentUrl - dataset source URL is missing from the bundle files."
+  ]
+}

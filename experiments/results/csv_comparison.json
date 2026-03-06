@@ -1,0 +1,65 @@
+{
+  "root_csv": "/Users/kentrachmat/Desktop/phd/paper2codabench/neurips2025_db_croissants.csv",
+  "data_csv": "/Users/kentrachmat/Desktop/phd/paper2codabench/data/neurips_2025_db_papers.csv",
+  "root_total": 506,
+  "data_total": 497,
+  "in_both": 426,
+  "only_in_root": 80,
+  "only_in_data": 71,
+  "title_mismatches": 1,
+  "croissant_url_mismatches": 0,
+  "details": {
+    "only_in_root_ids": [
+      "04mNnhGv2N",
+      "0FOgFpvM7u",
+      "0vryNakJYC",
+      "1AaRO6hSB2",
+      "1YRXn34Y82",
+      "20QV069lc6",
+      "2ApxOLDLDl",
+      "2dByqivksZ",
+      "41dtT6feKo",
+      "4GWfYyo6FS",
+      "5XmZ5f5QVw",
+      "6UHEfOBVkn",
+      "6YCtJYxhqz",
+      "6rgY2sFQ3t",
+      "82vkI9M8oM",
+      "89Kt3GZjL4",
+      "8HUVueG8H9",
+      "8HxzgdrXhG",
+      "8IZyTzudQL",
+      "8wEQLCSfCT"
+    ],
+    "only_in_data_ids": [
+      "1dSLbhErNv",
+      "1de3azE606",
+      "28bjSsEpMP",
+      "3k70Vt0YFS",
+      "49W4eKKjPU",
+      "4Ae8edNqm0",
+      "4Ud0pRqFto",
+      "5W5mFU4oMO",
+      "652Q6jBFMZ",
+      "AgTASkryb6",
+      "BPpG4qQaNj",
+      "CXqq2v6qUv",
+      "Cyl5stCodb",
+      "DHA9uoeMQx",
+      "EVzjqVxOVS",
+      "FRbNGgWqCX",
+      "GqYSunGmp7",
+      "IJ2cOji0ME",
+      "IKK0mEUTfE",
+      "JxuFBB5OpD"
+    ],
+    "title_mismatches": [
+      {
+        "paper_id": "mORzRZaqT4",
+        "root_title": "PolyGuard: Massive Multi-Domain Safety Policy-Grounded Guardrail Dataset",
+        "data_title": "GuardSet-X: Massive Multi-Domain Safety Policy-Grounded Guardrail Dataset"
+      }
+    ],
+    "croissant_url_mismatches": []
+  }
+}

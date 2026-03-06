@@ -1,41 +1,38 @@
-# Codabench Competition Configuration
-# Auto-generated from Croissant Task: Concordia Cooperative Intelligence Challenge
-
-title: "Concordia Cooperative Intelligence Challenge"
+title: "Concordia Cooperative AI Challenge"
 description: |
-  Develop autonomous language model agents capable of effective cooperation in mixed-motive, text-mediated environments, balancing individual goals with collective welfare.
-
-# Task details
-task_type: other
-
-# Phases (single phase for POC)
+  Develop autonomous language model agents capable of cooperative reasoning, communication, and decision-making in text-mediated, multi-agent environments.
+image: logo.png
+docker_image: "codalab/codalab-legacy:py3"
+tasks:
+  - index: 0
+    name: "Concordia Cooperative AI Challenge"
+    description: "Develop autonomous language model agents capable of cooperative reasoning, communication, and decision-making in text-mediated, multi-agent environments."
+    scoring_program: scoring_program
+    ingestion_program: ingestion_program
+    reference_data: reference_data
+    input_data: input_data
 phases:
-  - id: 1
+  - index: 0
     name: "Evaluation Phase"
     description: "Main evaluation phase"
-    start: "2024-01-01"
-    end: "2025-12-31"
-
-    # Scoring
-    tasks:
-      - name: "Concordia Cooperative Intelligence Challenge"
-        scoring_program: "scoring_program.zip"
-        reference_data: "reference_data.zip"
-        ingestion_program: "ingestion_program.zip"
-        input_data: "input_data.zip"
-
-# Leaderboard
-leaderboard:
-  - title: "Results"
-    key: "Quantitative scores measuring individual returns and social welfare"
-    sorting: "desc"
-    computation: "average"
-
-# Resource limits
-resource_limits:
-  time_limit: 600
-  memory_limit_mb: 4096
-
-# Metadata
-created_by: "Paper2Codabench POC"
-version: "1.0"
+    start: "2026-01-01"
+    end: "2027-12-31"
+    max_submissions_per_day: 5
+    max_submissions: 100
+    tasks: [0]
+leaderboards:
+  - index: 0
+    title: "Results"
+    key: "results"
+    submission_rule: "force_last"
+    columns:
+      - index: 0
+        title: "LM-based reward model score"
+        key: "LM-based reward model score"
+        sorting: "desc"
+pages:
+  - title: "Overview"
+    file: overview.html
+  - title: "Evaluation"
+    file: evaluation.html
+terms: terms.html

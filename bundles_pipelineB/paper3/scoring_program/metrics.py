@@ -1,19 +1,18 @@
 import numpy as np
 from typing import Dict
-from sklearn.metrics import accuracy_score
 from scipy.stats import norm
 
 def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, task_type: str) -> Dict[str, float]:
     """
-    Compute evaluation metrics for classification tasks.
+    Compute evaluation metrics for the Codabench competition.
 
     Parameters:
-    - y_true (np.ndarray): Ground truth labels or values.
-    - y_pred (np.ndarray): Predicted labels or interval bounds.
-    - task_type (str): Type of task, expected to be "classification".
+    - y_true (np.ndarray): Ground truth values, expected shape (n_samples, 2) where columns are [mu16, mu84].
+    - y_pred (np.ndarray): Predicted values, expected shape (n_samples, 2) where columns are [mu16, mu84].
+    - task_type (str): Task type, expected to be 'other'.
 
     Returns:
-    - Dict[str, float]: Dictionary containing metric names and their computed values.
+    - Dict[str, float]: Dictionary containing computed metrics.
     """
     # Reshape 1D arrays to 2D
     if y_true.ndim == 1:
@@ -22,43 +21,48 @@ def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, task_type: str) -> D
         y_pred = y_pred.reshape(-1, 1)
 
     # Validate input shapes
-    if y_true.shape[0] != y_pred.shape[0]:
-        raise ValueError("y_true and y_pred must have the same number of samples.")
-    if y_true.size == 0 or y_pred.size == 0:
-        raise ValueError("y_true and y_pred cannot be empty.")
+    if y_true.shape != y_pred.shape:
+        raise ValueError("Shape mismatch: y_true and y_pred must have the same shape.")
+    if y_true.shape[1] != 2 or y_pred.shape[1] != 2:
+        raise ValueError("Invalid shape: y_true and y_pred must have exactly 2 columns (mu16, mu84).")
     if np.any(np.isnan(y_true)) or np.any(np.isnan(y_pred)):
-        raise ValueError("y_true and y_pred cannot contain NaN values.")
+        raise ValueError("Input contains NaN values.")
 
-    # Extract components from y_pred
-    mu_16 = y_pred[:, 0]  # Lower bound of confidence interval
-    mu_84 = y_pred[:, 1]  # Upper bound of confidence interval
-    predicted_class = y_pred[:, 2]  # Predicted classification labels
+    # Extract lower and upper bounds
+    mu16_true, mu84_true = y_true[:, 0], y_true[:, 1]
+    mu16_pred, mu84_pred = y_pred[:, 0], y_pred[:, 1]
 
     # Compute metrics
+    n_samples = len(y_true)
+    epsilon = 1e-2  # Regularization term
+    target_coverage = 0.6827  # Target coverage for 68.27% CI
+
     # Average Interval Width (w)
-    interval_width = mu_84 - mu_16
-    average_interval_width = np.mean(interval_width)
+    interval_widths = mu84_pred - mu16_pred
+    average_interval_width = np.mean(interval_widths)
 
     # Coverage (c)
-    coverage = np.mean((y_true[:, 0] >= mu_16) & (y_true[:, 0] <= mu_84))
+    coverage = np.mean((mu16_pred <= mu16_true) & (mu84_pred >= mu84_true))
 
-    # Final Quantile Score
-    epsilon = 1e-2
-    def coverage_penalty(c):
-        target_coverage = 0.6827
-        if c < target_coverage:
-            return np.exp(target_coverage - c)
+    # Binomial statistical error (σ68)
+    sigma68 = np.sqrt(target_coverage * (1 - target_coverage) / n_samples)
+
+    # Penalty Function (f(c))
+    def penalty_function(c, target, sigma):
+        if c >= target:
+            return 1
         else:
-            return np.exp(c - target_coverage)
-    final_quantile_score = -np.log((average_interval_width + epsilon) * coverage_penalty(coverage))
+            return np.exp(-((target - c) / sigma)**2)
 
-    # Classification Accuracy
-    classification_accuracy = accuracy_score(y_true[:, 1], predicted_class)
+    penalty = penalty_function(coverage, target_coverage, sigma68)
 
-    # Return metrics dictionary
+    # Quantile Score
+    quantile_score = -np.log((average_interval_width + epsilon) * penalty)
+
+    # Return metrics
     return {
-        "Final Quantile Score": final_quantile_score,
+        "Quantile Score": quantile_score,  # Primary metric
         "Average Interval Width (w)": average_interval_width,
         "Coverage (c)": coverage,
-        "Classification Accuracy": classification_accuracy
+        "Penalty Function (f(c))": penalty
     }

@@ -1,0 +1,119 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "[FILL IN THE BLANK: paper_id]-task",
+  "name": "EEG-Based Machine Learning Challenges",
+  "description": "Develop models to predict response times and psychopathology scores using EEG data, emphasizing transfer learning and regression tasks.",
+  "cr:input": [
+    {
+      "name": "EEG Input Data",
+      "description": "Input data contains columns: ['id', 'pred_response_time', 'pred_internalization', 'pred_externalization', 'pred_attention']. Example rows include 'sample_000,value_0,value_0,value_0,value_0'.",
+      "url": null,
+      "distribution": null,
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "text/csv",
+      "contentUrl": "[FILL IN THE BLANK: dataset source URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predictions include columns: ['id', 'pred_response_time', 'pred_internalization', 'pred_externalization', 'pred_attention', 'pred_p_factor']. Example row: 'sample_000,value_0,value_0,value_0,value_0,0.766369311118356'.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "id",
+          "description": "Unique identifier for each sample, e.g., 'sample_000'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "pred_response_time",
+          "description": "Predicted response time, e.g., 'value_0'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "pred_internalization",
+          "description": "Predicted internalization score, e.g., 'value_0'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "pred_externalization",
+          "description": "Predicted externalization score, e.g., 'value_0'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "pred_attention",
+          "description": "Predicted attention score, e.g., 'value_0'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "pred_p_factor",
+          "description": "Predicted psychopathology factor score, e.g., '0.766369311118356'.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        }
+      ],
+      "@type": "cr:RecordSet"
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "numpy",
+        "pandas",
+        "sklearn"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Normalized Root Mean Square Error (nRMSE)",
+    "metrics": [
+      "Normalized Root Mean Square Error (nRMSE)",
+      "nRMSE_S1",
+      "nRMSE_S2"
+    ],
+    "higherIsBetter": false,
+    "notes": "nRMSE is computed as RMSE divided by the standard deviation of true values. Weighted average of nRMSE scores is used for overall ranking: 0.3 * nRMSE_S1 + 0.7 * nRMSE_S2."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper7",
+  "open_questions": [
+    "What is the original paper associated with this competition?",
+    "What is the source URL for the dataset?",
+    "What is the exact paper ID?"
+  ],
+  "fill_in_the_blank": [
+    "paper_id - reason it could not be determined from the bundle files",
+    "dataset.sourceUrl - reason it could not be determined from the bundle files",
+    "paper_id - reason it could not be determined from the bundle files"
+  ]
+}

@@ -1,13 +1,13 @@
-# SLM Early-Stage Evaluation
+# Early Training Evaluation Benchmarks for SLMs
 
 Auto-generated Codabench bundle (Pipeline B: direct from paper).
 
 ## Task Overview
 
 **Type:** other
-**Primary Metric:** Signal Quality (ScoreSQ)
+**Primary Metric:** Total Score
 
-Evaluate Small Language Models (SLMs) during early training stages (0-200 billion tokens) using benchmarks for reasoning, scientific knowledge, and training dynamics.
+Evaluate Small Language Models (SLMs) during early training stages on scientific knowledge acquisition, reasoning, and sensitivity to knowledge-intensive tasks.
 
 ## Submission Format
 
@@ -17,7 +17,7 @@ Evaluate Small Language Models (SLMs) during early training stages (0-200 billio
 
 ## Evaluation
 
-Primary metric: Signal Quality (ScoreSQ)
+Primary metric: Total Score
 Higher is better: True
 
 ## Resource Limits

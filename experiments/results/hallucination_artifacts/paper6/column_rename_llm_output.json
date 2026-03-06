@@ -1,0 +1,96 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "arXiv:2406.00783v3-task",
+  "name": "Fairness Benchmark for AI-Generated Face Detection",
+  "description": "The task is to evaluate the fairness of AI-generated face detectors across demographic groups using the AI-Face dataset, which includes real and AI-generated faces annotated with demographic attributes such as skin tone, gender, and age.",
+  "paper_id": "arXiv:2406.00783v3",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "AI-Face Dataset",
+      "description": "A million-scale dataset containing 400,885 real face images and 1,245,660 AI-generated face images. The dataset includes demographic annotations for skin tone (Monk Skin Tone Scale), gender (binary categories), and age (five groups: Child, Youth, Adult, Middle-age Adult, Senior). Images are sourced from public datasets and generated using Deepfake Videos, GANs, and Diffusion Models.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset encoding format]",
+      "contentUrl": "https://github.com/Purdue-M2/AI-Face-FairnessBench"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predicted fairness evaluation metrics for AI-generated face detectors, including performance disparities across demographic groups.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "detector_name",
+          "dataType": "sc:Text",
+          "description": "The name of the AI-generated face detector being evaluated, e.g., 'StyleGAN Detector'."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "demographic_group",
+          "dataType": "sc:Text",
+          "description": "The demographic group being evaluated, e.g., 'Skin Tone 1', 'Female', or 'Adult'."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "fairness_metric",
+          "dataType": "sc:Float",
+          "description": "The fairness evaluation metric value for the detector on the specified demographic group."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "utility_metric",
+          "dataType": "sc:Float",
+          "description": "The utility evaluation metric value for the detector, e.g., accuracy or F1-score."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "torch",
+        "numpy",
+        "scikit-learn",
+        "mediapipe",
+        "k-means-constrained"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "[FILL IN THE BLANK: list of all evaluation metrics]"
+    ],
+    "higherIsBetter": "[FILL IN THE BLANK: true or false]",
+    "notes": "The evaluation includes fairness metrics across demographic groups and utility metrics for overall performance. Specific metric formulas are not provided in the paper."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "yes"
+  },
+  "open_questions": [
+    "What is the exact primary evaluation metric used in the fairness benchmark?",
+    "What are the specific fairness and utility metrics evaluated in the benchmark?",
+    "What is the encoding format of the AI-Face dataset?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - The dataset encoding format is not specified in the paper.",
+    "cr:evaluation.primaryMetric - The primary evaluation metric is not explicitly mentioned in the paper.",
+    "cr:evaluation.metrics - The paper does not list all evaluation metrics used in the benchmark.",
+    "cr:evaluation.higherIsBetter - It is unclear whether higher values of the primary metric indicate better performance."
+  ]
+}

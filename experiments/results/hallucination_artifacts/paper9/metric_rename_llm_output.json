@@ -1,0 +1,88 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "arxiv-2506.07731v1-task",
+  "name": "Early Training Evaluation of Small Language Models",
+  "description": "This task focuses on designing evaluation benchmarks to assess the early training progress of small language models (SLMs) in acquiring scientific knowledge, reasoning, and other capabilities.",
+  "paper_id": "arXiv:2506.07731v1",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "Pre-trained Small Language Models and Checkpoints",
+      "description": "Three pre-trained small language models (0.5B, 1B, and 3B parameters) with intermediate checkpoints sampled during training up to 200 billion tokens. Models are trained on two data mixtures: a web-only dataset and a scientific knowledge dataset.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset file format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The expected output includes performance signals that measure the early training progress of SLMs. These signals should reflect the models' ability to acquire scientific knowledge and reasoning capabilities.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "model_size",
+          "dataType": "sc:Text",
+          "description": "The size of the model being evaluated (e.g., 0.5B, 1B, 3B)."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "training_tokens",
+          "dataType": "sc:Integer",
+          "description": "The number of training tokens processed (e.g., 50 billion, 100 billion)."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "benchmark_score",
+          "dataType": "sc:Float",
+          "description": "The performance score on the evaluation benchmark (e.g., MMLU-var score)."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "[FILL IN THE BLANK: required Python packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "MMLU-var",
+      "MMLU",
+      "HellaSwag",
+      "WinoGrande"
+    ],
+    "higherIsBetter": true,
+    "notes": "Metrics evaluate the ability of SLMs to acquire scientific knowledge and reasoning capabilities during early training. MMLU-var is highlighted as a more effective benchmark for early-stage evaluation."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "yes"
+  },
+  "open_questions": [
+    "What specific evaluation metrics should be used to measure the quality of performance signals?",
+    "How can benchmarks be refined to better capture intermediate reasoning capabilities?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset file format is not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL is not provided in the paper",
+    "cr:implementation.cr:environment.packages - required Python packages are not listed in the paper",
+    "cr:evaluation.primaryMetric - the primary evaluation metric is not explicitly stated in the paper"
+  ]
+}

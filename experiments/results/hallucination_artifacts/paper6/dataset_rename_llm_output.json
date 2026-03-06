@@ -1,0 +1,91 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "arxiv:2406.00783v3-task",
+  "name": "Fairness Benchmarking for AI-Generated Face Detection",
+  "description": "This task involves evaluating the fairness of AI-generated face detectors using the SynthBench-2024 dataset, which includes demographically annotated real and AI-generated face images from diverse generation methods (Deepfake Videos, GANs, and Diffusion Models). The goal is to assess and improve fairness across demographic groups such as skin tone, gender, and age.",
+  "paper_id": "arxiv:2406.00783v3",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "SynthBench-2024 Dataset",
+      "description": "A dataset containing 400,885 real face images and 1,245,660 AI-generated face images annotated with demographic attributes (skin tone, gender, and age). The dataset includes images from 28 subsets and 37 generation methods, such as FF++, DFDC, GANs, and Diffusion Models.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset encoding format]",
+      "contentUrl": "https://github.com/Purdue-M2/SynthBench-2024-FairnessBench"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The output consists of fairness evaluation results for AI-generated face detectors, including performance metrics disaggregated by demographic groups (e.g., skin tone, gender, age).",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "detector_id",
+          "dataType": "sc:Text",
+          "description": "Identifier for the AI face detector being evaluated, e.g., 'detector_001'."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "demographic_group",
+          "dataType": "sc:Text",
+          "description": "The demographic group being evaluated, e.g., 'Skin Tone: Tone 1', 'Gender: Male', 'Age: Adult (25-44)'."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "fairness_metric_value",
+          "dataType": "sc:Float",
+          "description": "The fairness metric value for the detector on the specified demographic group, e.g., 0.85."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "torch",
+        "numpy",
+        "scikit-learn",
+        "mediapipe",
+        "clip"
+      ]
+    },
+    "entryPoint": "fairness_benchmark.py",
+    "interface": "evaluate_fairness(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "[FILL IN THE BLANK: list of all metrics mentioned in the paper]"
+    ],
+    "higherIsBetter": "[FILL IN THE BLANK: true or false]",
+    "notes": "[FILL IN THE BLANK: any special computation details for the metrics]"
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "yes"
+  },
+  "open_questions": [
+    "What is the primary evaluation metric used for fairness benchmarking?",
+    "What are the exact metrics used to evaluate fairness across demographic groups?",
+    "What is the encoding format of the SynthBench-2024 dataset?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - The dataset encoding format is not specified in the paper.",
+    "cr:evaluation.primaryMetric - The primary evaluation metric is not explicitly mentioned in the paper.",
+    "cr:evaluation.metrics - The list of all metrics used for evaluation is not provided in the paper.",
+    "cr:evaluation.higherIsBetter - It is unclear whether higher values of the metrics indicate better performance.",
+    "cr:evaluation.notes - The paper does not specify any special computation details for the metrics."
+  ]
+}

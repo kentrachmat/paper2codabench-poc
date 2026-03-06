@@ -1,0 +1,89 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "neurips2024-llm-privacy-challenge-task",
+  "name": "LLM Privacy Challenge",
+  "description": "The NeurIPS 2024 LLM Privacy Challenge addresses privacy risks in Large Language Models (LLMs) by focusing on identifying vulnerabilities (Red Team) and developing defenses (Blue Team) using synthetic datasets mimicking private data.",
+  "paper_id": "neurips2024-llm-privacy-challenge",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "Synthetic Private Data",
+      "description": "Synthetic datasets generated to mimic real-world private information, such as replacing names and email addresses in public datasets like Enron with randomly generated strings. The data format is designed to simulate sensitive data contexts responsibly.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Expected outputs include attack success rates (Red Team) and defense effectiveness metrics (Blue Team). For example, Red Team outputs might include extracted sensitive information, while Blue Team outputs could include sanitized LLM responses.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "attack_accuracy",
+          "dataType": "sc:Float",
+          "description": "The success rate of identifying and extracting sensitive information from LLMs. Example values: 0.85 (85% success rate)."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "efficiency",
+          "dataType": "sc:Float",
+          "description": "For Red Team: number of tokens or queries used to achieve a successful breach. For Blue Team: computational overhead of defense mechanisms. Example values: 120 tokens for Red Team, 0.02 seconds per query for Blue Team."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "model_effectiveness",
+          "dataType": "sc:Float",
+          "description": "For Blue Team: general performance of the LLM after applying defensive methods. Example values: 0.92 (92% accuracy on benchmark tasks)."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "transformers",
+        "numpy",
+        "torch",
+        "scipy"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "attack_accuracy",
+    "metrics": [
+      "attack_accuracy",
+      "efficiency",
+      "model_effectiveness"
+    ],
+    "higherIsBetter": true,
+    "notes": "Attack accuracy is maximized for Red Team and minimized for Blue Team. Efficiency measures resource use (e.g., tokens, computational overhead). Model effectiveness evaluates LLM performance post-defense."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact format of the synthetic datasets provided?",
+    "What are the specific examples of sensitive data in the synthetic datasets?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset format not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL not provided in the paper",
+    "cr:execution.allowedExternalData - unclear if external data is allowed"
+  ]
+}

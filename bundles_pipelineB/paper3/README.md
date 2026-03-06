@@ -1,13 +1,13 @@
-# Signal Strength Estimation and Classification in High-Energy Physics Data
+# FAIR Universe HiggsML Uncertainty Challenge
 
 Auto-generated Codabench bundle (Pipeline B: direct from paper).
 
 ## Task Overview
 
-**Type:** classification
-**Primary Metric:** Final Quantile Score
+**Type:** other
+**Primary Metric:** Quantile Score
 
-Develop machine learning models to estimate the signal strength parameter (µ) and classify particle collision events as Signal or Background, while accounting for systematic and random uncertainties.
+The task involves estimating the signal strength parameter (µ) for Higgs boson events relative to the Standard Model prediction, along with a 68.27% Confidence Interval (CI), accounting for systematic uncertainties and distribution shifts.
 
 ## Submission Format
 
@@ -17,7 +17,7 @@ Develop machine learning models to estimate the signal strength parameter (µ) a
 
 ## Evaluation
 
-Primary metric: Final Quantile Score
+Primary metric: Quantile Score
 Higher is better: True
 
 ## Resource Limits

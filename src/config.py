@@ -21,6 +21,10 @@ class Config:
     AZURE_OPENAI_DEPLOYMENT = os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4")
     AZURE_OPENAI_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION")  # Optional
 
+    # Codabench Settings
+    CODABENCH_API_URL = os.getenv("CODABENCH_API_URL", "https://www.codabench.org/api")
+    CODABENCH_API_TOKEN = os.getenv("CODABENCH_API_TOKEN")
+
     # Project Paths
     PROJECT_ROOT = project_root
     PAPERS_DIR = project_root / "papers"
@@ -49,6 +53,21 @@ class Config:
                 f"Please copy .env.example to .env and fill in your credentials."
             )
 
+        return True
+
+    @classmethod
+    def validate_codabench(cls):
+        """Validate Codabench configuration"""
+        missing = []
+        if not cls.CODABENCH_API_URL:
+            missing.append("CODABENCH_API_URL")
+        if not cls.CODABENCH_API_TOKEN:
+            missing.append("CODABENCH_API_TOKEN")
+        if missing:
+            raise ValueError(
+                f"Missing Codabench environment variables: {', '.join(missing)}\n"
+                f"Please set them in your .env file."
+            )
         return True
 
     @classmethod

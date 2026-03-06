@@ -1,13 +1,13 @@
-# Concordia Cooperative Intelligence Challenge
+# Concordia Cooperative AI Challenge
 
 Auto-generated Codabench bundle (Pipeline B: direct from paper).
 
 ## Task Overview
 
 **Type:** other
-**Primary Metric:** Quantitative scores measuring individual returns and social welfare
+**Primary Metric:** LM-based reward model score
 
-Develop autonomous language model agents capable of effective cooperation in mixed-motive, text-mediated environments, balancing individual goals with collective welfare.
+Develop autonomous language model agents capable of cooperative reasoning, communication, and decision-making in text-mediated, multi-agent environments.
 
 ## Submission Format
 
@@ -17,7 +17,7 @@ Develop autonomous language model agents capable of effective cooperation in mix
 
 ## Evaluation
 
-Primary metric: Quantitative scores measuring individual returns and social welfare
+Primary metric: LM-based reward model score
 Higher is better: True
 
 ## Resource Limits

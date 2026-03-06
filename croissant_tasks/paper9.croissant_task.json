@@ -1,0 +1,99 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "early-stage-evaluation-slms-task",
+  "name": "Early-Stage Evaluation of Small Language Models (SLMs) for Scientific Knowledge and Reasoning",
+  "description": "The task challenges participants to design or adapt evaluation benchmarks that better capture early-stage learning progress of Small Language Models (SLMs), particularly in scientific domains, and to differentiate between models trained on scientific knowledge-focused datasets and those trained on general web data.",
+  "cr:input": [
+    {
+      "name": "Pre-trained SLMs and Benchmarks",
+      "description": "Participants receive pre-trained SLMs (0.5B, 1B, 3B parameters) with intermediate checkpoints (up to 200 billion tokens) and benchmarks in various formats. Benchmarks include MMLU (MCQs with four options), MMLU-var (continuation-based prompts), and SciQ (question-answer pairs with context). Example MMLU question: 'Find the degree for the given field extension Q(sqrt(2), sqrt(3), sqrt(18)) over Q. Options: A. 0, B. 4, C. 2, D. 6. Answer: B (4).'",
+      "url": null,
+      "distribution": null,
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "[FILL IN THE BLANK: dataset format, e.g., text/csv, application/json]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The expected output varies by benchmark. For MMLU: the selected answer (A, B, C, or D). For MMLU-var: the continuation with the highest log-probability among candidates. For SciQ: a binary classification label ('Accept' or 'Reject') indicating whether the question requires domain-specific reasoning.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "mmlu_answer",
+          "description": "Selected answer for MMLU questions. Example: 'B'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "mmlu_var_continuation",
+          "description": "Continuation with the highest log-probability for MMLU-var prompts. Example: 'C1: (3,3), C2: (4,4), C3: (6,6).'",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "sciq_label",
+          "description": "Binary classification label for SciQ questions. Example: 'Accept'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        }
+      ],
+      "@type": "cr:RecordSet"
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "lm-evaluation-harness",
+        "[FILL IN THE BLANK: additional required packages]"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Total Score",
+    "metrics": [
+      "Signal Quality (SQ)",
+      "Ranking Consistency (RC)",
+      "Compliance Score (CS)"
+    ],
+    "higherIsBetter": true,
+    "notes": "Total Score is computed as a weighted combination of Signal Quality (SQ), Ranking Consistency (RC), and Compliance Score (CS). Formula: Total Score = 0.4 \u00d7 ScoreSQ + 0.2 \u00d7 ScoreRC + 0.4 \u00d7 ScoreCS. SQ includes Monotonicity Score and Autocorrelation Strength. RC uses Kendall\u2019s Tau coefficient. CS assesses alignment with scientific knowledge domains."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 6144,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper9",
+  "open_questions": [
+    "What is the exact dataset format (e.g., text/csv, application/json)?",
+    "What is the dataset download URL?",
+    "What is the paper identifier?",
+    "What additional Python packages are required for implementation?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset format is not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL is not provided in the paper",
+    "paper_id - paper identifier is not mentioned in the provided text",
+    "cr:implementation.cr:environment.packages[1] - additional required packages are not listed in the paper"
+  ]
+}

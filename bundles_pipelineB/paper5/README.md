@@ -5,9 +5,9 @@ Auto-generated Codabench bundle (Pipeline B: direct from paper).
 ## Task Overview
 
 **Type:** generation
-**Primary Metric:** final score
+**Primary Metric:** Euclidean distance (sqrt(Q^2 + A^2))
 
-Evaluate the robustness of invisible watermarking techniques in AI-generated images against adversarial attacks, focusing on watermark removal while preserving image quality.
+This competition evaluates the robustness of invisible watermarks in AI-generated images against adversarial attacks, aiming to minimize watermark detection while preserving image quality.
 
 ## Submission Format
 
@@ -17,7 +17,7 @@ Evaluate the robustness of invisible watermarking techniques in AI-generated ima
 
 ## Evaluation
 
-Primary metric: final score
+Primary metric: Euclidean distance (sqrt(Q^2 + A^2))
 Higher is better: False
 
 ## Resource Limits

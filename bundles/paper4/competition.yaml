@@ -1,0 +1,38 @@
+title: "Concordia Cooperative Intelligence Challenge"
+description: |
+  Develop and evaluate autonomous language model agents capable of cooperative reasoning, communication, and decision-making in diverse, mixed-motive, text-mediated environments to maximize joint welfare.
+image: logo.png
+docker_image: "codalab/codalab-legacy:py3"
+tasks:
+  - index: 0
+    name: "Concordia Cooperative Intelligence Challenge"
+    description: "Develop and evaluate autonomous language model agents capable of cooperative reasoning, communication, and decision-making in diverse, mixed-motive, text-mediated environments to maximize joint welfare."
+    scoring_program: scoring_program
+    ingestion_program: ingestion_program
+    reference_data: reference_data
+    input_data: input_data
+phases:
+  - index: 0
+    name: "Evaluation Phase"
+    description: "Main evaluation phase"
+    start: "2026-01-01"
+    end: "2027-12-31"
+    max_submissions_per_day: 5
+    max_submissions: 100
+    tasks: [0]
+leaderboards:
+  - index: 0
+    title: "Results"
+    key: "results"
+    submission_rule: "force_last"
+    columns:
+      - index: 0
+        title: "Quantitative scores based on cooperative intelligence"
+        key: "Quantitative scores based on cooperative intelligence"
+        sorting: "desc"
+pages:
+  - title: "Overview"
+    file: overview.html
+  - title: "Evaluation"
+    file: evaluation.html
+terms: terms.html

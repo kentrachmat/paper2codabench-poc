@@ -1,0 +1,234 @@
+The NeurIPS 2024 LLM Privacy Challenge
+Qinbin Li
+UC Berkeley
+Junyuan Hong
+UT Austin
+Chulin Xie
+UIUC
+Junyi Hou
+NUS
+Yiqun Diao
+NUS
+Zhun Wang
+UC Berkeley
+Dan Hendrycks
+Center for AI Safety
+Zhangyang Wang
+UT Austin
+Bo Li
+UChicago
+Bingsheng He
+NUS
+Dawn Song
+UC Berkeley
+Abstract
+The NeurIPS 2024 LLM Privacy Challenge is designed to address the critical issue
+of privacy in the use of Large Language Models (LLMs), which have become
+fundamental in a wide array of artificial intelligence applications. This competition
+acknowledges the potential privacy risks posed by the extensive datasets used to
+train these models, including the inadvertent leakage of sensitive information. To
+mitigate these risks, the challenge is structured around two main tracks: the Red
+Team, focusing on identifying and exploiting privacy vulnerabilities, and the Blue
+Team, dedicated to developing defenses against such vulnerabilities. Participants
+will have the option to work with LLMs fine-tuned on synthetic private data or
+LLMs interacting with private system/user prompts, thus offering a versatile ap-
+proach to tackling privacy concerns. The competition will provide participants
+with access to a toolkit designed to facilitate the development of privacy-enhancing
+methods, alongside baselines for comparison. Submissions will be evaluated based
+on attack accuracy, efficiency, and the effectiveness of defensive strategies, with
+prizes awarded to the most innovative and impactful contributions. By foster-
+ing a collaborative environment for exploring privacy-preserving techniques, the
+NeurIPS 2024 LLM Privacy Challenge aims to catalyze advancements in the se-
+cure and ethical deployment of LLMs, ensuring their continued utility in sensitive
+applications without compromising user privacy.
+Keywords
+Large Language Models, Privacy
+1
+Competition description
+1.1
+Background and impact
+The rapid advancement and integration of Large Language Models (LLMs) across various sec-
+tors—from healthcare and finance to legal and educational services—underscore their significance
+in the modern digital landscape. These models, trained on vast corpora of text data, have shown
+remarkable ability in generating coherent and contextually relevant text outputs, driving efficiencies
+and innovation. However, the very foundation of their capabilities, extensive data training, raises
+significant privacy concerns. The potential for these models to memorize and inadvertently leak
+sensitive information poses a risk not only to individual privacy but also to corporate and national
+security impacting multiple countries and races [1, 6, 2, 9, 7, 13, 12, 11, 8]. The fields of machine
+learning, natural language processing, cybersecurity, and data privacy converge in this arena, each
+bringing unique perspectives and methodologies to address these challenges.
+Preprint. Under review.
+
+
+The proposed NeurIPS 2024 LLM Privacy Challenge aims to catalyze significant technical ad-
+vancements and deepen our understanding of privacy risks in LLMs. By focusing on identifying
+vulnerabilities and developing protective measures, the challenge is positioned to make substantial
+contributions:
+• The challenge will significantly deepen researchers’ and developers’ collective understanding
+of privacy vulnerabilities within LLMs, illuminating the intricate ways in which sensitive
+data can be exposed and the broader implications for data privacy in AI technologies.
+• Through the challenge, we anticipate the emergence of innovative methodologies for safe-
+guarding data privacy in LLMs. These advancements are expected not only to alleviate
+current concerns regarding the deployment of LLMs but also to set new standards for the
+responsible and ethical use of LLMs, reinforcing its societal and humanitarian benefits.
+• By spotlighting the critical issue of privacy within LLMs, the challenge will galvanize
+broader engagement with the topic, motivating researchers and developers to contribute
+towards the evolution of more secure and reliable LLMs. This concerted effort is crucial for
+ensuring the safe and responsible integration of LLM technologies into our daily lives.
+Relevance to the NeurIPS community
+Privacy and security are central concerns in the devel-
+opment and deployment of AI technologies. The NeurIPS audience, comprising researchers and
+practitioners in privacy-preserving machine learning, is uniquely positioned to contribute to and
+benefit from the insights generated through this challenge. Given the broad and multidisciplinary
+impact of LLM privacy, the challenge is expected to attract a large and diverse group of participants,
+ranging from academic researchers to industry practitioners. The interdisciplinary nature of the
+problem, touching on technical, ethical, and regulatory aspects of AI, will likely draw interest from
+hundreds to potentially over 200 participants.
+Settings
+Participants in the NeurIPS 2024 LLM Privacy Challenge will engage in a simulated
+environment that mirrors real-life scenarios where privacy breaches can occur. For instance, in the
+Red Team track, participants might work with models fine-tuned on datasets similar to a public dataset
+that contains sensitive information (e.g., the Enron email dataset [5]), identifying ways sensitive
+information could be extracted through cleverly crafted prompts. Conversely, the Blue Team will
+develop methods to thwart such attacks, enhancing the model’s ability to protect information without
+losing its utility. This approach not only provides a practical and applied setting for the competition
+but also underscores the real-world relevance and urgency of the challenges being addressed.
+1.2
+Novelty
+This NeurIPS 6079 LLM Privacy Challenge represents an entirely new initiative, specifically designed
+to address the critical and emerging concerns surrounding privacy in LLMs. While there have been
+competitions focused on aspects of AI ethics and security in the past, this challenge uniquely centers
+on the nuanced domain of privacy within LLMs—a topic of increasing relevance as these models
+become more integrated into our daily lives and business operations.
+There were challenges for trustworthy machine learning. For example, the Trojan Detection Challange
+2023 [4] aims to discover ways to detect trojans in LLMs in 2023. The NeurIPS 2023 Machine
+Unlearning Challenge [10] aims to study the unlearning methods focusing on the image data. To the
+best of our knowledge, these competitions either do not focus on privacy or do not focus on LLMs.
+Our first LLM Privacy Challenge is designed to fill this gap by:
+• Providing a focused platform for exploring and mitigating privacy risks specific to LLMs.
+• Introducing a structured competition format that encourages the development of innovative
+privacy-preserving techniques from two complementary perspectives: identifying potential
+privacy breaches and devising effective defense mechanisms.
+• Offering a specialized toolkit and datasets tailored to the unique challenges of LLM privacy,
+facilitating targeted research and development efforts.
+In summary, the NeurIPS 2024 LLM Privacy Challenge represents a pioneering effort to catalyze
+advancements in privacy preservation techniques for LLMs. By providing a novel platform for
+2
+
+
+exploration, this competition is poised to make significant contributions to the ethical development
+and deployment of LLMs.
+1.3
+Data
+Synthetic Data Generation
+Due to privacy concerns, we will not provide new real private data in
+the competition. To ensure privacy, integrity, and fairness, using real-world datasets that encompass
+enormous private information as references, we will create synthetic data that is designed to mimic
+real-world private information without compromising individual privacy. Specifically, we will replace
+the private data in public real-world datasets with random generated strings. For example, we
+will replace the name and email address in Enron [5] with random generations while ensuring that
+the format is reasonable. The synthetic datasets are designed to be large and diverse enough to
+enable meaningful, statistically significant conclusions. The ground truth for the datasets has not
+been published or shared previously. It has been securely maintained to ensure the integrity of
+the competition’s evaluation process. The creation of synthetic data was guided by strict ethical
+principles, with the aim to simulate sensitive data contexts in a responsible manner.
+Permissions and Licenses
+The synthetic data have been generated in-house, ensuring full control
+over their use and distribution. These resources will be made freely available to all competition
+participants under CC-BY 4.0 license that permits their use for the duration of the challenge and
+future research.
+1.4
+Tasks and application scenarios
+The NeurIPS 2024 LLM Privacy Challenge is designed around two core tasks, each corresponding to
+a crucial aspect of privacy in Large Language Models (LLMs): identifying potential privacy breaches
+(Red Team) and developing effective countermeasures to protect sensitive information (Blue Team).
+These tasks mirror real-world challenges faced by developers and users of LLM technologies in both
+industry and academia.
+Real-World Scenarios
+Red Team participants are tasked with uncovering vulnerabilities in LLMs
+that could potentially leak sensitive information. This task directly correlates with the industry
+challenge of preventing data breaches that can lead to significant financial and reputational damage. A
+practical example is the potential extraction of personally identifiable information (PII) from models
+that is fine-tuned on the private domain data, such as financial data. Blue Team participants focus on
+fortifying LLMs against privacy attacks, enhancing their ability to safeguard data. This reflects the
+academic and industrial pursuit of creating secure AI systems that respect user privacy. An application
+scenario could involve designing methods to sanitize output from healthcare-related queries to LLMs,
+ensuring that sensitive patient information is not inadvertently disclosed.
+Justification of Challenge
+The tasks set forth in the competition are challenging due to the
+complexity of LLMs and the subtlety of privacy vulnerabilities. Participants must navigate the
+trade-off between model utility, privacy, and efficiency, developing solutions that are effective without
+unduly compromising the functionality of the LLMs. This balance is a live issue in the development
+of AI technologies, reflecting ongoing debates in the field.
+While challenging, the tasks are designed to be achievable within the current technological landscape.
+There are already some existing studies that investigate privacy issues in LLMs [7, 13, 12, 11]. The
+use of synthetic and real-world inspired datasets ensures that participants have a robust foundation for
+testing and refining their approaches. Additionally, by structuring the competition around both attack
+and defense mechanisms, participants are encouraged to think critically and creatively about privacy
+from multiple angles. Moreover, the scientific problems tackled in the competition have implications
+beyond the specific datasets provided, applicable to various domains where LLMs are employed. For
+instance, techniques developed to protect synthetic private data can be adapted to secure LLMs used
+in legal document analysis, while strategies for safeguarding against privacy breaches in user prompts
+could benefit LLMs applied in personalized learning environments.
+3
+
+
+1.5
+Metrics
+We will employ quantitative metrics to evaluate submissions from participants in both the Red Team
+and Blue Team tracks. These metrics are chosen to effectively assess the efficacy of solutions in
+addressing privacy concerns within LLMs, ensuring that the evaluations are comprehensive, fair, and
+reflective of real-world applicability.
+• Attack Accuracy: This metric measures the success rate of participants in identifying
+and extracting sensitive information from the LLMs. It quantifies the precision of attacks,
+highlighting the capability to pinpoint vulnerabilities within the models. For the Red Team,
+the ranking is higher if the attack accuracy is higher. For the Blue Team, the ranking is
+higher if the attack accuracy is lower.
+• Efficiency: For the Red Team, this metric evaluates the number of tokens or queries used to
+achieve a successful breach, reflecting the resource efficiency of the attack method. For the
+Blue Team, we will assess the computational overhead (for example, inference throughput,
+and training costs) introduced by defense mechanisms, ensuring that solutions are not only
+effective but also efficient.
+• Model Effectiveness (Blue Team): For Blue Team, we will also evaluate the general
+performance of the LLM after applying defensive methods to filter the solutions that will
+degrade the model performance significantly.
+Computing Infrastructure for Reproduction
+A standardized computing environment with 8
+NVIDIA H100 GPUs will be used to reproduce the submissions by the participants. This environment
+will include specific hardware configurations and software versions to ensure that all participants’
+solutions are evaluated under uniform conditions. Details of the computing infrastructure will be
+disclosed to participants in advance, including processor types, memory specifications, and available
+software libraries.
+Error Bars and Significance Testing
+Error bars will be calculated using standard deviations from
+multiple runs of the submitted solutions, providing insights into the consistency and reliability of
+the results. Statistical significance in performance differences between participants will be evaluated
+using appropriate tests (e.g., t-tests or ANOVA), ensuring that observed differences are not due to
+random variation.
+1.6
+Baselines, code, and material provided
+Baselines
+For Red Team, a baseline method is to use a query-based data extraction attack [3] to
+extract private information that prompts LLMs with training data prefixes. For Blue Team, a baseline
+method is to simply prompt LLMs to not leak private information.
+Code
+We have provided a toolkit at https://github.com/QinbinLi/LLM-PBE to provide the
+code for conducting various attack and defend approaches such as data extraction attacks and
+differential privacy. Participants can easily use our code to load the data and execute the attack or
+defense.
+Material
+We have provided documentation at https://llm-pbe.github.io/document for the
+usage of the code and a paper at https://llm-pbe.github.io/paper that includes baseline
+approaches and the results. Participants can refer to our documentation and paper to compare with
+baseline approaches.
+1.7
+Website, tutorial and documentation
+We have prepared a website at https://llm-pc.github.io/, which includes general information
+about the challenge, FAQ section, and contact information. We will further improve the website
+substantially.
+4
+
+
+2
+Organizational aspects
+2.

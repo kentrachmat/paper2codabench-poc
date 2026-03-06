@@ -9,19 +9,19 @@
   "conformsTo": "http://mlcommons.org/croissant/1.0",
   "@type": "cr:TaskProblem",
   "@id": "paper7-task",
-  "name": "EEG Transfer and Psychopathology Prediction",
-  "description": "Develop models for zero-shot decoding of cognitive tasks from EEG data and predicting latent psychological constructs as biomarkers for mental health.",
+  "name": "EEG-Based Machine Learning Challenges",
+  "description": "Develop models to predict response times and psychopathology scores using EEG data, emphasizing transfer learning and regression tasks.",
   "paper_id": "paper7",
   "cr:input": [
     {
       "name": "competition_dataset",
-      "description": "EEG data in the form of 2-second epochs (128 channels x time steps), along with demographic attributes (age, gender, handedness) for Challenge 1, and event-level annotations for Challenge 2.",
-      "url": "[FILL IN THE BLANK]"
+      "description": "Participants receive EEG data (128-channel recordings), demographic data (age, gender, handedness, psychological factors), and event labels for cognitive tasks. Example: EEG epochs are 2-second segments recorded post-stimulus onset.",
+      "url": "[FILL IN THE BLANK: URL to the competition dataset]"
     }
   ],
   "cr:output": {
     "name": "predictions",
-    "description": "Continuous predictions for response time in Challenge 1 and continuous scores for internalization, externalization, attention, and the p-factor in Challenge 2. Values are expected to be within the range of observed data distributions.",
+    "description": "Predicted response times for the CCD task (0.5\u20132.5 seconds) and continuous psychopathology scores for internalization, externalization, attention, and p-factor.",
     "cr:schema": {
       "name": "prediction_schema",
       "field": [
@@ -31,9 +31,29 @@
           "description": "unique identifier for each sample, e.g., eeg_sample_001"
         },
         {
-          "name": "pred",
+          "name": "pred_response_time",
           "dataType": "sc:Float",
-          "description": "predicted value for response time or psychopathology factors, depending on the challenge"
+          "description": "predicted response time for the CCD task, ranging from 0.5 to 2.5 seconds"
+        },
+        {
+          "name": "pred_internalization",
+          "dataType": "sc:Float",
+          "description": "predicted internalization score, continuous value"
+        },
+        {
+          "name": "pred_externalization",
+          "dataType": "sc:Float",
+          "description": "predicted externalization score, continuous value"
+        },
+        {
+          "name": "pred_attention",
+          "dataType": "sc:Float",
+          "description": "predicted attention score, continuous value"
+        },
+        {
+          "name": "pred_p_factor",
+          "dataType": "sc:Float",
+          "description": "predicted p-factor score, continuous value"
         }
       ]
     }
@@ -45,8 +65,9 @@
         "pandas",
         "numpy",
         "scikit-learn",
-        "braindecode",
-        "torch"
+        "mne",
+        "torch",
+        "braindecode"
       ]
     },
     "entryPoint": "solution.py",
@@ -55,12 +76,10 @@
   "cr:evaluation": {
     "primaryMetric": "Normalized Root Mean Square Error (nRMSE)",
     "metrics": [
-      "Normalized Root Mean Square Error (nRMSE)",
-      "RMSE",
-      "std"
+      "Normalized Root Mean Square Error (nRMSE)"
     ],
     "higherIsBetter": false,
-    "notes": "nRMSE is computed as RMSE divided by the standard deviation of the true labels. Overall ranking is a weighted combination of nRMSE scores for the two challenges."
+    "notes": "nRMSE is computed as RMSE divided by the standard deviation of the true values. Overall ranking combines scores from both challenges using weighted averaging: 0.3 * S1 + 0.7 * S2."
   },
   "cr:execution": {
     "runtimeLimitSec": 600,
@@ -68,13 +87,13 @@
     "allowedExternalData": "unknown"
   },
   "open_questions": [
-    "What are the exact runtime and memory constraints for the competition?",
-    "Are there additional preprocessing steps required for EEG data beyond what is provided in the starter kit?",
-    "What is the expected range of predictions for each psychopathology factor in Challenge 2?"
+    "How are participants expected to handle missing demographic data?",
+    "What is the exact format for EEG data preprocessing?",
+    "Are there any restrictions on model architectures beyond those provided in the baselines?"
   ],
   "fill_in_the_blank": [
-    "Exact runtime and memory constraints.",
-    "Details on additional preprocessing steps for EEG data.",
-    "Expected value ranges for predictions in Challenge 2."
+    "[FILL IN THE BLANK: dataset download URL]",
+    "[FILL IN THE BLANK: number of test samples]",
+    "[FILL IN THE BLANK: exact EEG preprocessing steps]"
   ]
 }

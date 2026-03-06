@@ -1,0 +1,97 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "arXiv:2506.07731v1-task",
+  "name": "Early Training Evaluation of Language Models",
+  "description": "This task involves designing evaluation benchmarks to measure the early training progress of small language models (SLMs) in acquiring scientific knowledge, focusing on the 0-200 billion tokens training phase.",
+  "paper_id": "arXiv:2506.07731v1",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "Pre-trained Small Language Models and Checkpoints",
+      "description": "Three pre-trained small language models (0.5B, 1B, and 3B parameters) with intermediate checkpoints sampled during training up to 200 billion tokens. Models are trained on two datasets: a Web-only dataset derived from FineWeb and a Scientific Knowledge Data Mixture combining subsets of FineWeb-edu, The Stack V1 and V2, InfiMM, and TxT360.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The expected output includes performance signals for early training stages of SLMs, such as rankings of models based on their scientific knowledge acquisition and reasoning capabilities.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "model_size",
+          "dataType": "sc:Text",
+          "description": "The size of the model being evaluated (e.g., 0.5B, 1B, 3B)."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "architecture_variant",
+          "dataType": "sc:Text",
+          "description": "The architectural variant of the model (e.g., arch1, arch2)."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "performance_signal",
+          "dataType": "sc:Float",
+          "description": "The performance signal (e.g., zeta_score) indicating the model's progress in early training stages."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "evaluation_metric",
+          "dataType": "sc:Text",
+          "description": "The evaluation metric used to assess the model (e.g., MMLU-var, GPQA, MATH)."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "[FILL IN THE BLANK: list of required Python packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "zeta_score",
+      "MMLU-var",
+      "GPQA",
+      "MATH",
+      "MUSR"
+    ],
+    "higherIsBetter": true,
+    "notes": "Metrics are used to assess the quality of performance signals, consistency of model rankings, and relevance to the scientific knowledge domain."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "yes"
+  },
+  "open_questions": [
+    "What specific format should the dataset files be provided in?",
+    "What is the exact URL for downloading the datasets?",
+    "What Python packages are required for implementing the solution?",
+    "What is the primary evaluation metric for this task?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset format is not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL is not provided in the paper",
+    "cr:implementation.cr:environment.packages - required Python packages are not listed in the paper",
+    "cr:evaluation.primaryMetric - primary evaluation metric is not explicitly mentioned in the paper"
+  ]
+}

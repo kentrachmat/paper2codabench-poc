@@ -7,17 +7,19 @@ Usage:
     python generate_bundle.py croissant_tasks/paper1.croissant_task.json --output bundles/custom_name
 """
 import argparse
+import copy
 import json
+import re
 import shutil
 import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, Any, List, Tuple
 import pandas as pd
 import numpy as np
-from openai import OpenAI
 
 from config import Config
-from seal import create_bundle_seal
+from llm_client import call_azure_openai_for_code
+from utils import validate_python_syntax
 from prompts import (
     CODE_GENERATION_SYSTEM,
     TOY_DATA_SYSTEM,
@@ -42,6 +44,49 @@ def load_template(template_name: str) -> str:
     template_path = Config.TEMPLATES_DIR / template_name
     with open(template_path, 'r') as f:
         return f.read()
+
+
+def truncate_croissant_for_llm(croissant_task: dict, max_desc_chars: int = 15000) -> dict:
+    """
+    Deep-copy the Croissant Task and truncate long text fields to avoid token overflow.
+    """
+    task = copy.deepcopy(croissant_task)
+
+    # Truncate top-level description
+    desc = task.get('description', '')
+    if len(desc) > max_desc_chars:
+        task['description'] = desc[:max_desc_chars] + '\n... [TRUNCATED]'
+
+    # Truncate each input description
+    for inp in task.get('cr:input', []):
+        inp_desc = inp.get('description', '')
+        if len(inp_desc) > max_desc_chars:
+            inp['description'] = inp_desc[:max_desc_chars] + '\n... [TRUNCATED]'
+
+    return task
+
+
+def generate_toy_data_minimal_fallback(croissant_task: dict, num_samples: int = 20) -> tuple:
+    """
+    Minimal fallback toy data generation when all other methods fail.
+    Creates safe DataFrames with id + prediction columns.
+    """
+    print(f"  Generating {num_samples} minimal fallback toy data samples...")
+
+    output_spec = croissant_task.get('cr:output', {})
+    schema = output_spec.get('cr:schema', {})
+    fields = schema.get('field', [])
+    columns = [f.get('name', '') for f in fields] if fields else ['id', 'pred']
+    target_column = columns[-1] if len(columns) > 1 else 'pred'
+
+    ids = [f"sample_{i:03d}" for i in range(num_samples)]
+
+    input_df = pd.DataFrame({'id': ids})
+    reference_df = pd.DataFrame({'id': ids, target_column: [0] * num_samples})
+    sample_submission_df = pd.DataFrame({'id': ids, target_column: [0] * num_samples})
+
+    print(f"  Generated {num_samples} minimal samples (id + {target_column})")
+    return input_df, reference_df, sample_submission_df
 
 
 def fill_template(template_content: str, variables: Dict[str, Any]) -> str:
@@ -75,37 +120,96 @@ def fill_template(template_content: str, variables: Dict[str, Any]) -> str:
     return result
 
 
-def extract_bundle_vars(croissant_task: dict) -> Dict[str, Any]:
+_FITB_PATTERN = re.compile(r'\[FILL IN THE BLANK[^\]]*\]', re.IGNORECASE)
+
+
+def sanitize_bundle_value(
+    value: Any,
+    field_name: str,
+    default: Any,
+    fallback_log: List[str],
+) -> Any:
+    """
+    Check if *value* is None, empty string, or contains a [FILL IN THE BLANK...]
+    placeholder.  Return *default* when invalid and append a note to *fallback_log*
+    for traceability.
+    """
+    if value is None:
+        fallback_log.append(f"{field_name}: was None, using default '{default}'")
+        return default
+
+    if isinstance(value, str):
+        if value.strip() == '':
+            fallback_log.append(f"{field_name}: was empty string, using default '{default}'")
+            return default
+        if _FITB_PATTERN.search(value):
+            fallback_log.append(
+                f"{field_name}: contained '[FILL IN THE BLANK]', using default '{default}'"
+            )
+            return default
+
+    return value
+
+
+def extract_bundle_vars(croissant_task: dict) -> Tuple[Dict[str, Any], List[str]]:
     """
     Convert Croissant Task JSON-LD to flat dict for template filling.
 
     Derives task_type, columns, target_column, etc. from Croissant structure.
+
+    Returns:
+        (template_vars, fallback_log) — the variable dict and a list of
+        fallback substitutions that were applied.
     """
-    task_name = croissant_task.get('name', 'Unknown Task')
+    fallback_log: List[str] = []
+
+    task_name = sanitize_bundle_value(
+        croissant_task.get('name'), 'task_name', 'Unnamed Competition', fallback_log
+    )
     task_type = infer_task_type(croissant_task)
 
     evaluation = croissant_task.get('cr:evaluation', {})
     execution = croissant_task.get('cr:execution', {})
 
+    problem_statement = sanitize_bundle_value(
+        croissant_task.get('description'), 'problem_statement',
+        'No description provided', fallback_log
+    )
+    primary_metric = sanitize_bundle_value(
+        evaluation.get('primaryMetric'), 'primary_metric', 'accuracy', fallback_log
+    )
+
+    higher_is_better = evaluation.get('higherIsBetter')
+    if higher_is_better is None:
+        fallback_log.append("higherIsBetter: was None, defaulting to True")
+        higher_is_better = True
+
     output_spec = croissant_task.get('cr:output', {})
     schema = output_spec.get('cr:schema', {})
     fields = schema.get('field', [])
-    columns = [f.get('name', '') for f in fields] if fields else ['id', 'pred']
+    columns = [f.get('name', '') for f in fields] if fields else []
+    # Filter empty column names
+    columns = [c for c in columns if c.strip()]
+    if not columns:
+        columns = ['id', 'pred']
+        fallback_log.append("required_columns: no valid columns found, using ['id', 'pred']")
 
     target_column = columns[-1] if len(columns) > 1 else 'pred'
 
-    return {
+    template_vars = {
         'task_name': task_name,
-        'problem_statement': croissant_task.get('description', 'No description provided'),
+        'problem_statement': problem_statement,
         'task_type': task_type,
-        'primary_metric': evaluation.get('primaryMetric', 'accuracy'),
-        'sort_order': 'desc' if evaluation.get('higherIsBetter', True) else 'asc',
+        'primary_metric': primary_metric,
+        'sort_order': 'desc' if higher_is_better else 'asc',
         'runtime_limit_sec': execution.get('runtimeLimitSec', 600),
         'memory_limit_mb': execution.get('memoryLimitMb', 4096),
         'submission_filename': 'solution.py',
         'required_columns': columns,
         'target_column': target_column,
     }
+
+    return template_vars, fallback_log
 
 
 def generate_toy_data_with_llm(croissant_task: dict, num_samples: int = 20) -> tuple:
@@ -203,20 +307,40 @@ def generate_toy_data_generic(croissant_task: dict, num_samples: int = 20) -> tu
     # Create DataFrames with ALL columns from schema
     # input_df gets all columns EXCEPT the prediction target (last column)
     # reference_df and sample_submission_df get ALL columns
-    input_data = {'id': ids}
-    reference_data = {'id': ids}
-    sample_data = {'id': ids}
+    target_column = columns[-1] if len(columns) > 1 else 'pred'
 
-    # Add middle columns (metadata columns between id and prediction)
-    for i in range(1, len(columns) - 1):
-        col_name = columns[i]
-        metadata_values = [f"value_{j}" for j in range(num_samples)]
-        input_data[col_name] = metadata_values
-        reference_data[col_name] = metadata_values
-        sample_data[col_name] = metadata_values
+    # Determine if schema already has an id-like first column
+    has_id_column = len(columns) > 0 and columns[0].lower() == 'id'
+
+    input_data = {}
+    reference_data = {}
+    sample_data = {}
+
+    if has_id_column:
+        # Schema already has 'id' as first column — use it directly
+        input_data[columns[0]] = ids
+        reference_data[columns[0]] = ids
+        sample_data[columns[0]] = ids
+        # Add middle columns (between id and target)
+        for i in range(1, len(columns) - 1):
+            col_name = columns[i]
+            metadata_values = [f"value_{j}" for j in range(num_samples)]
+            input_data[col_name] = metadata_values
+            reference_data[col_name] = metadata_values
+            sample_data[col_name] = metadata_values
+    else:
+        # Schema doesn't have 'id' — add synthetic id + ALL schema fields except target
+        input_data['id'] = ids
+        reference_data['id'] = ids
+        sample_data['id'] = ids
+        for i in range(0, len(columns) - 1):
+            col_name = columns[i]
+            metadata_values = [f"value_{j}" for j in range(num_samples)]
+            input_data[col_name] = metadata_values
+            reference_data[col_name] = metadata_values
+            sample_data[col_name] = metadata_values
 
     # Add the final prediction column (only to reference and sample, NOT input)
-    target_column = columns[-1] if len(columns) > 1 else 'pred'
     reference_data[target_column] = true_labels
     sample_data[target_column] = pred_labels
 
@@ -237,7 +361,6 @@ def create_bundle_structure(bundle_path: Path):
         bundle_path / "scoring_program",
         bundle_path / "input_data",
         bundle_path / "reference_data",
-        bundle_path / "seals",
         bundle_path / "examples",
     ]
 
@@ -245,60 +368,6 @@ def create_bundle_structure(bundle_path: Path):
         directory.mkdir(parents=True, exist_ok=True)
 
     print("  Bundle structure created")
-
-
-def validate_python_syntax(code: str) -> tuple[bool, str]:
-    """Validate Python syntax."""
-    try:
-        compile(code, '<string>', 'exec')
-        return True, ""
-    except SyntaxError as e:
-        return False, f"Syntax error at line {e.lineno}: {e.msg}"
-    except Exception as e:
-        return False, str(e)
-
-
-def call_azure_openai_for_code(system_prompt: str, user_prompt: str, max_retries: int = 2) -> str:
-    """Call Azure OpenAI for code generation."""
-    try:
-        Config.validate()
-    except ValueError as e:
-        raise RuntimeError(f"Configuration error: {e}")
-
-    client = OpenAI(
-        base_url=Config.AZURE_OPENAI_ENDPOINT,
-        api_key=Config.AZURE_OPENAI_KEY
-    )
-
-    for attempt in range(max_retries):
-        try:
-            response = client.chat.completions.create(
-                model=Config.AZURE_OPENAI_DEPLOYMENT,
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt}
-                ],
-                max_tokens=4000,
-                temperature=0.2,
-            )
-
-            code = response.choices[0].message.content.strip()
-
-            # Remove markdown code fences if present
-            if code.startswith("```python"):
-                code = code[9:]
-            if code.startswith("```"):
-                code = code[3:]
-            if code.endswith("```"):
-                code = code[:-3]
-
-            return code.strip()
-
-        except Exception as e:
-            if attempt < max_retries - 1:
-                print(f"  Attempt {attempt + 1} failed, retrying: {e}")
-            else:
-                raise RuntimeError(f"LLM call failed after {max_retries} attempts: {e}")
 
 
 def generate_metrics_py_with_llm(croissant_task: dict) -> str:
@@ -461,7 +530,14 @@ def generate_bundle(croissant_task_path: Path, output_dir: Path = None) -> Path:
     create_bundle_structure(bundle_path)
 
     # Extract template variables from Croissant Task
-    template_vars = extract_bundle_vars(croissant_task)
+    template_vars, fallback_log = extract_bundle_vars(croissant_task)
+    if fallback_log:
+        print("\n  Sanitization fallbacks applied:")
+        for entry in fallback_log:
+            print(f"    - {entry}")
+
+    # Truncate Croissant Task for LLM calls to avoid token overflow
+    croissant_task_for_llm = truncate_croissant_for_llm(croissant_task)
 
     # Try LLM-based generation first, fall back to templates
     use_llm = True
@@ -469,7 +545,7 @@ def generate_bundle(croissant_task_path: Path, output_dir: Path = None) -> Path:
 
     if use_llm:
         try:
-            generated_files = generate_bundle_files_with_llm(croissant_task)
+            generated_files = generate_bundle_files_with_llm(croissant_task_for_llm)
 
             # Write LLM-generated files
             print("\n  Writing LLM-generated files...")
@@ -519,9 +595,28 @@ def generate_bundle(croissant_task_path: Path, output_dir: Path = None) -> Path:
     (bundle_path / "scoring_program" / "metadata").write_text("command: python score.py\n")
     print("  Metadata files created")
 
+    # Generate ancillary HTML files and logo
+    print("\n  Generating ancillary files...")
+    overview_html = fill_template(load_template('overview.html.template'), template_vars)
+    evaluation_html = fill_template(load_template('evaluation.html.template'), template_vars)
+    terms_html = fill_template(load_template('terms.html.template'), template_vars)
+    (bundle_path / "overview.html").write_text(overview_html)
+    (bundle_path / "evaluation.html").write_text(evaluation_html)
+    (bundle_path / "terms.html").write_text(terms_html)
+
+    # Copy logo
+    logo_src = Config.TEMPLATES_DIR / "logo.png"
+    if logo_src.exists():
+        shutil.copy(logo_src, bundle_path / "logo.png")
+    print("  Ancillary files created")
+
     # Generate toy data
     print("\n  Generating toy data...")
-    input_df, reference_df, sample_submission_df = generate_toy_data_with_llm(croissant_task, num_samples=20)
+    try:
+        input_df, reference_df, sample_submission_df = generate_toy_data_with_llm(croissant_task_for_llm, num_samples=20)
+    except Exception as e:
+        print(f"  All toy data generation failed: {e}")
+        input_df, reference_df, sample_submission_df = generate_toy_data_minimal_fallback(croissant_task)
 
     # Save toy data to bundle directories
     (bundle_path / "input_data" / "input.csv").write_text(input_df.to_csv(index=False))
@@ -583,10 +678,9 @@ Higher is better: {evaluation.get('higherIsBetter', True)}
 │   └── input.csv
 ├── reference_data/          # Ground truth (hidden)
 │   └── reference.csv
-├── examples/                # Example submission
-│   ├── solution.py
-│   └── sample_submission.csv
-└── README.md
+└── examples/                # Example submission
+    ├── solution.py
+    └── sample_submission.csv
 ```
 
 ## Usage
@@ -606,17 +700,6 @@ Generated by Paper2Codabench
     (bundle_path / "README.md").write_text(readme_content)
     print("  README created")
 
-    # Create verification seal
-    print("\n  Creating verification seal...")
-    seal_metadata = {
-        'task_name': task_name,
-        'task_type': task_type,
-        'paper_id': paper_id,
-        'primary_metric': evaluation.get('primaryMetric', 'N/A'),
-    }
-    seal = create_bundle_seal(bundle_path, seal_metadata)
-    print(f"  Seal created: {seal.get('seal_id', 'N/A')}")
-
     print(f"\n{'='*60}")
     print(f"Bundle generation complete!")
     print(f"   Location: {bundle_path}")
@@ -624,8 +707,18 @@ Generated by Paper2Codabench
     print(f"   Type: {task_type}")
     print(f"{'='*60}\n")
 
+    # Validate bundle
+    from bundle_validator import validate_bundle as _validate_bundle
+    is_valid, validation_errors = _validate_bundle(bundle_path)
+    if is_valid:
+        print("  Bundle validation: PASSED")
+    else:
+        print(f"  Bundle validation: {len(validation_errors)} issues")
+        for err in validation_errors:
+            print(f"    - {err}")
+
     # Show bundle contents
-    print("Bundle contents:")
+    print("\nBundle contents:")
     for item in sorted(bundle_path.rglob("*")):
         if item.is_file():
             rel_path = item.relative_to(bundle_path)

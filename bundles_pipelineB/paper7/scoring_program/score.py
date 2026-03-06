@@ -17,38 +17,40 @@ def main():
 
         # Check if files exist
         if not predictions_file.exists():
-            raise FileNotFoundError(f"Predictions file not found: {predictions_file}")
+            raise FileNotFoundError(f"Predictions file not found at {predictions_file}")
         if not reference_file.exists():
-            raise FileNotFoundError(f"Reference file not found: {reference_file}")
+            raise FileNotFoundError(f"Reference file not found at {reference_file}")
 
         # Load predictions and reference
         predictions = pd.read_csv(predictions_file)
         reference = pd.read_csv(reference_file)
 
         # Validate columns
-        required_columns = ['id', 'pred']
-        if not all(col in predictions.columns for col in required_columns):
-            raise ValueError(f"Predictions file must contain columns: {required_columns}")
-        if not all(col in reference.columns for col in required_columns):
-            raise ValueError(f"Reference file must contain columns: {required_columns}")
+        required_columns = ['id', 'pred_response_time', 'pred_internalization', 'pred_externalization', 'pred_attention', 'pred_p_factor']
+        for col in required_columns:
+            if col not in predictions.columns:
+                raise ValueError(f"Missing column '{col}' in predictions file.")
+            if col not in reference.columns:
+                raise ValueError(f"Missing column '{col}' in reference file.")
 
-        # Merge on 'id'
-        merged = pd.merge(reference, predictions, on=['id'], suffixes=['_true', '_pred'])
+        # Merge on the required keys
+        merge_keys = ['id', 'pred_response_time', 'pred_internalization', 'pred_externalization', 'pred_attention']
+        merged = pd.merge(reference, predictions, on=merge_keys, suffixes=['_true', '_pred'])
 
-        # Extract prediction columns as numpy arrays
-        y_true = merged['pred_true'].values
-        y_pred = merged['pred_pred'].values
+        # Extract true and predicted values for the target column
+        y_true = merged['pred_p_factor_true'].values
+        y_pred = merged['pred_p_factor_pred'].values
 
         # Compute metrics
         scores = compute_metrics(y_true, y_pred, task_type="other")
 
         # Write scores to JSON
-        scores_dir.mkdir(parents=True, exist_ok=True)
+        scores_dir.mkdir(exist_ok=True, parents=True)
         with open(scores_file, 'w') as f:
             json.dump(scores, f)
 
     except Exception as e:
-        # Print error and exit with non-zero status
+        # Handle exceptions and print error message
         sys.stderr.write(str(e) + '\n')
         sys.exit(1)
 

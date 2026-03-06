@@ -1,0 +1,172 @@
+{
+  "pipeline_a": {
+    "results": [
+      {
+        "status": "FAIL",
+        "scores": {},
+        "error": "        args.verbose\n    )\n  File \"/Users/kentrachmat/Desktop/phd/paper2codabench/src/local_run.py\", line 191, in run_local_simulation\n    raise RuntimeError(\"Scoring failed\")\nRuntimeError: Scoring failed",
+        "paper_id": "paper1",
+        "title": "NeurIPS 2024 ML4CFD Competition: Harnessing Machine Learning for Computational Fluid Dynamics in Airfoil Design",
+        "task_type": "regression"
+      },
+      {
+        "status": "FAIL",
+        "scores": {},
+        "error": "        args.verbose\n    )\n  File \"/Users/kentrachmat/Desktop/phd/paper2codabench/src/local_run.py\", line 191, in run_local_simulation\n    raise RuntimeError(\"Scoring failed\")\nRuntimeError: Scoring failed",
+        "paper_id": "paper2",
+        "title": "The NeurIPS 2024 LLM Privacy Challenge",
+        "task_type": "generation"
+      },
+      {
+        "status": "FAIL",
+        "scores": {},
+        "error": "        args.verbose\n    )\n  File \"/Users/kentrachmat/Desktop/phd/paper2codabench/src/local_run.py\", line 167, in run_local_simulation\n    raise RuntimeError(\"Ingestion failed\")\nRuntimeError: Ingestion failed",
+        "paper_id": "paper3",
+        "title": "FAIR Universe HiggsML Uncertainty Challenge",
+        "task_type": "ranking"
+      },
+      {
+        "status": "FAIL",
+        "scores": {},
+        "error": "        args.verbose\n    )\n  File \"/Users/kentrachmat/Desktop/phd/paper2codabench/src/local_run.py\", line 191, in run_local_simulation\n    raise RuntimeError(\"Scoring failed\")\nRuntimeError: Scoring failed",
+        "paper_id": "paper4",
+        "title": "The Concordia Contest: Advancing the Cooperative Intelligence of Language Agents",
+        "task_type": "generation"
+      },
+      {
+        "status": "FAIL",
+        "scores": {},
+        "error": "        args.verbose\n    )\n  File \"/Users/kentrachmat/Desktop/phd/paper2codabench/src/local_run.py\", line 191, in run_local_simulation\n    raise RuntimeError(\"Scoring failed\")\nRuntimeError: Scoring failed",
+        "paper_id": "paper5",
+        "title": "Erasing the Invisible: A Stress-Test Challenge for Image Watermarks",
+        "task_type": "generation"
+      },
+      {
+        "status": "FAIL",
+        "scores": {},
+        "error": "        args.verbose\n    )\n  File \"/Users/kentrachmat/Desktop/phd/paper2codabench/src/local_run.py\", line 191, in run_local_simulation\n    raise RuntimeError(\"Scoring failed\")\nRuntimeError: Scoring failed",
+        "paper_id": "paper6",
+        "title": "AI-Face: A Million-Scale Demographically Annotated AI-Generated Face Dataset and Fairness Benchmark",
+        "task_type": "classification"
+      },
+      {
+        "status": "PASS",
+        "scores": {
+          "nRMSE": 1.467174
+        },
+        "error": null,
+        "paper_id": "paper7",
+        "title": "EEG Foundation Challenge: From Cross-Task to Cross-Subject EEG Decoding",
+        "task_type": "classification"
+      },
+      {
+        "status": "PASS",
+        "scores": {
+          "Total Score": 0.346134,
+          "Signal Quality (SQ)": 0.06549,
+          "Ranking Consistency (RC)": 0.103661,
+          "Compliance Score (CS)": 0.748014
+        },
+        "error": null,
+        "paper_id": "paper9",
+        "title": "NeurIPS 2025 E2LM Competition: Early Training Evaluation of Language Models",
+        "task_type": "classification"
+      }
+    ],
+    "total": 8,
+    "passed": 2,
+    "failed": 6
+  },
+  "pipeline_b": {
+    "results": [
+      {
+        "status": "FAIL",
+        "scores": {},
+        "error": "        args.verbose\n    )\n  File \"/Users/kentrachmat/Desktop/phd/paper2codabench/src/local_run.py\", line 191, in run_local_simulation\n    raise RuntimeError(\"Scoring failed\")\nRuntimeError: Scoring failed",
+        "paper_id": "paper1",
+        "title": "NeurIPS 2024 ML4CFD Competition: Harnessing Machine Learning for Computational Fluid Dynamics in Airfoil Design",
+        "task_type": "regression"
+      },
+      {
+        "status": "FAIL",
+        "scores": {},
+        "error": "        args.verbose\n    )\n  File \"/Users/kentrachmat/Desktop/phd/paper2codabench/src/local_run.py\", line 191, in run_local_simulation\n    raise RuntimeError(\"Scoring failed\")\nRuntimeError: Scoring failed",
+        "paper_id": "paper2",
+        "title": "The NeurIPS 2024 LLM Privacy Challenge",
+        "task_type": "generation"
+      },
+      {
+        "status": "FAIL",
+        "scores": {},
+        "error": "        args.verbose\n    )\n  File \"/Users/kentrachmat/Desktop/phd/paper2codabench/src/local_run.py\", line 167, in run_local_simulation\n    raise RuntimeError(\"Ingestion failed\")\nRuntimeError: Ingestion failed",
+        "paper_id": "paper3",
+        "title": "FAIR Universe HiggsML Uncertainty Challenge",
+        "task_type": "ranking"
+      },
+      {
+        "status": "PASS",
+        "scores": {
+          "LM-based reward model score": -0.051113,
+          "Social Welfare": 0.358682,
+          "Qualitative Analysis": 0.0
+        },
+        "error": null,
+        "paper_id": "paper4",
+        "title": "The Concordia Contest: Advancing the Cooperative Intelligence of Language Agents",
+        "task_type": "generation"
+      },
+      {
+        "status": "FAIL",
+        "scores": {},
+        "error": "        args.verbose\n    )\n  File \"/Users/kentrachmat/Desktop/phd/paper2codabench/src/local_run.py\", line 191, in run_local_simulation\n    raise RuntimeError(\"Scoring failed\")\nRuntimeError: Scoring failed",
+        "paper_id": "paper5",
+        "title": "Erasing the Invisible: A Stress-Test Challenge for Image Watermarks",
+        "task_type": "generation"
+      },
+      {
+        "status": "PASS",
+        "scores": {
+          "AUC": 0.485,
+          "ACC": 0.5,
+          "AP": 0.514612,
+          "EER": 0.45,
+          "FDP": NaN,
+          "FEO": NaN,
+          "FIND": NaN,
+          "FMEO": NaN,
+          "FOAE": NaN,
+          "FPR": NaN,
+          "TPR": NaN
+        },
+        "error": null,
+        "paper_id": "paper6",
+        "title": "AI-Face: A Million-Scale Demographically Annotated AI-Generated Face Dataset and Fairness Benchmark",
+        "task_type": "classification"
+      },
+      {
+        "status": "FAIL",
+        "scores": {},
+        "error": "        args.verbose\n    )\n  File \"/Users/kentrachmat/Desktop/phd/paper2codabench/src/local_run.py\", line 191, in run_local_simulation\n    raise RuntimeError(\"Scoring failed\")\nRuntimeError: Scoring failed",
+        "paper_id": "paper7",
+        "title": "EEG Foundation Challenge: From Cross-Task to Cross-Subject EEG Decoding",
+        "task_type": "classification"
+      },
+      {
+        "status": "PASS",
+        "scores": {
+          "Total Score": -0.347275,
+          "Signal Quality": -1.363799,
+          "Ranking Consistency": 0.430075,
+          "Compliance Score": 0.729041
+        },
+        "error": null,
+        "paper_id": "paper9",
+        "title": "NeurIPS 2025 E2LM Competition: Early Training Evaluation of Language Models",
+        "task_type": "classification"
+      }
+    ],
+    "total": 8,
+    "passed": 3,
+    "failed": 5
+  }
+}

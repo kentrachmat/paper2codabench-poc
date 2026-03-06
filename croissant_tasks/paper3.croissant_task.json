@@ -1,0 +1,88 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "fair-universe-higgsml-uncertainty-task",
+  "name": "FAIR Universe HiggsML Uncertainty Challenge",
+  "description": "Develop machine learning models to estimate the signal strength parameter (\u00b5) and provide a 68.27% Confidence Interval (CI), accounting for both aleatoric and epistemic uncertainties. The task involves systematic biases introduced by six nuisance parameters to simulate real-world uncertainties.",
+  "paper_id": "paper3",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "FAIR Universe HiggsML Uncertainty Dataset",
+      "description": "Tabular dataset in parquet format containing simulated proton-proton collision events. Features include raw measurements (e.g., PRI_had_pt, PRI_lep_eta, PRI_met) and derived features (e.g., DER_mass_transverse_met_lep, DER_deltaeta_jet_jet). Labels include binary classification (1 for signal, 0 for background). Systematic biases are introduced via six nuisance parameters (e.g., \u03b1tes, \u03b1jes).",
+      "encodingFormat": "application/x-parquet",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predicted 68.27% Confidence Interval (CI) bounds for the signal strength parameter (\u00b5). Output includes lower bound (\u00b516) and upper bound (\u00b584), clipped to a maximum value of 3.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "mu_16",
+          "dataType": "sc:Float",
+          "description": "Lower bound of the 68.27% Confidence Interval for \u00b5. Example: 0.5."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "mu_84",
+          "dataType": "sc:Float",
+          "description": "Upper bound of the 68.27% Confidence Interval for \u00b5. Example: 1.5."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "xgboost",
+        "numpy",
+        "scipy",
+        "pandas",
+        "matplotlib",
+        "[FILL IN THE BLANK: additional required packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Final Quantile Score",
+    "metrics": [
+      "Average Interval Width (w)",
+      "Coverage (c)",
+      "Final Quantile Score"
+    ],
+    "higherIsBetter": true,
+    "notes": "The final quantile score is computed as -ln((w + \u03b5)f(c)), where \u03b5 = 10^-2 and f(c) is an asymmetric penalty function penalizing deviations from 68.27% coverage."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 20,
+    "memoryLimitMb": "[FILL IN THE BLANK: memory limit in MB]",
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact paper identifier?",
+    "What is the dataset download URL?",
+    "What is the memory limit for execution?",
+    "Are there additional required Python packages beyond those listed?"
+  ],
+  "fill_in_the_blank": [
+    "paper_id - exact paper identifier is not provided in the text",
+    "cr:input[0].contentUrl - dataset download URL is not provided in the text",
+    "cr:execution.memoryLimitMb - memory limit is not explicitly stated in the paper",
+    "cr:implementation.cr:environment.packages[5] - additional required packages are not explicitly listed in the paper"
+  ]
+}

@@ -35,6 +35,27 @@ COMPETITION_KEYWORDS = re.compile(
     r"\b(competition|challenge|contest|shared.?task|retrospective)\b", re.IGNORECASE
 )
 
+# URL patterns for downloadable datasets
+DATASET_URL_PATTERNS = re.compile(
+    r"https?://(?:"
+    r"huggingface\.co/datasets/[\w\-\.]+/[\w\-\.]+"
+    r"|kaggle\.com/(?:datasets|competitions)/[\w\-\.]+"
+    r"|github\.com/[\w\-\.]+/[\w\-\.]+"
+    r"|zenodo\.org/record(?:s)?/\d+"
+    r"|doi\.org/10\.\d{4,}/[\w\.\-]+"
+    r"|drive\.google\.com/[\w\?=&/]+"
+    r"|figshare\.com/[\w/\.\-]+"
+    r")",
+    re.IGNORECASE,
+)
+
+
+def extract_dataset_urls_from_text(text: str) -> list:
+    """Find known dataset hosting URLs in text."""
+    if not text:
+        return []
+    return list(set(DATASET_URL_PATTERNS.findall(text)))
+
 
 def connect():
     """Connect to OpenReview API v2 (public, no auth needed)."""
@@ -204,6 +225,14 @@ def fetch_papers(client, year, venue_id):
                 if text_val.startswith("http"):
                     dataset_url = text_val
 
+        # Scan abstract + keywords for dataset URLs if dataset_url is still empty
+        if not dataset_url:
+            found_urls = extract_dataset_urls_from_text(f"{abstract} {keywords}")
+            if found_urls:
+                dataset_url = found_urls[0]
+
+        has_downloadable_dataset = bool(dataset_url)
+
         # Competition heuristic
         is_comp = is_competition_paper(title, keywords, abstract)
 
@@ -227,6 +256,7 @@ def fetch_papers(client, year, venue_id):
             "has_croissant": has_croissant,
             "croissant_url": croissant_url,
             "dataset_url": dataset_url,
+            "has_downloadable_dataset": has_downloadable_dataset,
             "openreview_url": openreview_url,
             "pdf_url": pdf_url,
             "is_competition_paper": is_comp,
@@ -243,8 +273,8 @@ def save_csv(papers, filepath):
 
     fieldnames = [
         "year", "paper_id", "title", "authors", "abstract", "keywords",
-        "has_croissant", "croissant_url", "dataset_url", "openreview_url",
-        "pdf_url", "is_competition_paper",
+        "has_croissant", "croissant_url", "dataset_url", "has_downloadable_dataset",
+        "openreview_url", "pdf_url", "is_competition_paper",
     ]
     with open(filepath, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -262,6 +292,28 @@ def generate_summary(all_papers):
         croissant_papers = [p for p in year_papers if p["has_croissant"]]
         competition_papers = [p for p in year_papers if p["is_competition_paper"]]
         comp_with_croissant = [p for p in competition_papers if p["has_croissant"]]
+        dataset_papers = [p for p in year_papers if p.get("has_downloadable_dataset")]
+
+        # Count dataset URL domains
+        domain_counts = {}
+        for p in dataset_papers:
+            url = p.get("dataset_url", "")
+            if "huggingface.co" in url:
+                domain_counts["huggingface"] = domain_counts.get("huggingface", 0) + 1
+            elif "kaggle.com" in url:
+                domain_counts["kaggle"] = domain_counts.get("kaggle", 0) + 1
+            elif "github.com" in url:
+                domain_counts["github"] = domain_counts.get("github", 0) + 1
+            elif "zenodo.org" in url:
+                domain_counts["zenodo"] = domain_counts.get("zenodo", 0) + 1
+            elif "doi.org" in url:
+                domain_counts["doi"] = domain_counts.get("doi", 0) + 1
+            elif "drive.google.com" in url:
+                domain_counts["google_drive"] = domain_counts.get("google_drive", 0) + 1
+            elif "figshare.com" in url:
+                domain_counts["figshare"] = domain_counts.get("figshare", 0) + 1
+            elif url:
+                domain_counts["other"] = domain_counts.get("other", 0) + 1
 
         summary[f"neurips_{year}"] = {
             "total_accepted": len(year_papers),
@@ -269,6 +321,9 @@ def generate_summary(all_papers):
             "croissant_percentage": round(100 * len(croissant_papers) / max(len(year_papers), 1), 1),
             "competition_papers": len(competition_papers),
             "competition_with_croissant": len(comp_with_croissant),
+            "papers_with_dataset_url": len(dataset_papers),
+            "dataset_url_percentage": round(100 * len(dataset_papers) / max(len(year_papers), 1), 1),
+            "dataset_url_domains": domain_counts,
             "papers_with_croissant": [
                 {
                     "paper_id": p["paper_id"],

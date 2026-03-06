@@ -9,31 +9,31 @@
   "conformsTo": "http://mlcommons.org/croissant/1.0",
   "@type": "cr:TaskProblem",
   "@id": "paper9-task",
-  "name": "SLM Early-Stage Evaluation",
-  "description": "Evaluate Small Language Models (SLMs) during early training stages (0-200 billion tokens) using benchmarks for reasoning, scientific knowledge, and training dynamics.",
+  "name": "Early Training Evaluation Benchmarks for SLMs",
+  "description": "Evaluate Small Language Models (SLMs) during early training stages on scientific knowledge acquisition, reasoning, and sensitivity to knowledge-intensive tasks.",
   "paper_id": "paper9",
   "cr:input": [
     {
       "name": "competition_dataset",
-      "description": "Participants receive reformulated prompts for benchmarks like MMLU-var, pre-trained SLMs (0.5B, 1B, 3B parameters) with intermediate checkpoints, and a starting kit with Jupyter notebooks and evaluation scripts. Example input: A question with multiple-choice options (A, B, C, D) or a question-answer pair in text format.",
-      "url": "[FILL IN THE BLANK]"
+      "description": "Participants receive tokenized datasets (English-only) with a vocabulary size of 65,000 tokens and reformulated prompts for benchmarks like MMLU-var, ARC-Easy, and SciQ. Example: 'Question: Find the degree for the given field extension Q(sqrt(2), sqrt(3), sqrt(18)) over Q. Choices: A. 0, B. 4, C. 2, D. 6.'",
+      "url": "[FILL IN THE BLANK: URL to the competition dataset]"
     }
   ],
   "cr:output": {
     "name": "predictions",
-    "description": "For benchmark tasks, the output is the predicted answer (e.g., 'B' or a continuation). For binary classification, the output is 'Accept' or 'Reject'.",
+    "description": "Participants must produce benchmark scores as numerical values for Signal Quality (SQ), Ranking Consistency (RC), and Compliance Score (CS), along with binary classification labels for benchmarks like SciQ ('Accept' or 'Reject').",
     "cr:schema": {
       "name": "prediction_schema",
       "field": [
         {
           "name": "id",
           "dataType": "sc:Text",
-          "description": "unique identifier for the benchmark or classification task, e.g., benchmark_001"
+          "description": "unique identifier for benchmark evaluation, e.g., benchmark_001"
         },
         {
           "name": "pred",
-          "dataType": "sc:Text",
-          "description": "predicted output, e.g., 'B' for multiple-choice or 'Accept'/'Reject' for classification"
+          "dataType": "sc:Float",
+          "description": "numerical score reflecting model performance across benchmarks"
         }
       ]
     }
@@ -52,15 +52,15 @@
     "interface": "predict(input_dir, output_dir)"
   },
   "cr:evaluation": {
-    "primaryMetric": "Signal Quality (ScoreSQ)",
+    "primaryMetric": "Total Score",
     "metrics": [
-      "Signal Quality (ScoreSQ)",
-      "Ranking Consistency (ScoreRC)",
-      "Compliance Score (ScoreCS)",
-      "Classification Accuracy"
+      "Signal Quality (SQ)",
+      "Ranking Consistency (RC)",
+      "Compliance Score (CS)",
+      "Total Score"
     ],
     "higherIsBetter": true,
-    "notes": "Signal Quality (ScoreSQ) combines Monotonicity Score and Autocorrelation Strength. Ranking Consistency (ScoreRC) uses Kendall\u2019s Tau. Compliance Score (ScoreCS) measures alignment with scientific domains. Total score is a weighted sum of these metrics."
+    "notes": "Total Score is computed as a weighted combination: 0.5 \u00d7 SQ + 0.1 \u00d7 RC + 0.4 \u00d7 CS. SQ includes Monotonicity Score and Autocorrelation Strength."
   },
   "cr:execution": {
     "runtimeLimitSec": 600,
@@ -68,12 +68,13 @@
     "allowedExternalData": "unknown"
   },
   "open_questions": [
-    "What is the exact runtime limit for model evaluation?",
-    "Are there specific hardware requirements beyond GPU memory (~6GB)?",
-    "What is the exact format for the reformulated prompts in MMLU-var?"
+    "How are binary classification labels ('Accept' or 'Reject') evaluated?",
+    "What are the specific formats for intermediate model checkpoints?",
+    "Are there any restrictions on using pre-trained models?"
   ],
   "fill_in_the_blank": [
-    "Exact runtime limit for model evaluation",
-    "Detailed format of reformulated prompts for MMLU-var"
+    "[FILL IN THE BLANK: dataset download URL]",
+    "[FILL IN THE BLANK: number of test samples]",
+    "[FILL IN THE BLANK: detailed leakage check methodology for SciQ]"
   ]
 }

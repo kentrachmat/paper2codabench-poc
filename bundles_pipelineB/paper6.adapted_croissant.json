@@ -9,19 +9,19 @@
   "conformsTo": "http://mlcommons.org/croissant/1.0",
   "@type": "cr:TaskProblem",
   "@id": "paper6-task",
-  "name": "Fairness and Utility in AI-Generated Face Detection",
-  "description": "Develop machine learning models to detect AI-generated face images while ensuring fairness across demographic groups and robustness to post-processing transformations.",
+  "name": "Fairness-Aware AI-Generated Face Detection",
+  "description": "This task involves detecting whether a facial image is real or AI-generated (binary classification) while ensuring fairness across demographic groups defined by skin tone, gender, and age. The task also evaluates robustness under various post-processing conditions and cross-domain scenarios.",
   "paper_id": "paper6",
   "cr:input": [
     {
       "name": "competition_dataset",
-      "description": "The input consists of cropped face images annotated with demographic attributes: skin tone (1-10), gender (Male: 1, Female: 0), age (0-4), and generation method (Real or AI-generated, with specific AI method labels). Example: An image with Tone 6, Male, Adult, and AI-generated using GAN.",
-      "url": "[FILL IN THE BLANK]"
+      "description": "The input consists of cropped RGB face images (e.g., 244 \u00d7 244 dimensions after preprocessing with RetinaFace). Optional demographic subgroup labels (e.g., Male-Light, Female-Dark) are provided for fairness evaluation.",
+      "url": "[FILL IN THE BLANK: URL to the competition dataset]"
     }
   ],
   "cr:output": {
     "name": "predictions",
-    "description": "The output includes a binary classification prediction (0 for real, 1 for AI-generated), along with predicted demographic labels: skin tone (1-10), gender (0 or 1), and age category (0-4). Example: For an input image, the model might output 1 (AI-generated), Tone 6, Male, and Adult.",
+    "description": "The output includes binary predictions for real/fake classification (0 for real, 1 for fake), along with demographic predictions: skin tone (1-10), gender (0 for Female, 1 for Male), and age group (0-4).",
     "cr:schema": {
       "name": "prediction_schema",
       "field": [
@@ -33,22 +33,22 @@
         {
           "name": "pred",
           "dataType": "sc:Float",
-          "description": "Prediction value for binary classification (0.0 for real, 1.0 for AI-generated)."
+          "description": "Prediction for real/fake classification, where 0.0 represents real and 1.0 represents fake."
         },
         {
           "name": "skin_tone",
           "dataType": "sc:Integer",
-          "description": "Predicted skin tone on a scale of 1 to 10 (Tone1-Tone10)."
+          "description": "Predicted skin tone on the Monk Skin Tone Scale (1-10)."
         },
         {
           "name": "gender",
           "dataType": "sc:Integer",
-          "description": "Predicted gender (1 for Male, 0 for Female)."
+          "description": "Predicted gender, where 1 represents Male and 0 represents Female."
         },
         {
           "name": "age",
           "dataType": "sc:Integer",
-          "description": "Predicted age category (0: Child, 1: Youth, 2: Adult, 3: Middle-age Adult, 4: Senior)."
+          "description": "Predicted age group, where 0 = Child, 1 = Youth, 2 = Adult, 3 = Middle-age Adult, 4 = Senior."
         }
       ]
     }
@@ -60,29 +60,30 @@
         "pandas",
         "numpy",
         "scikit-learn",
-        "mediapipe",
-        "torch"
+        "torch",
+        "torchvision"
       ]
     },
     "entryPoint": "solution.py",
     "interface": "predict(input_dir, output_dir)"
   },
   "cr:evaluation": {
-    "primaryMetric": "Area Under the ROC Curve (AUC)",
+    "primaryMetric": "AUC",
     "metrics": [
-      "Area Under the ROC Curve (AUC)",
-      "Accuracy (ACC)",
-      "Average Precision (AP)",
-      "Equal Error Rate (EER)",
-      "False Positive Rate (FPR)",
-      "Fairness Demographic Parity (FDP)",
-      "Fairness Equal Opportunity (FEO)",
-      "Fairness Overall Accuracy Equality (FOAE)",
-      "Fairness Maximum Equalized Odds (FMEO)",
-      "Fairness Individual Disparity (FIND)"
+      "AUC",
+      "ACC",
+      "AP",
+      "EER",
+      "FPR",
+      "TPR",
+      "FEO",
+      "FMEO",
+      "FDP",
+      "FOAE",
+      "FIND"
     ],
     "higherIsBetter": true,
-    "notes": "Metrics are computed across demographic subgroups and post-processed images to evaluate fairness, robustness, and generalization. Lower is better for EER and FPR."
+    "notes": "Utility metrics such as AUC, ACC, and AP are higher-is-better, while fairness metrics like FEO, FMEO, FDP, FOAE, and FIND are lower-is-better. Metrics are computed for both raw and post-processed images, and intersectional fairness is assessed across subgroups."
   },
   "cr:execution": {
     "runtimeLimitSec": 600,
@@ -90,12 +91,13 @@
     "allowedExternalData": "unknown"
   },
   "open_questions": [
-    "What is the exact weighting or trade-off between fairness and utility metrics in evaluation?",
-    "How should post-processing transformations be applied during inference?",
-    "Are participants required to predict the specific AI generation method, or just binary classification?"
+    "What is the exact format of the optional demographic subgroup labels provided to participants?",
+    "Are participants required to submit predictions for all demographic attributes (skin tone, gender, age) or only for real/fake classification?",
+    "What are the specific thresholds for fairness metrics like FEO and FMEO to determine acceptable performance?"
   ],
   "fill_in_the_blank": [
-    "Exact hardware requirements beyond NVIDIA RTX A6000 GPU.",
-    "Specific details on how fairness metrics are aggregated for final evaluation."
+    "[FILL IN THE BLANK: dataset download URL]",
+    "[FILL IN THE BLANK: number of test samples]",
+    "[FILL IN THE BLANK: specific evaluation script details for fairness metrics]"
   ]
 }

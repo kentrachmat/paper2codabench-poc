@@ -13,7 +13,7 @@ def predict(input_dir, output_dir):
 
     # Build predictions dataframe with all required columns
     predictions = input_df.copy()
-    predictions['pred'] = np.random.choice([0, 1], size=len(predictions))  # Random baseline
+    predictions['pred'] = np.random.choice([0, 1], size=len(input_df))  # Random baseline
 
     # Save predictions with exact columns: ['id', 'pred']
     predictions[['id', 'pred']].to_csv(output_dir / 'predictions.csv', index=False)

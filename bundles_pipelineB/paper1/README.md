@@ -1,13 +1,13 @@
-# ML-Driven Surrogate Modeling for Airfoil Design
+# Airfoil Design Simulation Challenge
 
 Auto-generated Codabench bundle (Pipeline B: direct from paper).
 
 ## Task Overview
 
 **Type:** other
-**Primary Metric:** global_score
+**Primary Metric:** Global Score
 
-Develop machine learning models to predict steady-state 2D velocity and pressure fields around airfoils, compute aerodynamic properties, and optimize lift-over-drag ratios while ensuring physical consistency and generalization to out-of-distribution scenarios.
+Develop machine learning surrogate models to predict steady-state 2D velocity fields, pressure fields, turbulent viscosity, and derived aerodynamic coefficients around airfoils, approximating high-fidelity CFD simulations.
 
 ## Submission Format
 
@@ -17,7 +17,7 @@ Develop machine learning models to predict steady-state 2D velocity and pressure
 
 ## Evaluation
 
-Primary metric: global_score
+Primary metric: Global Score
 Higher is better: True
 
 ## Resource Limits

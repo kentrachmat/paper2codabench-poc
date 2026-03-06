@@ -1,0 +1,83 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "concordia-contest-task",
+  "name": "Cooperative Intelligence in Language Model Agents",
+  "description": "The task is to develop language model (LM) agents capable of cooperative intelligence in mixed-motive social dilemma scenarios using the Concordia framework. These agents must demonstrate skills such as promise-keeping, negotiation, reciprocity, and compromise in text-mediated environments.",
+  "paper_id": "concordia-contest-paper",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "Concordia Scenarios",
+      "description": "A set of mixed-motive social dilemma scenarios where LM agents interact in text-mediated environments. These scenarios are designed to evaluate cooperative intelligence and generalization capabilities. The data includes natural language descriptions of game states and co-player actions.",
+      "encodingFormat": "[FILL IN THE BLANK: data format, e.g., text/csv, application/json]",
+      "contentUrl": "https://github.com/google-deepmind/concordia"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The expected output is natural language descriptions of the agents' intended actions and interactions. These outputs should demonstrate cooperative behavior in the given scenarios.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "action_description",
+          "dataType": "sc:Text",
+          "description": "A natural language description of the agent's intended action, e.g., 'Agent A proposes a compromise to split the resources equally.'"
+        },
+        {
+          "@type": "cr:Field",
+          "name": "interaction_log",
+          "dataType": "sc:Text",
+          "description": "A log of interactions between agents, capturing dialogue or cooperative strategies, e.g., 'Agent B agrees to the proposal and suggests a timeline for implementation.'"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "transformers",
+        "numpy",
+        "pandas",
+        "torch"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "[FILL IN THE BLANK: list of evaluation metrics]"
+    ],
+    "higherIsBetter": "[FILL IN THE BLANK: true or false]",
+    "notes": "Participants will be scored based on their agents' ability to cooperate effectively in held-out scenarios. Metrics will evaluate skills such as promise-keeping, negotiation, and reciprocity."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What specific metrics will be used to evaluate cooperative intelligence?",
+    "What are the exact formats and schemas of the input and output data?",
+    "What are the constraints on LM calls, tokens, and compute resources?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - data format not specified in the paper",
+    "cr:evaluation.primaryMetric - primary evaluation metric not specified in the paper",
+    "cr:evaluation.metrics - list of evaluation metrics not specified in the paper",
+    "cr:evaluation.higherIsBetter - whether higher values of the metrics are better is not specified in the paper"
+  ]
+}

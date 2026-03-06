@@ -42,7 +42,11 @@ def main():
         print("ERROR: solution.py does not define a 'predict' function")
         sys.exit(1)
 
-    solution.predict(str(input_dir), str(output_dir))
+    try:
+        solution.predict(str(input_dir), str(output_dir))
+    except Exception as e:
+        print(f"ERROR: Exception occurred while running predict: {e}")
+        sys.exit(1)
 
     # Verify output was created
     predictions_file = output_dir / 'predictions.csv'

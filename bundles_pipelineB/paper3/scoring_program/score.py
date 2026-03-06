@@ -15,41 +15,39 @@ def main():
         reference_path = reference_dir / 'reference.csv'
         scores_path = scores_dir / 'scores.json'
 
-        # Validate file existence
+        # Load predictions and reference
         if not predictions_path.exists():
             raise FileNotFoundError(f"Predictions file not found at {predictions_path}")
         if not reference_path.exists():
             raise FileNotFoundError(f"Reference file not found at {reference_path}")
 
-        # Load data
         predictions = pd.read_csv(predictions_path)
         reference = pd.read_csv(reference_path)
 
         # Validate columns
-        required_columns = ['id', 'mu_16', 'mu_84', 'classification']
-        for df, name in zip([predictions, reference], ['predictions', 'reference']):
-            missing_columns = [col for col in required_columns if col not in df.columns]
-            if missing_columns:
-                raise ValueError(f"Missing columns in {name} file: {missing_columns}")
+        required_columns = ['id', 'mu16', 'mu84']
+        for df, name in [(predictions, "predictions"), (reference, "reference")]:
+            if not all(col in df.columns for col in required_columns):
+                raise ValueError(f"Missing required columns in {name} file. Expected columns: {required_columns}")
 
-        # Merge data
-        merged = pd.merge(reference, predictions, on=['id', 'mu_16', 'mu_84'], suffixes=['_true', '_pred'])
+        # Merge on ['id', 'mu16']
+        merged = pd.merge(reference, predictions, on=['id', 'mu16'], suffixes=['_true', '_pred'])
 
         # Extract true and predicted values
-        y_true = merged['classification_true'].values
-        y_pred = merged['classification_pred'].values
+        y_true = merged['mu84_true'].values
+        y_pred = merged['mu84_pred'].values
 
         # Compute metrics
-        scores = compute_metrics(y_true, y_pred, task_type="classification")
+        scores = compute_metrics(y_true, y_pred, task_type="other")
 
         # Write scores to JSON
-        scores_dir.mkdir(parents=True, exist_ok=True)
+        scores_dir.mkdir(exist_ok=True, parents=True)
         with scores_path.open('w') as f:
             json.dump(scores, f)
 
     except Exception as e:
-        # Handle errors and exit
-        sys.stderr.write(f"Error: {str(e)}\n")
+        # Handle exceptions and exit with error message
+        sys.stderr.write(f"Error: {e}\n")
         sys.exit(1)
 
 if __name__ == "__main__":

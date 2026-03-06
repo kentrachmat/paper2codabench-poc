@@ -26,44 +26,19 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from datetime import datetime
 
-from seal import create_evaluation_seal
+from bundle_validator import validate_bundle_structure as _validate_structure
 
 
 def validate_bundle(bundle_path: Path) -> bool:
-    """Validate bundle structure"""
+    """Validate bundle structure using the centralised checker."""
     print("  Validating bundle structure...")
-
-    required_dirs = [
-        "ingestion_program",
-        "scoring_program",
-        "reference_data",
-        "input_data"
-    ]
-
-    required_files = [
-        "ingestion_program/ingestion.py",
-        "scoring_program/score.py",
-        "scoring_program/metrics.py",
-    ]
-
-    missing = []
-
-    for dir_name in required_dirs:
-        if not (bundle_path / dir_name).exists():
-            missing.append(f"directory: {dir_name}")
-
-    for file_path in required_files:
-        if not (bundle_path / file_path).exists():
-            missing.append(f"file: {file_path}")
-
+    missing = _validate_structure(bundle_path)
     if missing:
         print("  Bundle validation failed. Missing:")
         for item in missing:
             print(f"  - {item}")
         return False
-
     print("  Bundle structure is valid")
     return True
 
@@ -235,18 +210,6 @@ def run_local_simulation(bundle_path: Path, submission_path: Path, verbose: bool
             print(f"  {metric_name:20s}: {value:.6f}")
 
         print("="*60)
-
-        # Create verification seal
-        print("\n  Creating verification seal...")
-
-        submission_info = {
-            'filename': submission_path.name,
-            'type': 'code' if is_code_submission else 'csv',
-            'timestamp': datetime.utcnow().isoformat() + 'Z',
-        }
-
-        seal = create_evaluation_seal(bundle_path, scores, submission_info)
-        print(f"  Seal created: {seal.get('seal_id', 'N/A')}")
 
         print(f"\n  Simulation completed successfully!")
         print(f"   Working directory: {work_dir}")

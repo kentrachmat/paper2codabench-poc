@@ -1,0 +1,84 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "concordia-contest-task",
+  "name": "Cooperative Intelligence in Mixed-Motive Settings",
+  "description": "The task is to design language model (LM) agents capable of exhibiting cooperative intelligence in mixed-motive social dilemma scenarios using the Concordia framework. Agents must use natural language to cooperate effectively in complex environments, even when faced with challenges such as competing interests, differing values, and potential miscommunication.",
+  "paper_id": "concordia-contest-paper",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "Concordia Scenarios",
+      "description": "A set of mixed-motive social dilemma scenarios provided by the Concordia framework. These scenarios include environments and populations of co-players that agents interact with. The scenarios are designed to test cooperative intelligence and generalization capabilities of LM agents. Examples include promise-keeping, negotiation, and sanctioning tasks.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset encoding format]",
+      "contentUrl": "https://github.com/google-deepmind/concordia"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The expected output is a natural language description of the agent's actions and intentions in response to the game state. For example, an agent might respond to a scenario by stating, 'I propose we share resources equally to maximize our collective score.'",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "action_description",
+          "dataType": "sc:Text",
+          "description": "A natural language description of the agent's intended action or response. Example: 'I will negotiate with the other agent to split the reward.'"
+        },
+        {
+          "@type": "cr:Field",
+          "name": "reasoning",
+          "dataType": "sc:Text",
+          "description": "A natural language explanation of the reasoning behind the action. Example: 'I chose to cooperate because it maximizes the long-term reward for both agents.'"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "transformers",
+        "numpy",
+        "pandas",
+        "[FILL IN THE BLANK: additional required packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "zeta_score",
+    "metrics": [
+      "zeta_score"
+    ],
+    "higherIsBetter": true,
+    "notes": "The zeta_score measures the cooperative intelligence of agents in mixed-motive scenarios. Details on how the zeta_score is calculated are not provided in the paper."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact formula for the zeta_score?",
+    "What are the specific details of the held-out evaluation scenarios?",
+    "What is the exact LM model to be used for the contest?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - The paper does not specify the encoding format of the Concordia scenarios.",
+    "cr:implementation.cr:environment.packages[2] - The paper does not specify all additional Python packages required for implementation.",
+    "cr:evaluation.primaryMetric - The exact formula for the zeta_score is not provided in the paper.",
+    "cr:evaluation.notes - Details on how the zeta_score is calculated are missing.",
+    "cr:execution.allowedExternalData - The paper does not clarify whether external data is allowed."
+  ]
+}

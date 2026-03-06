@@ -4,16 +4,15 @@ from sklearn.metrics import mean_squared_error
 
 def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, task_type: str) -> Dict[str, float]:
     """
-    Compute evaluation metrics for the Codabench competition.
+    Compute evaluation metrics for the competition.
 
     Parameters:
-    - y_true (np.ndarray): Ground truth values (1D or 2D array).
-    - y_pred (np.ndarray): Predicted values (1D or 2D array).
-    - task_type (str): Task type (not used in this implementation but required by Codabench).
+    - y_true (np.ndarray): Ground truth values, shape (n_samples, n_targets).
+    - y_pred (np.ndarray): Predicted values, shape (n_samples, n_targets).
+    - task_type (str): Task type, not used in this competition but included for compatibility.
 
     Returns:
     - Dict[str, float]: Dictionary containing the computed metrics.
-      Primary metric (nRMSE) is listed first.
     """
     # Reshape 1D arrays to 2D
     if y_true.ndim == 1:
@@ -21,25 +20,34 @@ def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, task_type: str) -> D
     if y_pred.ndim == 1:
         y_pred = y_pred.reshape(-1, 1)
 
-    # Validate input shapes
+    # Validate inputs
     if y_true.shape != y_pred.shape:
         raise ValueError("Shape mismatch: y_true and y_pred must have the same shape.")
     if y_true.size == 0 or y_pred.size == 0:
-        raise ValueError("Empty arrays: y_true and y_pred must not be empty.")
+        raise ValueError("Empty input: y_true and y_pred must not be empty.")
     if np.any(np.isnan(y_true)) or np.any(np.isnan(y_pred)):
         raise ValueError("NaN values detected: y_true and y_pred must not contain NaN values.")
 
-    # Compute metrics
-    rmse = np.sqrt(mean_squared_error(y_true, y_pred))
-    std_true = np.std(y_true)
-    if std_true == 0:
-        raise ValueError("Standard deviation of y_true is zero, cannot compute normalized RMSE.")
-    nrmse = rmse / std_true
-    std_pred = np.std(y_pred)
+    # Compute nRMSE for each target
+    nrmse_scores = []
+    for i in range(y_true.shape[1]):
+        true_values = y_true[:, i]
+        pred_values = y_pred[:, i]
+        rmse = np.sqrt(mean_squared_error(true_values, pred_values))
+        std_dev = np.std(true_values)
+        if std_dev == 0:
+            raise ValueError(f"Standard deviation of true values is zero for target {i}. Cannot compute nRMSE.")
+        nrmse = rmse / std_dev
+        nrmse_scores.append(nrmse)
 
-    # Return metrics dictionary
+    # Weighted average of nRMSE scores for overall ranking
+    if len(nrmse_scores) != 2:
+        raise ValueError("Expected exactly 2 targets for weighted averaging, but got {len(nrmse_scores)}.")
+    overall_nrmse = 0.3 * nrmse_scores[0] + 0.7 * nrmse_scores[1]
+
+    # Return metrics
     return {
-        "nRMSE": nrmse,  # Primary metric
-        "RMSE": rmse,
-        "std": std_pred
+        "nRMSE": overall_nrmse,  # Primary metric
+        "nRMSE_S1": nrmse_scores[0],
+        "nRMSE_S2": nrmse_scores[1],
     }
