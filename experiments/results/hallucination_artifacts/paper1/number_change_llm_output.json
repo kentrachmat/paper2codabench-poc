@@ -1,0 +1,98 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "neurips2024-ml4cfd-task",
+  "name": "Airfoil Design Simulation",
+  "description": "The task focuses on predicting velocity and pressure fields around airfoils in a subsonic regime using ML-based surrogate models to maximize the lift-over-drag ratio while reducing computational costs. The evaluation includes accuracy, computational efficiency, Out-of-Distribution generalization, and physics compliance.",
+  "paper_id": "arXiv:2407.01641v1",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "AirfRANS dataset",
+      "description": "The dataset consists of 2D simulations of airfoil designs represented as point clouds defined via the nodes of the simulation mesh. Input variables include positions, inlet velocity, distance to the airfoil, and normals.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset encoding format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predicted outputs include velocity fields (ux, uy), pressure divided by specific mass (ps), and turbulent kinematic viscosity (\u03bdt). These predictions are used to compute force coefficients as post-treatments.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "ux",
+          "dataType": "sc:Float",
+          "description": "X-component of velocity field. Example values: [FILL IN THE BLANK: example values for ux]."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "uy",
+          "dataType": "sc:Float",
+          "description": "Y-component of velocity field. Example values: [FILL IN THE BLANK: example values for uy]."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "ps",
+          "dataType": "sc:Float",
+          "description": "Pressure divided by specific mass. Example values: [FILL IN THE BLANK: example values for ps]."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "\u03bdt",
+          "dataType": "sc:Float",
+          "description": "Turbulent kinematic viscosity. Example values: [FILL IN THE BLANK: example values for \u03bdt]."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "[FILL IN THE BLANK: required Python packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Mean Squared Error (MSE)",
+    "metrics": [
+      "Mean Squared Error (MSE)",
+      "Computational time",
+      "Out-of-Distribution (OOD) generalization",
+      "Physics compliance"
+    ],
+    "higherIsBetter": false,
+    "notes": "MSE is used to evaluate prediction accuracy. Computational time measures efficiency. OOD generalization assesses performance on unseen airfoil geometries. Physics compliance ensures adherence to physical laws."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact encoding format of the AirfRANS dataset?",
+    "What are the example values for the output fields (ux, uy, ps, \u03bdt)?",
+    "What are the required Python packages for implementation?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset encoding format not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL not provided in the paper",
+    "cr:output.cr:schema.field[0].description - example values for ux not provided in the paper",
+    "cr:output.cr:schema.field[1].description - example values for uy not provided in the paper",
+    "cr:output.cr:schema.field[2].description - example values for ps not provided in the paper",
+    "cr:output.cr:schema.field[3].description - example values for \u03bdt not provided in the paper",
+    "cr:implementation.cr:environment.packages - required Python packages not specified in the paper"
+  ]
+}

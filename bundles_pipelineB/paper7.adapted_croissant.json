@@ -1,0 +1,99 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "paper7-task",
+  "name": "EEG-Based Machine Learning Challenges",
+  "description": "Develop models to predict response times and psychopathology scores using EEG data, emphasizing transfer learning and regression tasks.",
+  "paper_id": "paper7",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Participants receive EEG data (128-channel recordings), demographic data (age, gender, handedness, psychological factors), and event labels for cognitive tasks. Example: EEG epochs are 2-second segments recorded post-stimulus onset.",
+      "url": "[FILL IN THE BLANK: URL to the competition dataset]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predicted response times for the CCD task (0.5\u20132.5 seconds) and continuous psychopathology scores for internalization, externalization, attention, and p-factor.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "field": [
+        {
+          "name": "id",
+          "dataType": "sc:Text",
+          "description": "unique identifier for each sample, e.g., eeg_sample_001"
+        },
+        {
+          "name": "pred_response_time",
+          "dataType": "sc:Float",
+          "description": "predicted response time for the CCD task, ranging from 0.5 to 2.5 seconds"
+        },
+        {
+          "name": "pred_internalization",
+          "dataType": "sc:Float",
+          "description": "predicted internalization score, continuous value"
+        },
+        {
+          "name": "pred_externalization",
+          "dataType": "sc:Float",
+          "description": "predicted externalization score, continuous value"
+        },
+        {
+          "name": "pred_attention",
+          "dataType": "sc:Float",
+          "description": "predicted attention score, continuous value"
+        },
+        {
+          "name": "pred_p_factor",
+          "dataType": "sc:Float",
+          "description": "predicted p-factor score, continuous value"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "mne",
+        "torch",
+        "braindecode"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Normalized Root Mean Square Error (nRMSE)",
+    "metrics": [
+      "Normalized Root Mean Square Error (nRMSE)"
+    ],
+    "higherIsBetter": false,
+    "notes": "nRMSE is computed as RMSE divided by the standard deviation of the true values. Overall ranking combines scores from both challenges using weighted averaging: 0.3 * S1 + 0.7 * S2."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "How are participants expected to handle missing demographic data?",
+    "What is the exact format for EEG data preprocessing?",
+    "Are there any restrictions on model architectures beyond those provided in the baselines?"
+  ],
+  "fill_in_the_blank": [
+    "[FILL IN THE BLANK: dataset download URL]",
+    "[FILL IN THE BLANK: number of test samples]",
+    "[FILL IN THE BLANK: exact EEG preprocessing steps]"
+  ]
+}

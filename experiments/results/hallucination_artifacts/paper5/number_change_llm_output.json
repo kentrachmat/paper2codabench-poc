@@ -1,0 +1,93 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "erasing-the-invisible-2024-task",
+  "name": "Stress Testing Image Watermarks",
+  "description": "A task to evaluate the robustness of invisible watermarks embedded in AI-generated images through large-scale stress testing, using both black-box and beige-box attack tracks.",
+  "paper_id": "erasing-the-invisible-2024",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "ETI Benchmark Dataset",
+      "description": "A dataset of AI-generated images with watermarks applied using in-processing and post-processing techniques. Includes 907 images for the Black-box track and 300 images for the Beige-box track, with watermarks such as Gaussian Shading, StegaStamp, JigMark, PRC, StableSignature, and Trufo.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset encoding format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predictions indicating the success of watermark removal and the preservation of image quality. Outputs include metrics for watermark detection rates and image quality degradation.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "watermark_detection_rate",
+          "dataType": "sc:Float",
+          "description": "The proportion of images where the watermark remains detectable after the attack. Example: 0.15 (15% detection rate)."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "image_quality_degradation",
+          "dataType": "sc:Float",
+          "description": "A normalized score representing the visual degradation of the image after the attack. Example: 0.05 (low degradation)."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "numpy",
+        "scipy",
+        "torch",
+        "opencv-python",
+        "lpips",
+        "[FILL IN THE BLANK: additional packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Euclidean distance of (Q, A)",
+    "metrics": [
+      "Image Quality Degradation (Q)",
+      "Watermark Detection Performance (A)",
+      "Peak Signal-to-Noise Ratio (PSNR)",
+      "Structural Similarity Index (SSIM)",
+      "Normalized Mutual Information (NMI)",
+      "Frechet Inception Distance (FID)",
+      "CLIP Image Fidelity (CLIP-FID)",
+      "Learned Perceptual Image Patch Similarity (LPIPS)",
+      "Delta Aesthetics Score (\u0394Aesthetics)",
+      "Delta Artifacts Score (\u0394Artifacts)"
+    ],
+    "higherIsBetter": false,
+    "notes": "The primary metric is the Euclidean distance of Q (image quality degradation) and A (watermark detection performance). Lower values indicate better performance. A is defined as TPR@0.1%FPR."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the dataset encoding format?",
+    "What is the dataset download URL?",
+    "What additional Python packages are required for implementation?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset encoding format is not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL is not provided in the paper",
+    "cr:implementation.cr:environment.packages[5] - additional required Python packages are not listed in the paper"
+  ]
+}

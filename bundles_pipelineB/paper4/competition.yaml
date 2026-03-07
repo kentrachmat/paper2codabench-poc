@@ -1,0 +1,38 @@
+title: "Concordia Cooperative AI Challenge"
+description: |
+  Develop autonomous language model agents capable of cooperative reasoning, communication, and decision-making in text-mediated, multi-agent environments.
+image: logo.png
+docker_image: "codalab/codalab-legacy:py3"
+tasks:
+  - index: 0
+    name: "Concordia Cooperative AI Challenge"
+    description: "Develop autonomous language model agents capable of cooperative reasoning, communication, and decision-making in text-mediated, multi-agent environments."
+    scoring_program: scoring_program
+    ingestion_program: ingestion_program
+    reference_data: reference_data
+    input_data: input_data
+phases:
+  - index: 0
+    name: "Evaluation Phase"
+    description: "Main evaluation phase"
+    start: "2026-01-01"
+    end: "2027-12-31"
+    max_submissions_per_day: 5
+    max_submissions: 100
+    tasks: [0]
+leaderboards:
+  - index: 0
+    title: "Results"
+    key: "results"
+    submission_rule: "force_last"
+    columns:
+      - index: 0
+        title: "LM-based reward model score"
+        key: "LM-based reward model score"
+        sorting: "desc"
+pages:
+  - title: "Overview"
+    file: overview.html
+  - title: "Evaluation"
+    file: evaluation.html
+terms: terms.html

@@ -1,0 +1,90 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "neurips2024-llm-privacy-challenge-task",
+  "name": "LLM Privacy Challenge",
+  "description": "The NeurIPS 2024 LLM Privacy Challenge addresses privacy risks in Large Language Models (LLMs) by focusing on identifying vulnerabilities (Red Team) and developing defenses (Blue Team). The competition uses synthetic datasets mimicking private data to evaluate attack precision, efficiency, and defense effectiveness.",
+  "paper_id": "neurips2024-llm-privacy-challenge",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "Synthetic Private Data",
+      "description": "Synthetic datasets designed to mimic real-world private information by replacing sensitive fields (e.g., names, email addresses) with randomly generated strings. For example, names and email addresses in the Enron dataset are replaced with random values while maintaining realistic formats.",
+      "encodingFormat": "application/json",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The expected output includes predictions or evaluations of privacy vulnerabilities for the Red Team and defensive measures for the Blue Team. Outputs are evaluated on attack precision@7, efficiency, and model effectiveness.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "attack_precision@7",
+          "dataType": "sc:Float",
+          "description": "The precision of identifying sensitive information in the top 7 results. Higher precision indicates better attack performance for the Red Team and worse performance for the Blue Team."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "efficiency",
+          "dataType": "sc:Float",
+          "description": "For the Red Team, this measures the number of tokens or queries required for a successful breach. For the Blue Team, it evaluates computational overhead such as inference throughput and training costs."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "model_effectiveness",
+          "dataType": "sc:Float",
+          "description": "For the Blue Team, this evaluates the general performance of the LLM after applying defensive methods, ensuring minimal degradation in utility."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "transformers",
+        "torch",
+        "numpy",
+        "pandas"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "attack precision@7",
+    "metrics": [
+      "attack precision@7",
+      "efficiency",
+      "model effectiveness"
+    ],
+    "higherIsBetter": false,
+    "notes": "For the Red Team, higher attack precision@7 is better, while for the Blue Team, lower attack precision@7 is better. Efficiency is evaluated differently for both teams: fewer tokens/queries for Red Team and lower computational overhead for Blue Team."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "no"
+  },
+  "open_questions": [
+    "What specific formats or schemas are used for the synthetic datasets?",
+    "What are the exact thresholds for computational overhead in the efficiency metric for the Blue Team?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].contentUrl - dataset download URL is not provided in the paper",
+    "cr:evaluation.primaryMetric - exact metric formula for attack precision@7 is not provided",
+    "cr:execution.runtimeLimitSec - runtime limit is not explicitly stated in the paper",
+    "cr:execution.memoryLimitMb - memory limit is not explicitly stated in the paper"
+  ]
+}

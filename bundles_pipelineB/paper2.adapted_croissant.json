@@ -1,0 +1,80 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "paper2-task",
+  "name": "Privacy in Large Language Models (LLM-PBE)",
+  "description": "A competition to identify and mitigate privacy vulnerabilities in large language models, focusing on sensitive information leakage and defense mechanisms.",
+  "paper_id": "paper2",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Participants interact with LLMs using text-based inputs. For the Red Team Track, inputs are queries designed to probe for sensitive information. For the Blue Team Track, inputs include LLMs under simulated privacy attacks, along with attack scenarios and prompts.",
+      "url": "[FILL IN THE BLANK: URL to the competition dataset]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Red Team Track outputs include extracted sensitive information (e.g., 'Xylo Zeta', 'xylo.zeta@randommail.com'). Blue Team Track outputs include sanitized LLM responses that prevent leakage of sensitive information while maintaining utility.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "field": [
+        {
+          "name": "id",
+          "dataType": "sc:Text",
+          "description": "unique identifier for the sample, e.g., sample_001"
+        },
+        {
+          "name": "pred",
+          "dataType": "sc:Text",
+          "description": "output prediction, such as extracted sensitive information or sanitized output"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Attack Accuracy",
+    "metrics": [
+      "Attack Accuracy",
+      "Efficiency",
+      "Defense Effectiveness",
+      "Model Effectiveness",
+      "Statistical Significance"
+    ],
+    "higherIsBetter": true,
+    "notes": "Metrics vary by track. For the Red Team, 'Attack Accuracy' measures success in extracting sensitive information (higher is better), while 'Efficiency' measures the number of tokens or queries required (lower is better). For the Blue Team, 'Defense Effectiveness' and 'Model Effectiveness' measure the success of defenses and LLM performance post-defense (higher is better). 'Efficiency' for the Blue Team evaluates computational overhead (lower is better). Statistical tests like t-tests and ANOVA ensure result consistency."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What are the exact runtime and memory limits for the competition?",
+    "What are the specific details of the test set and evaluation process?",
+    "What is the expected format for Blue Team outputs (e.g., sanitized text or specific metadata)?"
+  ],
+  "fill_in_the_blank": [
+    "[FILL IN THE BLANK: dataset download URL]",
+    "[FILL IN THE BLANK: number of test samples]",
+    "[FILL IN THE BLANK: detailed runtime and memory constraints]"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "paper9-task",
+  "name": "Early Training Evaluation Benchmarks for SLMs",
+  "description": "Evaluate Small Language Models (SLMs) during early training stages on scientific knowledge acquisition, reasoning, and sensitivity to knowledge-intensive tasks.",
+  "paper_id": "paper9",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Participants receive tokenized datasets (English-only) with a vocabulary size of 65,000 tokens and reformulated prompts for benchmarks like MMLU-var, ARC-Easy, and SciQ. Example: 'Question: Find the degree for the given field extension Q(sqrt(2), sqrt(3), sqrt(18)) over Q. Choices: A. 0, B. 4, C. 2, D. 6.'",
+      "url": "[FILL IN THE BLANK: URL to the competition dataset]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Participants must produce benchmark scores as numerical values for Signal Quality (SQ), Ranking Consistency (RC), and Compliance Score (CS), along with binary classification labels for benchmarks like SciQ ('Accept' or 'Reject').",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "field": [
+        {
+          "name": "id",
+          "dataType": "sc:Text",
+          "description": "unique identifier for benchmark evaluation, e.g., benchmark_001"
+        },
+        {
+          "name": "pred",
+          "dataType": "sc:Float",
+          "description": "numerical score reflecting model performance across benchmarks"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "lm-evaluation-harness"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Total Score",
+    "metrics": [
+      "Signal Quality (SQ)",
+      "Ranking Consistency (RC)",
+      "Compliance Score (CS)",
+      "Total Score"
+    ],
+    "higherIsBetter": true,
+    "notes": "Total Score is computed as a weighted combination: 0.5 \u00d7 SQ + 0.1 \u00d7 RC + 0.4 \u00d7 CS. SQ includes Monotonicity Score and Autocorrelation Strength."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "How are binary classification labels ('Accept' or 'Reject') evaluated?",
+    "What are the specific formats for intermediate model checkpoints?",
+    "Are there any restrictions on using pre-trained models?"
+  ],
+  "fill_in_the_blank": [
+    "[FILL IN THE BLANK: dataset download URL]",
+    "[FILL IN THE BLANK: number of test samples]",
+    "[FILL IN THE BLANK: detailed leakage check methodology for SciQ]"
+  ]
+}

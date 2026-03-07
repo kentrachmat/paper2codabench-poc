@@ -1,0 +1,151 @@
+{
+  "pipeline_a": [
+    {
+      "file": "paper1.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper2.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper3.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper4.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper5.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper6.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper7.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper9.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "pipeline_b": [
+    {
+      "file": "paper1.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper2.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper3.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper4.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper5.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper6.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper7.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper9.croissant_task.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper1.adapted_croissant.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper2.adapted_croissant.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper3.adapted_croissant.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper4.adapted_croissant.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper5.adapted_croissant.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper6.adapted_croissant.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper7.adapted_croissant.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "paper9.adapted_croissant.json",
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "huggingface_comparisons": []
+}

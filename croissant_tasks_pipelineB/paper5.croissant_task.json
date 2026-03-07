@@ -1,0 +1,98 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "[FILL IN THE BLANK: paper_id]-task",
+  "name": "Erasing the Invisible",
+  "description": "This competition evaluates the robustness of invisible watermarks in AI-generated images against adversarial attacks, aiming to minimize watermark detection while preserving image quality.",
+  "cr:input": [
+    {
+      "name": "input_data",
+      "description": "Input dataset contains a single column 'id' with sample identifiers. Example values: 'sample_000', 'sample_001'.",
+      "url": null,
+      "distribution": null,
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "text/csv",
+      "contentUrl": "[FILL IN THE BLANK: dataset source URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predicted values for the 'id' column in the input dataset. The output contains two columns: 'id' and 'pred', where 'pred' represents the predicted text or values. Example values: 'predicted_text_0', 'predicted_text_1'.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "id",
+          "description": "Unique identifier for each sample, matching the input dataset. Example values: 'sample_000', 'sample_001'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "pred",
+          "description": "Predicted text or values for the corresponding 'id'. Example values: 'predicted_text_0', 'predicted_text_1'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        }
+      ],
+      "@type": "cr:RecordSet"
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "numpy",
+        "pandas",
+        "scikit-learn",
+        "scipy",
+        "torch",
+        "Pillow",
+        "clip"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Euclidean Distance",
+    "metrics": [
+      "Image Quality Degradation (Q)",
+      "Watermark Removal Rate (A)",
+      "Euclidean Distance",
+      "Peak Signal-to-Noise Ratio (PSNR)",
+      "Structural Similarity Index (SSIM)",
+      "Normalized Mutual Information (NMI)"
+    ],
+    "higherIsBetter": false,
+    "notes": "The primary metric is computed as sqrt(Q^2 + A^2), where Q is normalized MSE and A is the watermark removal rate. Additional metrics include PSNR, SSIM, and NMI."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper5",
+  "open_questions": [
+    "The exact paper ID is not provided.",
+    "The dataset source URL is missing.",
+    "The original paper title is not provided."
+  ],
+  "fill_in_the_blank": [
+    "paper_id - reason it could not be determined from the bundle files",
+    "cr:input[0].contentUrl - reason it could not be determined from the bundle files",
+    "@id - reason it could not be determined from the bundle files"
+  ]
+}

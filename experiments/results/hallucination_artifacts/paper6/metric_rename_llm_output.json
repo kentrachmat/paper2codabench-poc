@@ -1,0 +1,90 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "arxiv:2406.00783v3-task",
+  "name": "Fairness Benchmark for AI-Generated Face Detection",
+  "description": "The task involves detecting AI-generated faces while ensuring fairness across demographic groups, using the AI-Face dataset which includes real and AI-generated faces annotated with demographic attributes such as skin tone, gender, and age.",
+  "paper_id": "arxiv:2406.00783v3",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "AI-Face Dataset",
+      "description": "A dataset containing 400,885 real face images and 1,245,660 AI-generated face images. The fake images are generated using Deepfake Videos, GANs, and Diffusion Models, and all images are annotated with demographic attributes: skin tone (Monk Skin Tone Scale), gender (binary), and age (five groups).",
+      "encodingFormat": "[FILL IN THE BLANK: dataset format, e.g., image/jpeg]",
+      "contentUrl": "https://github.com/Purdue-M2/AI-Face-FairnessBench"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predictions indicating whether a face is real or AI-generated, along with fairness metrics across demographic groups.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "is_ai_generated",
+          "dataType": "sc:Boolean",
+          "description": "Indicates whether the face is AI-generated (true) or real (false). Example: true."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "demographic_group",
+          "dataType": "sc:Text",
+          "description": "The demographic group of the face based on skin tone, gender, and age. Example: 'Skin Tone 5, Female, Adult'."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "fairness_score",
+          "dataType": "sc:Float",
+          "description": "Fairness score of the detection model for the specific demographic group. Example: 0.85."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "torch",
+        "numpy",
+        "scikit-learn",
+        "mediapipe"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "[FILL IN THE BLANK: list of all metrics mentioned in the paper]"
+    ],
+    "higherIsBetter": "[FILL IN THE BLANK: true or false]",
+    "notes": "[FILL IN THE BLANK: any special computation details for the metrics]"
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "yes"
+  },
+  "open_questions": [
+    "What is the exact primary evaluation metric used in the fairness benchmark?",
+    "What are the specific metrics used to evaluate fairness and detection performance?",
+    "What is the encoding format of the AI-Face dataset (e.g., image/jpeg)?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - The dataset format (e.g., image/jpeg) is not specified in the paper.",
+    "cr:evaluation.primaryMetric - The primary evaluation metric is not explicitly mentioned in the paper.",
+    "cr:evaluation.metrics - The exact list of metrics used for evaluation is not provided in the paper.",
+    "cr:evaluation.higherIsBetter - It is unclear whether higher values of the metrics are better.",
+    "cr:evaluation.notes - Special computation details for the metrics are not described in the paper."
+  ]
+}

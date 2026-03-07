@@ -1,0 +1,17 @@
+{
+  "plant_record": {
+    "plant_type": "dataset_rename",
+    "original": "Single-GPU",
+    "replacement": "SynthBench-2024",
+    "planted": true
+  },
+  "detection": {
+    "plant_type": "dataset_rename",
+    "planted": true,
+    "original": "Single-GPU",
+    "replacement": "SynthBench-2024",
+    "propagated": false,
+    "original_found": false,
+    "details": "Planted value 'SynthBench-2024' NOT found in LLM output"
+  }
+}

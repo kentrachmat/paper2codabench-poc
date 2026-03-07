@@ -1,0 +1,85 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "arxiv:2410.02867v5-task",
+  "name": "Higgs Boson Event Confidence Interval Estimation",
+  "description": "The task involves estimating the signal strength (\u00b5), representing the number of Higgs boson events normalized by the Standard Model prediction, and generating a 68.27% Confidence Interval (CI) for \u00b5 while accounting for systematic uncertainties.",
+  "paper_id": "arxiv:2410.02867v5",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "FAIR Universe HiggsML Dataset",
+      "description": "A tabular dataset of 280 million simulated proton-proton collision events, with 28 features per event. Features include primary attributes (e.g., energy and momentum of particles) and derived attributes calculated using domain-specific knowledge. Each event is labeled as either a Higgs boson event or a background event. The dataset includes systematic bias parameterizations and is stored in Parquet format.",
+      "encodingFormat": "application/x-parquet",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The output consists of a 68.27% Confidence Interval (CI) for the signal strength \u00b5. The CI is represented by two bounds: \u00b516 (lower bound) and \u00b584 (upper bound). Example: \u00b516 = 0.8, \u00b584 = 1.2.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "mu16",
+          "dataType": "sc:Float",
+          "description": "Lower bound of the 68.27% Confidence Interval for the signal strength \u00b5. Example: 0.8."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "mu84",
+          "dataType": "sc:Float",
+          "description": "Upper bound of the 68.27% Confidence Interval for the signal strength \u00b5. Example: 1.2."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "numpy",
+        "scipy",
+        "pandas",
+        "tensorflow",
+        "torch"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Quantile Score",
+    "metrics": [
+      "Quantile Score",
+      "Average Interval Width (w)",
+      "Coverage (c)"
+    ],
+    "higherIsBetter": true,
+    "notes": "Quantile Score is computed as -ln((w + \u03f5)f(c)), where w is the average CI width, c is the coverage, and f(c) is a penalizing function for deviations from 68.27% coverage. Overestimating uncertainty incurs a smaller penalty than underestimating it."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 20,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "The exact dataset download URL is not provided in the paper.",
+    "Details about the private dataset used for over-training checks are not disclosed.",
+    "The specific Python package versions required for implementation are not mentioned."
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].contentUrl - dataset download URL is not provided in the paper",
+    "cr:execution.allowedExternalData - unclear if external data is allowed",
+    "cr:implementation.cr:environment.packages - specific package versions are not mentioned"
+  ]
+}

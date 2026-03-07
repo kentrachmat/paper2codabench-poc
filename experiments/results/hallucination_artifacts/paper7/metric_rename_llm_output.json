@@ -1,0 +1,108 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "arXiv:2506.19141v2-task",
+  "name": "EEG Decoding and Psychopathology Prediction",
+  "description": "The task involves developing models to decode cognitive tasks and predict psychopathology factors from high-density EEG data collected from over 3,000 participants across six cognitive tasks. The competition includes two challenges: zero-shot generalization across tasks and subjects, and regression of transdiagnostic psychopathology factors.",
+  "paper_id": "arXiv:2506.19141v2",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "HBN-EEG Dataset",
+      "description": "High-density EEG recordings (128 channels) from over 3,000 participants aged 5-21 years, performing six cognitive tasks (Resting State, Surround Suppression, Movie Watching, Contrast Change Detection, Sequence Learning, Symbol Search). Includes demographic attributes (age, gender, handedness) and four psychopathology factors (internalization, externalization, attention, p-factor). Data formatted in BIDS standard with event annotations using HED.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset encoding format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predicted outputs include task labels for EEG decoding and regression values for four psychopathology factors (internalization, externalization, attention, p-factor).",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "task_label",
+          "dataType": "sc:Text",
+          "description": "Predicted cognitive task label for EEG decoding. Example values: 'Resting State', 'Movie Watching'."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "internalization",
+          "dataType": "sc:Float",
+          "description": "Predicted internalization psychopathology factor. Example range: [FILL IN THE BLANK: psychopathology factor value range]."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "externalization",
+          "dataType": "sc:Float",
+          "description": "Predicted externalization psychopathology factor. Example range: [FILL IN THE BLANK: psychopathology factor value range]."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "attention",
+          "dataType": "sc:Float",
+          "description": "Predicted attention psychopathology factor. Example range: [FILL IN THE BLANK: psychopathology factor value range]."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "p_factor",
+          "dataType": "sc:Float",
+          "description": "Predicted p-factor psychopathology value. Example range: [FILL IN THE BLANK: psychopathology factor value range]."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "[FILL IN THE BLANK: required Python packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "[FILL IN THE BLANK: list of evaluation metrics]"
+    ],
+    "higherIsBetter": [
+      true
+    ],
+    "notes": "[FILL IN THE BLANK: special computation details for metrics]"
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact encoding format of the dataset?",
+    "What are the value ranges for the psychopathology factors (internalization, externalization, attention, p-factor)?",
+    "What is the primary evaluation metric for the competition?",
+    "What are the additional evaluation metrics used in the competition?",
+    "What Python packages are required to implement the baseline models?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset encoding format not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL not provided in the paper",
+    "cr:output.cr:schema.field[1].description - psychopathology factor value range not specified in the paper",
+    "cr:output.cr:schema.field[2].description - psychopathology factor value range not specified in the paper",
+    "cr:output.cr:schema.field[3].description - psychopathology factor value range not specified in the paper",
+    "cr:output.cr:schema.field[4].description - psychopathology factor value range not specified in the paper",
+    "cr:implementation.cr:environment.packages - required Python packages not listed in the paper",
+    "cr:evaluation.primaryMetric - primary evaluation metric not specified in the paper",
+    "cr:evaluation.metrics - list of evaluation metrics not specified in the paper",
+    "cr:evaluation.notes - special computation details for metrics not provided in the paper"
+  ]
+}

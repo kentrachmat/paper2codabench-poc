@@ -1,0 +1,90 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "[FILL IN THE BLANK: paper_id]-task",
+  "name": "Concordia Cooperative AI Challenge",
+  "description": "Develop autonomous language model agents capable of cooperative reasoning, communication, and decision-making in text-mediated, multi-agent environments.",
+  "cr:input": [
+    {
+      "name": "Input Dataset",
+      "description": "The input dataset consists of a single column named 'id' representing unique sample identifiers. Example values include 'sample_000', 'sample_001', etc.",
+      "url": null,
+      "distribution": null,
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "text/csv",
+      "contentUrl": "[FILL IN THE BLANK: dataset source URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The output consists of predictions in CSV format with two columns: 'id' (matching input IDs) and 'pred' (predicted values as floats). Example values for 'pred' include 0.3456541535501251 and 0.8813422599917877.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "id",
+          "description": "Unique identifier for each sample, matching the input dataset. Example values: 'sample_000', 'sample_001'.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "pred",
+          "description": "Predicted value for each sample. Example values: 0.3456541535501251, 0.8813422599917877.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        }
+      ],
+      "@type": "cr:RecordSet"
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "numpy",
+        "pandas",
+        "scipy",
+        "sklearn"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "LM-based reward model score",
+    "metrics": [
+      "LM-based reward model score",
+      "Social Welfare",
+      "Qualitative Analysis"
+    ],
+    "higherIsBetter": true,
+    "notes": "The primary metric is computed using Pearson correlation between ground truth and predictions. Secondary metric is mean squared error. Tertiary metric is qualitative analysis, which is a placeholder set to 0.0."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper4",
+  "open_questions": [
+    "The exact paper ID and DOI are not provided in the bundle.",
+    "The dataset source URL is missing from the bundle."
+  ],
+  "fill_in_the_blank": [
+    "paper_id - reason it could not be determined from the bundle files",
+    "dataset.sourceUrl - reason it could not be determined from the bundle files"
+  ]
+}

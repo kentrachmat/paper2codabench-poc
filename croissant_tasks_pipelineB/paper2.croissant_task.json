@@ -1,0 +1,93 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "privacy-llm-task",
+  "name": "Privacy in Large Language Models (LLM-PBE)",
+  "description": "A competition to identify and mitigate privacy vulnerabilities in large language models, focusing on sensitive information leakage and defense mechanisms.",
+  "cr:input": [
+    {
+      "name": "input_data",
+      "description": "Input data consists of a single column 'id' representing sample identifiers. Example values: sample_000, sample_001, sample_002.",
+      "url": null,
+      "distribution": null,
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "text/csv",
+      "contentUrl": "[FILL IN THE BLANK: dataset source URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predictions consist of two columns: 'id' (sample identifier) and 'pred' (binary classification output, either 0 or 1). Example values: sample_000 -> 1, sample_001 -> 0.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "id",
+          "description": "Sample identifier. Example values: sample_000, sample_001.",
+          "dataType": "sc:Text",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "pred",
+          "description": "Binary prediction output (0 or 1). Example values: 1, 0.",
+          "dataType": "sc:Integer",
+          "source": null,
+          "@type": "cr:Field"
+        }
+      ],
+      "@type": "cr:RecordSet"
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "numpy",
+        "pandas",
+        "scipy",
+        "sklearn"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Attack Accuracy",
+    "metrics": [
+      "Attack Accuracy",
+      "Efficiency",
+      "Defense Effectiveness",
+      "Model Effectiveness",
+      "Statistical Significance (t-test p-value)",
+      "Statistical Significance (ANOVA p-value)"
+    ],
+    "higherIsBetter": true,
+    "notes": "Metrics include accuracy for attack and defense, efficiency (e.g., computational overhead or token usage), and statistical significance tests (t-test and ANOVA)."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "paper_id": "paper2",
+  "open_questions": [
+    "The exact paper identifier is missing.",
+    "Dataset source URL is not provided."
+  ],
+  "fill_in_the_blank": [
+    "paper_id - reason it could not be determined from the paper",
+    "cr:input[0].contentUrl - reason it could not be determined from the paper"
+  ]
+}

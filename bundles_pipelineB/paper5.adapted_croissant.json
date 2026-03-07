@@ -1,0 +1,90 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "paper5-task",
+  "name": "Erasing the Invisible",
+  "description": "This competition evaluates the robustness of invisible watermarks in AI-generated images against adversarial attacks, aiming to minimize watermark detection while preserving image quality.",
+  "paper_id": "paper5",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Participants receive a set of 300 watermarked images in PNG format per submission, corresponding to the competition track. These images are generated using six watermarking techniques (e.g., Gaussian Shading, StegaStamp) and AI models (Stable Diffusion 2.1, Flux 1 [dev]). Metadata includes 'image_index' and 'watermarked_image'.",
+      "url": "[FILL IN THE BLANK: URL to the competition dataset]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Participants submit 300 'attacked' images in PNG format, where watermarks have been removed or degraded while preserving the original image's visual quality. The output images should match the input dimensions and format.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "field": [
+        {
+          "name": "id",
+          "dataType": "sc:Text",
+          "description": "Unique identifier for each watermarked image, e.g., image_001."
+        },
+        {
+          "name": "pred",
+          "dataType": "sc:Image",
+          "description": "The attacked image with the watermark removed or degraded, preserving visual quality."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "torch",
+        "onnxruntime-gpu",
+        "transformers",
+        "diffusers"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Euclidean distance (sqrt(Q^2 + A^2))",
+    "metrics": [
+      "Euclidean distance (sqrt(Q^2 + A^2))",
+      "Watermark Removal Rate (A)",
+      "Image Quality Degradation (Q)",
+      "Peak Signal-to-Noise Ratio (PSNR)",
+      "Structural Similarity Index (SSIM)",
+      "Normalized Mutual Information (NMI)",
+      "Frechet Inception Distance (FID)",
+      "CLIP Image Fidelity (CLIP-FID)",
+      "Learned Perceptual Image Patch Similarity (LPIPS)",
+      "Delta Aesthetics Score (\u2206Aesthetics)",
+      "Delta Artifacts Score (\u2206Artifacts)"
+    ],
+    "higherIsBetter": false,
+    "notes": "The primary metric is the Euclidean distance sqrt(Q^2 + A^2), where Q represents image quality degradation and A represents watermark removal rate. IQMs are normalized to [0.1, 0.9] using baseline distributions, and weights are applied to compute Q. TPR@0.1%FPR thresholds are calibrated using 10,000 unwatermarked images per watermark type."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 2400,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What are the exact weights applied to IQMs when computing Q?",
+    "What is the exact normalization procedure for IQMs?",
+    "What are the specific thresholds for TPR@0.1%FPR calibration?"
+  ],
+  "fill_in_the_blank": [
+    "[FILL IN THE BLANK: dataset download URL]",
+    "[FILL IN THE BLANK: number of test samples per track]",
+    "[FILL IN THE BLANK: exact weights for IQMs in Q computation]"
+  ]
+}

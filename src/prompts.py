@@ -5,67 +5,122 @@ All prompts used for Azure OpenAI GPT-4 calls are centralized here
 for easier debugging, versioning, and maintenance.
 
 Uses Croissant Task (cr:TaskProblem) JSON-LD as the intermediate format.
+
+Table of Contents:
+  - CROISSANT_TASK_SCHEMA_STRUCTURE — Schema definition for Croissant Task JSON-LD
+  - CHUNK_SUMMARIZE_SYSTEM / create_chunk_summarize_prompt — Long paper summarization
+  - COMBINE_SUMMARIES_SYSTEM / create_combine_summaries_prompt — Combine chunk summaries
+  - CROISSANT_TASK_EXTRACTION_SYSTEM / create_croissant_task_extraction_prompt — PDF → Croissant Task
+  - CODE_GENERATION_SYSTEM — System prompt for code generation
+  - create_metrics_generation_prompt — Generate metrics.py
+  - create_ingestion_generation_prompt — Generate ingestion.py
+  - create_score_generation_prompt — Generate score.py
+  - TOY_DATA_SYSTEM / create_toy_data_generation_prompt — Generate toy data CSVs
+  - SOLUTION_GENERATION_SYSTEM / create_sample_solution_prompt — Generate sample solution.py
+  - DIRECT_BUNDLE_SYSTEM / create_direct_bundle_prompt — Pipeline B: PDF → Bundle directly
+  - BUNDLE_TO_CROISSANT_SYSTEM / create_bundle_to_croissant_prompt — Bundle → Croissant Task
+  - ERROR_PLANTING_SYSTEM / create_error_planting_extraction_prompt — Hallucination detection
+  - EMULATED_SOLUTION_SYSTEM / create_emulated_solution_prompt — LLM as participant
+  - JUDGE_RATING_SYSTEM / create_judge_rating_prompt — LLM judge evaluation
+  - infer_task_type — Helper to infer task type (re-exported from utils)
 """
+import json
 
 # ============================================================================
 # CROISSANT TASK EXTRACTION PROMPTS
 # ============================================================================
 
-CROISSANT_TASK_SCHEMA = """{
+CROISSANT_TASK_SCHEMA_STRUCTURE = """
+The output must be valid JSON-LD following the Croissant (MLCommons) vocabulary.
+Croissant uses schema.org as its base vocabulary and extends it with the "cr:" namespace.
+
+Required JSON-LD structure:
+
+{
   "@context": {
-    "@vocab": "http://schema.org/",
+    "@language": "en",
+    "@vocab": "https://schema.org/",
     "cr": "http://mlcommons.org/croissant/",
-    "sc": "http://schema.org/"
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
   },
   "@type": "cr:TaskProblem",
-  "@id": "paper1-task",
-  "name": "Molecule Binding Prediction",
-  "description": "Predict whether a molecule binds to a target protein based on its SMILES representation.",
-  "paper_id": "paper1",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "<paper_id>-task",
+  "name": "<short task name from the paper>",
+  "description": "<1-2 sentence problem statement from the paper>",
+  "paper_id": "<paper identifier>",
+
   "cr:input": [
     {
-      "name": "competition_dataset",
-      "description": "IMPORTANT: Include CONCRETE EXAMPLES from the paper. E.g., 'CSV with columns: id (string), smiles (SMILES string like CC(=O)Oc1ccccc1C(=O)O), protein_name (one of BRD4, HSA, sEH)'",
-      "url": "[FILL IN THE BLANK]"
+      "@type": "cr:FileObject",
+      "name": "<dataset name>",
+      "description": "<describe the input data: format, columns, data types, concrete examples from the paper>",
+      "encodingFormat": "<e.g. text/csv, application/json>",
+      "contentUrl": "<dataset URL>"
     }
   ],
+
   "cr:output": {
     "name": "predictions",
-    "description": "IMPORTANT: Include CONCRETE EXAMPLES and value ranges. E.g., 'Binary binding predictions: 0=no binding, 1=binding'",
+    "description": "<describe expected output: format, value ranges, concrete examples>",
     "cr:schema": {
+      "@type": "cr:RecordSet",
       "name": "prediction_schema",
       "field": [
-        {"name": "id", "dataType": "sc:Text", "description": "Unique sample identifier, e.g. molecule_001"},
-        {"name": "pred", "dataType": "sc:Float", "description": "Predicted binding probability between 0.0 and 1.0"}
+        {
+          "@type": "cr:Field",
+          "name": "<field name>",
+          "dataType": "<sc:Text | sc:Integer | sc:Float | sc:Boolean | sc:URL | sc:ImageObject>",
+          "description": "<what this field represents, with example values>"
+        }
       ]
     }
   },
+
   "cr:implementation": {
     "cr:environment": {
       "language": "Python",
-      "packages": ["pandas", "numpy", "scikit-learn"]
+      "packages": ["<list packages needed to solve the task>"]
     },
     "entryPoint": "solution.py",
     "interface": "predict(input_dir, output_dir)"
   },
+
   "cr:evaluation": {
-    "primaryMetric": "mean_average_precision",
-    "metrics": ["mean_average_precision", "auc_roc"],
-    "higherIsBetter": true,
-    "notes": "MAP computed per protein target, then averaged"
+    "primaryMetric": "<exact metric name from the paper>",
+    "metrics": ["<list all metrics mentioned in the paper>"],
+    "higherIsBetter": <true or false>,
+    "notes": "<any special computation details for the metrics>"
   },
+
   "cr:execution": {
-    "runtimeLimitSec": 600,
-    "memoryLimitMb": 4096,
-    "allowedExternalData": "unknown"
+    "runtimeLimitSec": <integer seconds, or 600 if not specified>,
+    "memoryLimitMb": <integer MB, or 4096 if not specified>,
+    "allowedExternalData": "<yes | no | unknown>"
   },
+
   "open_questions": [
-    "list unclear details here"
+    "<list any unclear or ambiguous details from the paper>"
   ],
+
   "fill_in_the_blank": [
-    "cr:input[0].url - dataset URL not specified in paper"
+    "<path.to.field - reason it could not be determined from the paper>"
   ]
-}"""
+}
+
+IMPORTANT RULES:
+- Use actual Croissant/schema.org data types for fields (sc:Text, sc:Integer, sc:Float, etc.)
+- Each cr:Field in cr:output must have @type, name, dataType, and description
+- Use domain-appropriate identifiers (e.g. molecule_001 for chemistry, image_001 for vision)
+- Use [FILL IN THE BLANK: <specific description>] for ANY value you cannot determine from the paper, and track it in fill_in_the_blank
+  Examples: [FILL IN THE BLANK: dataset download URL], [FILL IN THE BLANK: primary evaluation metric], [FILL IN THE BLANK: number of training samples]
+- Extract the EXACT metric names used in the paper, do not substitute generic ones
+- Include CONCRETE examples from the paper in descriptions (sample data values, column names, value ranges)
+"""
+
+# Keep backward-compatible alias
+CROISSANT_TASK_SCHEMA = CROISSANT_TASK_SCHEMA_STRUCTURE
 
 
 # ============================================================================
@@ -131,11 +186,14 @@ RULES:
 CROISSANT_TASK_EXTRACTION_SYSTEM = """You are a senior ML engineer and reproducibility reviewer.
 Your job is to extract a Croissant Task (cr:TaskProblem) from a scientific paper so that it can be implemented as a Codabench competition bundle.
 
+This paper may be from ANY domain (NLP, vision, chemistry, biology, etc.). Extract only what is explicitly stated.
+
 You must:
 - Be precise
 - Avoid guessing
-- Use [FILL IN THE BLANK] for any information you cannot determine from the paper (dataset URLs, exact environment specs, etc.)
-- Track all [FILL IN THE BLANK] fields in the fill_in_the_blank array
+- Use [FILL IN THE BLANK: <specific description>] for any information you cannot determine from the paper — makes placeholders measurable and actionable
+  Examples: [FILL IN THE BLANK: dataset download URL], [FILL IN THE BLANK: Docker image name], [FILL IN THE BLANK: exact package version]
+- Track all [FILL IN THE BLANK: ...] fields in the fill_in_the_blank array
 - Explicitly list uncertainties in open_questions
 - Output MUST be valid JSON only (JSON-LD format with Croissant vocabulary)"""
 
@@ -147,8 +205,9 @@ def create_croissant_task_extraction_prompt(paper_text: str) -> str:
 Rules:
 - Output ONLY valid JSON matching the schema.
 - Do NOT invent dataset details.
-- Use [FILL IN THE BLANK] for any information not found in the paper (dataset URLs, Docker images, exact package versions, etc.)
-- Track ALL [FILL IN THE BLANK] usages in the fill_in_the_blank array
+- Use [FILL IN THE BLANK: <specific description>] for any information not found in the paper
+  Examples: [FILL IN THE BLANK: dataset download URL], [FILL IN THE BLANK: Docker image name], [FILL IN THE BLANK: exact package version]
+- Track ALL [FILL IN THE BLANK: ...] usages in the fill_in_the_blank array
 - If unknown, use null or "unknown" and add explanation to open_questions.
 - Focus on what is required to build:
   1) ingestion_program (code-execution: runs user's solution.py)
@@ -187,8 +246,6 @@ Output ONLY valid Python code with no markdown formatting or explanations."""
 
 def create_metrics_generation_prompt(croissant_task: dict) -> str:
     """Create prompt for generating metrics.py"""
-    import json
-
     evaluation = croissant_task.get('cr:evaluation', {})
     primary_metric = evaluation.get('primaryMetric', 'accuracy')
     all_metrics = evaluation.get('metrics', [primary_metric])
@@ -459,8 +516,6 @@ Output ONLY valid CSV data with no markdown formatting or explanations."""
 
 def create_toy_data_generation_prompt(croissant_task: dict, num_samples: int = 20) -> str:
     """Create prompt for generating toy data"""
-    import json
-
     task_name = croissant_task.get('name', 'Unknown Task')
     description = croissant_task.get('description', '')
 
@@ -538,8 +593,6 @@ The solution should be simple and demonstrate the correct interface."""
 
 def create_sample_solution_prompt(croissant_task: dict) -> str:
     """Create prompt for generating a sample solution.py"""
-    import json
-
     task_name = croissant_task.get('name', 'Unknown Task')
     description = croissant_task.get('description', '')
 
@@ -616,40 +669,195 @@ Generate the complete solution.py code now."""
 # HELPER FUNCTIONS
 # ============================================================================
 
-def infer_task_type(croissant_task: dict) -> str:
-    """Infer task type from Croissant Task evaluation and description"""
-    evaluation = croissant_task.get('cr:evaluation', {})
-    primary_metric = evaluation.get('primaryMetric', '').lower()
-    description = croissant_task.get('description', '').lower()
+# Re-export from utils for backward compatibility
+from utils import infer_task_type  # noqa: F401
 
-    # Map metrics to task types
-    classification_metrics = ['accuracy', 'f1', 'precision', 'recall', 'auc', 'roc',
-                              'log_loss', 'cross_entropy']
-    ranking_metrics = ['mrr', 'ndcg', 'map', 'mean_average_precision', 'average_precision']
-    generation_metrics = ['bleu', 'rouge', 'meteor', 'perplexity', 'cer', 'wer']
-    segmentation_metrics = ['iou', 'dice', 'pixel_accuracy', 'jaccard']
 
-    for m in classification_metrics:
-        if m in primary_metric:
-            return 'classification'
-    for m in ranking_metrics:
-        if m in primary_metric:
-            return 'ranking'
-    for m in generation_metrics:
-        if m in primary_metric:
-            return 'generation'
-    for m in segmentation_metrics:
-        if m in primary_metric:
-            return 'segmentation'
+# ============================================================================
+# PIPELINE B: DIRECT BUNDLE GENERATION PROMPTS (Paper → Bundle)
+# ============================================================================
 
-    # Fallback: check description
-    if 'classif' in description:
-        return 'classification'
-    if 'rank' in description:
-        return 'ranking'
-    if 'generat' in description:
-        return 'generation'
-    if 'segment' in description:
-        return 'segmentation'
+DIRECT_BUNDLE_SYSTEM = """You are a senior ML engineer converting a research paper directly into a Codabench competition specification.
+Your job is to extract enough detail to build a working competition bundle.
 
-    return 'other'
+You must:
+- Be precise
+- Avoid guessing
+- Use [FILL IN THE BLANK: <specific description>] for any information you cannot determine from the paper
+  Examples: [FILL IN THE BLANK: dataset download URL], [FILL IN THE BLANK: primary evaluation metric]
+- Output MUST be valid JSON only"""
+
+
+def create_direct_bundle_prompt(paper_text: str) -> str:
+    """Create prompt for direct bundle generation from paper text (Pipeline B Step 1)."""
+    return f"""Read the research paper below and produce a JSON object with these keys:
+
+{{
+  "name": "short task name",
+  "description": "1-2 sentence problem statement",
+  "task_type": "classification|regression|ranking|generation|segmentation|other",
+  "primary_metric": "exact metric name from paper (e.g. mean_average_precision)",
+  "metrics": ["list", "of", "all", "metrics"],
+  "higher_is_better": true,
+  "metric_notes": "any special computation details",
+  "output_schema": [
+    {{"name": "id", "dataType": "sc:Text", "description": "unique identifier e.g. sample_001"}},
+    {{"name": "pred", "dataType": "sc:Float", "description": "prediction value 0.0-1.0"}}
+  ],
+  "input_description": "concrete description of input data with examples",
+  "output_description": "concrete description of expected output with value ranges",
+  "runtime_limit_sec": 600,
+  "memory_limit_mb": 4096,
+  "packages": ["pandas", "numpy", "scikit-learn"],
+  "open_questions": ["list of unclear details"],
+  "fill_in_the_blank": ["fields that could not be determined"]
+}}
+
+Rules:
+- Output ONLY valid JSON.
+- Extract the EXACT metric names from the paper.
+- For output_schema, define exact output columns with realistic example values.
+- Use domain-appropriate IDs (molecule_001 for chemistry, image_001 for vision, etc.).
+- Use [FILL IN THE BLANK: <specific description>] for anything not found in the paper.
+  Examples: [FILL IN THE BLANK: dataset download URL], [FILL IN THE BLANK: number of test samples]
+
+Paper text:
+{paper_text}"""
+
+
+# ============================================================================
+# PIPELINE B: BUNDLE-TO-CROISSANT EXTRACTION PROMPTS (Bundle → Croissant Task)
+# ============================================================================
+
+BUNDLE_TO_CROISSANT_SYSTEM = """You are a senior ML engineer reverse-engineering a Codabench competition bundle into a Croissant Task (cr:TaskProblem) JSON-LD.
+Your job is to extract structured metadata from the bundle files.
+
+You must:
+- Be precise
+- Avoid guessing
+- Use [FILL IN THE BLANK: <specific description>] for any information you cannot determine from the bundle files
+  Examples: [FILL IN THE BLANK: original paper DOI], [FILL IN THE BLANK: dataset source URL]
+- Track all [FILL IN THE BLANK: ...] fields in the fill_in_the_blank array
+- Output MUST be valid JSON only (JSON-LD format with Croissant vocabulary)"""
+
+
+def create_bundle_to_croissant_prompt(bundle_context: str) -> str:
+    """Create prompt for extracting Croissant Task from bundle files (Pipeline B Step 2)."""
+    return f"""Extract a Croissant Task (cr:TaskProblem) JSON-LD from the competition bundle files below.
+
+Rules:
+- Output ONLY valid JSON matching the Croissant Task schema.
+- Use [FILL IN THE BLANK: <specific description>] for anything not inferrable from the bundle files.
+  Examples: [FILL IN THE BLANK: original paper title], [FILL IN THE BLANK: dataset source URL]
+- Track ALL [FILL IN THE BLANK: ...] usages in the fill_in_the_blank array.
+
+Croissant Task schema (fill all fields):
+{CROISSANT_TASK_SCHEMA}
+
+Bundle files:
+{bundle_context}"""
+
+
+# ============================================================================
+# ERROR PLANTING PROMPTS (Hallucination Detection)
+# ============================================================================
+
+ERROR_PLANTING_SYSTEM = """You are a senior ML engineer extracting a Croissant Task (cr:TaskProblem) from a scientific paper.
+You must be precise and avoid guessing. Use [FILL IN THE BLANK: <specific description>] for unknown information.
+Examples: [FILL IN THE BLANK: dataset download URL], [FILL IN THE BLANK: exact metric formula]
+Output MUST be valid JSON only (JSON-LD format with Croissant vocabulary)."""
+
+
+def create_error_planting_extraction_prompt(modified_paper_text: str) -> str:
+    """Create prompt for Croissant Task extraction from a modified paper (error planting).
+    Same as standard extraction but used with planted-error text."""
+    return f"""Extract a Croissant Task (cr:TaskProblem) JSON-LD from the paper below.
+
+Rules:
+- Output ONLY valid JSON matching the schema.
+- Do NOT invent dataset details.
+- Use [FILL IN THE BLANK: <specific description>] for any information not found in the paper.
+  Examples: [FILL IN THE BLANK: dataset download URL], [FILL IN THE BLANK: number of classes]
+- Track ALL [FILL IN THE BLANK: ...] usages in the fill_in_the_blank array.
+
+Croissant Task schema:
+{CROISSANT_TASK_SCHEMA}
+
+Paper text:
+{modified_paper_text}"""
+
+
+# ============================================================================
+# EMULATED SUBMISSION PROMPTS (LLM acting as participant)
+# ============================================================================
+
+EMULATED_SOLUTION_SYSTEM = """You are a machine learning competition participant.
+You are given a competition description and sample input data.
+Write a Python solution that implements a reasonable baseline approach.
+Output ONLY valid Python code with no markdown formatting or explanations."""
+
+
+def create_emulated_solution_prompt(
+    competition_description: str,
+    input_columns: list,
+    target_column: str,
+    sample_input_csv: str,
+) -> str:
+    """Create prompt for generating an emulated participant solution."""
+    return f"""You are participating in a machine learning competition.
+Write a solution.py that defines a predict(input_dir, output_dir) function.
+
+COMPETITION DESCRIPTION:
+{competition_description}
+
+INPUT DATA COLUMNS: {input_columns}
+TARGET COLUMN TO PREDICT: {target_column}
+
+SAMPLE INPUT DATA (first rows of input.csv):
+{sample_input_csv}
+
+REQUIREMENTS:
+1. Define predict(input_dir, output_dir) function
+2. Read input.csv from input_dir
+3. Generate predictions for the '{target_column}' column
+4. Write predictions.csv to output_dir with columns: {input_columns + [target_column]}
+5. Use a simple but reasonable approach (not random — try a heuristic or simple model)
+6. Only use standard libraries: pandas, numpy, scikit-learn, pathlib
+
+Generate the complete solution.py code now."""
+
+
+# ============================================================================
+# JUDGE RATING PROMPTS (LLM quality evaluation)
+# ============================================================================
+
+JUDGE_RATING_SYSTEM = """You are a senior ML engineer and competition designer reviewing a Codabench competition bundle.
+Evaluate the quality of the competition on multiple criteria.
+Output ONLY valid JSON."""
+
+
+def create_judge_rating_prompt(bundle_context: str) -> str:
+    """Create prompt for LLM judge evaluation of a competition bundle."""
+    return f"""Review this Codabench competition bundle and rate its quality.
+
+BUNDLE FILES:
+{bundle_context}
+
+Rate the competition on each criterion from 1 (poor) to 5 (excellent):
+
+1. **clarity**: Is the task description clear? Can a participant understand what to do?
+2. **metric_appropriateness**: Are the evaluation metrics appropriate for the task?
+3. **data_quality**: Is the toy data realistic and correctly formatted?
+4. **feasibility**: Can the task be reasonably solved with the given interface and constraints?
+
+Output a JSON object:
+{{
+  "overall_score": <float 1.0-5.0>,
+  "criteria_scores": {{
+    "clarity": <int 1-5>,
+    "metric_appropriateness": <int 1-5>,
+    "data_quality": <int 1-5>,
+    "feasibility": <int 1-5>
+  }},
+  "feedback": "<2-4 sentences of constructive feedback>"
+}}"""

@@ -1,0 +1,17 @@
+{
+  "plant_record": {
+    "plant_type": "column_rename",
+    "original": "identifying",
+    "replacement": "zeta_score",
+    "planted": true
+  },
+  "detection": {
+    "plant_type": "column_rename",
+    "planted": true,
+    "original": "identifying",
+    "replacement": "zeta_score",
+    "propagated": true,
+    "original_found": true,
+    "details": "Planted value 'zeta_score' found in LLM output; original 'identifying' also found"
+  }
+}

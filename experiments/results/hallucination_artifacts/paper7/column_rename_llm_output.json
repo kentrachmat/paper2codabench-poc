@@ -1,0 +1,106 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "arxiv:2506.19141v2-task",
+  "name": "EEG Foundation Challenge",
+  "description": "The challenge involves developing models for zero-shot decoding of EEG data across new tasks and subjects, as well as predicting latent psychological constructs (e.g., p-factor) from EEG recordings.",
+  "paper_id": "arxiv:2506.19141v2",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "HBN-EEG Dataset",
+      "description": "High-density EEG recordings (128 channels) from over 3,000 participants aged 5-21 years, engaging in six distinct cognitive tasks (Resting State, Surround Suppression, Movie Watching, Contrast Change Detection, Sequence Learning, Symbol Search). Includes demographic attributes (age, gender, handedness) and psychopathology factors (internalization, externalization, attention, p-factor). Data is formatted in BIDS standard with event annotations using HED.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predicted outputs include task labels for zero-shot decoding and regression values for psychopathology factors (e.g., internalization, externalization, attention, p-factor).",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "task_label",
+          "dataType": "sc:Text",
+          "description": "Predicted task label for EEG decoding. Example values: 'Resting State', 'Movie Watching'."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "p_factor",
+          "dataType": "sc:Float",
+          "description": "Predicted p-factor value representing a transdiagnostic psychopathology factor. Example range: [FILL IN THE BLANK: p-factor value range]."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "internalization",
+          "dataType": "sc:Float",
+          "description": "Predicted internalization score derived from CBCL questionnaire. Example range: [FILL IN THE BLANK: internalization value range]."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "externalization",
+          "dataType": "sc:Float",
+          "description": "Predicted externalization score derived from CBCL questionnaire. Example range: [FILL IN THE BLANK: externalization value range]."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "attention",
+          "dataType": "sc:Float",
+          "description": "Predicted attention score derived from CBCL questionnaire. Example range: [FILL IN THE BLANK: attention value range]."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "[FILL IN THE BLANK: required Python packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "[FILL IN THE BLANK: list of all evaluation metrics]"
+    ],
+    "higherIsBetter": "[FILL IN THE BLANK: true or false]",
+    "notes": "[FILL IN THE BLANK: any special computation details for metrics]"
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact dataset format for the HBN-EEG dataset?",
+    "What is the download URL for the HBN-EEG dataset?",
+    "What are the exact value ranges for the psychopathology factors (p-factor, internalization, externalization, attention)?",
+    "What is the primary evaluation metric for the competition?",
+    "What are the specific Python packages required for implementation?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset format not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL not provided in the paper",
+    "cr:output.cr:schema.field[1].description - p-factor value range not specified in the paper",
+    "cr:output.cr:schema.field[2].description - internalization value range not specified in the paper",
+    "cr:output.cr:schema.field[3].description - externalization value range not specified in the paper",
+    "cr:output.cr:schema.field[4].description - attention value range not specified in the paper",
+    "cr:implementation.cr:environment.packages - required Python packages not listed in the paper",
+    "cr:evaluation.primaryMetric - primary evaluation metric not specified in the paper",
+    "cr:evaluation.metrics - list of evaluation metrics not provided in the paper",
+    "cr:evaluation.higherIsBetter - higherIsBetter value not specified in the paper"
+  ]
+}

@@ -1,0 +1,38 @@
+title: "FAIR Universe HiggsML Uncertainty Challenge"
+description: |
+  Develop machine learning models to estimate the signal strength parameter (µ) and provide a 68.27% Confidence Interval (CI), accounting for both aleatoric and epistemic uncertainties. The task involves systematic biases introduced by six nuisance parameters to simulate real-world uncertainties.
+image: logo.png
+docker_image: "codalab/codalab-legacy:py3"
+tasks:
+  - index: 0
+    name: "FAIR Universe HiggsML Uncertainty Challenge"
+    description: "Develop machine learning models to estimate the signal strength parameter (µ) and provide a 68.27% Confidence Interval (CI), accounting for both aleatoric and epistemic uncertainties. The task involves systematic biases introduced by six nuisance parameters to simulate real-world uncertainties."
+    scoring_program: scoring_program
+    ingestion_program: ingestion_program
+    reference_data: reference_data
+    input_data: input_data
+phases:
+  - index: 0
+    name: "Evaluation Phase"
+    description: "Main evaluation phase"
+    start: "2026-01-01"
+    end: "2027-12-31"
+    max_submissions_per_day: 5
+    max_submissions: 100
+    tasks: [0]
+leaderboards:
+  - index: 0
+    title: "Results"
+    key: "results"
+    submission_rule: "force_last"
+    columns:
+      - index: 0
+        title: "Final Quantile Score"
+        key: "Final Quantile Score"
+        sorting: "desc"
+pages:
+  - title: "Overview"
+    file: overview.html
+  - title: "Evaluation"
+    file: evaluation.html
+terms: terms.html

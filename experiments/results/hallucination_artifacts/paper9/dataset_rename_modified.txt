@@ -1,0 +1,317 @@
+arXiv:2506.07731v1  [cs.AI]  9 Jun 2025
+NeurIPS 2025 E2LM Competition : Early Training
+Evaluation of Language Models
+Mouadh Yagoubi1
+Yasser Dahou1
+Billel Mokeddem1
+Younes Belkada1
+Phuc H. Le-Khac1
+Basma El Amel Boussaha1
+Reda Alami1
+Jingwei Zuo1
+Damiano Marsili2
+Mugariya Farooq1
+Mounia Lalmas3
+Georgia Gkioxari2
+Patrick Gallinari4
+Philip Torr5
+Hakim Hacid1
+Abstract
+Existing benchmarks have proven effective for assessing the performance of fully
+trained large language models. However, we find striking differences in the early
+training stages of small models, where benchmarks often fail to provide meaningful
+or discriminative signals. To explore how these differences arise, this competition
+tackles the challenge of designing scientific knowledge evaluation tasks specifically
+tailored for measuring early training progress of language models. Participants are
+invited to develop novel evaluation methodologies or adapt existing benchmarks
+to better capture performance differences among language models. To support
+this effort, we provide three pre-trained small models (0.5B, 1B, and 3B param-
+eters), along with intermediate checkpoints sampled during training up to 200B
+tokens. All experiments and development work can be run on widely available free
+cloud-based GPU platforms, making participation accessible to researchers with
+limited computational resources. Submissions will be evaluated based on three
+criteria: the quality of the performance signal they produce, the consistency of
+model rankings at 1 trillion tokens of training, and their relevance to the scientific
+knowledge domain. By promoting the design of tailored evaluation strategies for
+early training, this competition aims to attract a broad range of participants from
+various disciplines, including those who may not be machine learning experts or
+have access to dedicated GPU resources. Ultimately, this initiative seeks to make
+foundational LLM research more systematic and benchmark-informed from the
+earliest phases of model development.
+Keywords
+Early training analysis, Evaluation benchmarks, Scientific knowledge, Low-resource ML research,
+Language Models.
+1Technology Innovation Institute (TII), UAE
+2California Institute of Technology, Pasadena, CA, USA
+3Spotify, UK
+4ISIR - Sorbonne University, France
+5University of Oxford, UK
+Preprint. Under review.
+
+
+50
+100
+150
+200
+Billion Tokens
+0.24
+0.26
+0.28
+0.30
+0.32
+Score
+MMLU
+50
+100
+150
+200
+Billion Tokens
+0.20
+0.22
+0.24
+0.26
+0.28
+0.30
+0.32
+GPQA
+50
+100
+150
+200
+Billion Tokens
+0.00
+0.00
+0.00
+0.01
+0.01
+0.01
+0.02
+0.02
+MATH
+50
+100
+150
+200
+Billion Tokens
+0.02
+0.04
+0.06
+0.08
+0.10
+0.12
+0.14
+MUSR
+Experiments
+dense-1b-arch2
+dense-3b-arch1
+dense-0.5b-arch2
+dense-3b-arch2
+dense-1b-arch1
+dense-0.5b-arch1
+Model Categories
+1B
+3B
+0.5B
+Experiments
+dense-1b-arch2
+dense-3b-arch1
+dense-0.5b-arch2
+dense-3b-arch2
+dense-1b-arch1
+dense-0.5b-arch1
+Figure 1: Noisy results obtained with state-of-the-art benchmarks with different models sizes.
+1
+Competition description
+1.1
+Background and impact
+Large Language Models (LLMs) have advanced at an unprecedented pace in recent years [1, 2, 3,
+4]. In response, the research community has increasingly focused on developing benchmarking
+frameworks to assess their capabilities in a variety of domains, including language, mathematics, and
+reasoning. Early evaluations primarily focused on measuring the language modeling skills [5, 6],
+a fundamental competence that appears to be increasingly well-acquired by newer LLM variants
+saturating such benchmarks. Recently, attention has shifted towards evaluating scientific knowledge,
+code generation and reasoning capabilities, using benchmarks such as MMLU [7] and its enhanced
+version MMLU-pro [8], GPQA [9], GSM8K [10], MATH [11], and LiveCodeBench [12]. A common
+theme across these benchmarks is the increasing complexity of tasks, aimed at testing the limits of
+frontier models.
+Despite these advances, Small Language Models (SLMs) with lower than 7B parameters consistently
+underperform relative to their larger counterparts on these challenging benchmarks. This performance
+gap is particularly problematic when training SLMs from scratch, as these benchmarks fail to
+offer discriminative signals during early training phases (typically between 0-200 billion tokens).
+Consequently, they provide limited guidance for training dynamics regarding: hyperparameter search,
+data mixture and architectural sweeps. Developing more granular and targeted evaluation benchmarks
+in the scientific knowledge domain would enable more systematic investigation of fundamental
+research questions during the early training stages of SLMs.
+Concretely, we provide three pre-trained SLMs (0.5B, 1B, and 3B) along with intermediate check-
+points up to 200 billion tokens. As shown in Figure 1, current benchmarks are often noisy and fail
+to provide a clear signal to measure progress, raising several fundamental questions: Are SLMs not
+learning any scientific knowledge early in the training? Or are the benchmark questions too difficult
+at this stage? Is the noise due to a lack of acquired knowledge, or could it be related to how the
+questions are formatted from a linguistic standpoint? Are there ways to refine current benchmarks to
+better extract meaningful signals?
+The primary goal of this competition is to investigate these questions by inviting participants to design
+and develop novel evaluation tasks that enable a progressive assessment of scientific knowledge in
+SLMs, hence, enabling a progressive assessment of scientific knowledge in SLMs and producing
+more informative performance signals. Specifically, the expected impact of the challenge can be
+summarized as follows:
+• Enhancing SLMs research: By enabling more rigorous and conclusive studies on smaller models,
+this competition will open opportunities to develop stronger SLMs in scientific knowledge, code,
+and mathematics–ultimately helping to bridge the gap with larger models through meaningful
+analysis across a large number of small-scale experiments.
+• Transfer to large models: Lessons learned from studying SLMs can help inform better decisions
+when training larger models, particularly in terms of data mixtures, hyper-parameters, and architec-
+2
+
+
+tural choices. We refer the reader to [13, 14] for a comprehensive overview of the role of small
+models in advancing LLMs.
+• Understanding the learning dynamics: Current benchmarks often do not fully reflect the conver-
+gence or complexity of the model in a meaningful way. Benchmark difficulty should ideally evolve
+with a model’s level of training. Tackling this problem may offer insights into how models learn
+over time.
+• Expand the reach of LLM research: We aim to encourage participation from researchers beyond
+the core machine learning community, inviting them to bring evaluation ideas and benchmarks
+rooted in their domain expertise. Such interdisciplinary collaboration has the potential to broaden
+the impact and relevance of LLM research.
+To this end, participants can either adapt existing benchmarks or design entirely new tasks from
+scratch. Moreover, we provide a baseline approach that has been successfully tested on the provided
+checkpoints (see Section 1.4). This baseline draws inspiration from the work of [15], who proposed a
+variant of the well-known MMLU benchmark [7], referred to as MMLU-var. In this variant, prompts
+are reformulated in a completion/close-style format rather than as multiple-choice questions. The
+motivation for this adaptation stems from the observation that LLMs typically gain proficiency in
+multiple-choice questions only in later training stages (e.g., after 1 trillion tokens), which already
+represents a substantial computational budget.
+Furthermore, the results on MMLU-var (Figure 2) demonstrate how simple prompt modifications (see
+Appendix B) can substantially improve the evaluation of SLMs. Grade-school-level benchmarks like
+ARC-easy [16] and SciQ [17] also provide useful signals (refer to Appendix A). That said, benchmark
+complexity is inherently multi-dimensional; while MMLU-var addresses linguistic complexity in
+prompts, participants are encouraged to explore additional dimensions such as semantic depth and
+domain-specific reasoning in areas like mathematics or code generation.
+1.2
+Novelty
+Research on LLMs has been rapidly evolving across multiple fronts, including how to evaluate them
+effectively [18], how to improve their efficiency[19], their training scaling laws[20, 21], and how to
+combine or adapt them for diverse use cases[22]. In recent NeurIPS editions, several competitions
+have been introduced to address the high costs associated with training and deploying them: the
+LLM Merging Challenge explored how to combine existing models to create more powerful ones
+without additional training [23], while the Edge LLM Challenge [24] focused on developing efficient,
+optimized models capable of running on resource-constrained edge devices. A SynthBench-2024 Fine-
+Tuning and Inference Challenge was also organized to promote the development of methods that
+reduce the computational costs of using LLMs in practice [25].
+While these challenges target fully trained model’s applicability, our proposal shifts the focus towards
+SLMs and explores how best to evaluate their acquisition of scientific knowledge during the early
+phases of training. Drawing from foundational work in cognitive development and education [26, 27],
+we are inspired by the idea that evaluating learning requires sensitivity to both developmental
+stage and type of understanding. For example, [26] emphasized that learners acquire increasingly
+abstract forms of reasoning over time, suggesting that evaluation tasks should be developmentally
+aligned—not just more difficult, but also structured differently at each stage. Similarly, taxonomies
+in [27, 28] propose that comprehension, analysis, and knowledge application emerge progressively.
+By analogy, we argue that evaluation strategies for SLMs should not focus solely on final performance,
+but rather take into account the learning dynamics and training trajectory. Just as students are not
+assessed on differential equations before mastering algebra, language models should be evaluated on
+tasks aligned with their stage of development. We argue that early-stage benchmarks should probe
+intermediate reasoning capabilities and the gradual acquisition of scientific knowledge in a way that
+reflects how understanding evolves with exposure and training.
+This competition aims to provide the research community with new evaluation benchmarks that
+reflect the learning dynamics of Small Language Models. It will equip participants with tailored tools
+to assess SLMs, with a particular emphasis on reasoning and scientific knowledge domains.
+By establishing dedicated reasoning- and scientific-knowledge-focused evaluation benchmarks for
+SLMs, we aim not only to improve the evaluation of SLMs but also to support broader LLM research.
+Fine-grained evaluation at a small scale enables more informative experimentation, potentially
+3
+
+
+improving decisions in large-scale trainings. Ultimately, we believe that addressing the challenge of
+evaluating SLMs in a competition setting will foster innovation in benchmark design and inform the
+development of metrics better suited to the evolving needs of the research and industry communities.
+1.3
+Data
+To support participants and facilitate the validation of their benchmarks, we trained multiple models
+using two distinct data mixtures. Below, we provide a detailed description of each:
+• Web-only Dataset: This consists of a random subset of FineWeb [29], a cleaned and deduplicated
+English web corpus derived from CommonCrawl6. Models trained on this mixture typically acquire
+broad linguistic fluency and general world knowledge.
+• Scientific Knowledge Data Mixture: This mixture comprises selected subsets from the following
+publicly available datasets: FineWeb-edu [30] (50%), The Stack V1 [31] and The Stack V2 [32]
+(21.6%), InfiMM [33] (18.9%), and TxT3607 [34] (9.5%). Compared to the Web-only mixture,
+models trained on this subset are expected to demonstrate stronger performance in logical inference,
+mathematical problem-solving, and code generation.
+Each model was trained on 1 trillion tokens using a custom tokenizer with a vocabulary size of
+65,000 tokens. To maintain a clear scope for the competition and ensure a fair comparison across
+submissions, only English-language data was used. Additionally, we provide models at three
+scales—each instantiated with two distinct architectural variants for the same size: a deep variant
+(arch1) and a wide variant (arch2), assuming deeper models reason better [35], as shown in Appendix
+C. The choice is merely to differentiate models of the same size rather than to compare width vs
+depth, which is out of the scope of this work. Participants are provided with intermediate checkpoints
+up to 200 billion tokens, enabling evaluation at various stages of training.
+1.4
+Tasks and application scenarios
+We begin our investigation using the baseline results obtained on the MMLU-var benchmark. Figure 2
+presents a comparison of various model architectures and sizes using both the standard MMLU and
+its modified variant, MMLU-var [15].
+50
+100
+150
+200
+Billion Tokens
+0.26
+0.28
+0.30
+0.32
+0.34
+0.36
+Score
+MMLU-Var
+50
+100
+150
+200
+Billion Tokens
+0.24
+0.26
+0.28
+0.30
+0.32
+MMLU
+Experiments
+dense-1b-arch1
+dense-1b-arch2
+dense-3b-arch2
+dense-0.5b-arch2
+dense-3b-arch1
+dense-0.5b-arch1
+Experiments
+dense-1b-arch1
+dense-1b-arch2
+dense-3b-arch2
+dense-0.5b-arch2
+dense-3b-arch1
+dense-0.5b-arch1
+Figure 2:
+MMLU-var (left)
+vs MMLU (right) comparison
+on different configurations and
+sizes of models. Different col-
+ors for each size of the model
+(0.5B, 1B and 3B) and markers
+distinguish experiments within
+the same category. MMLU-var al-
+lows a clear comparison between
+variants while MMLU is giving
+noise (expect for 3B arch2).
+We observe that results on MMLU do not consistently differentiate between models of varying sizes
+and architectures (i.e, 0.5B, 1B, and 3B), with no apparent scaling law or pattern, except at later
+stages of training (around 180 billion Tokens), where the 3B-Arch-2 model clearly outperforms the
+others.
+In contrast, the MMLU-var (left plot) offers better informative results throughout the training process.
+On top of ranking models according to size, it also distinguishes between different architectural
+variants within the same size. These results suggest that early trained SLMs struggle to explicitly
+compare and reason over multiple-choices in the input space, but still gives a higher log-likelihood
+to the correct answer when prompted in a completion manner. Interestingly, we found that tasks
+requiring general language capabilities (i.e., HellaSwag [5], WinoGrande[6]) provide meaningful
+6https://commoncrawl.org
+7All subsets are included except for Common Crawl.
+4
+
+
+signals during early training (0 to 200 BT). Furthermore, a core objective of

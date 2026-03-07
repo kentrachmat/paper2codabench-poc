@@ -1,0 +1,86 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "concordia-contest-task",
+  "name": "Cooperative Intelligence of Language Model Agents",
+  "description": "The task is to develop language model agents capable of effective cooperation in mixed-motive, text-mediated environments using the Concordia framework. Agents must demonstrate skills such as promise-keeping, negotiation, and compromise in diverse scenarios.",
+  "paper_id": "The Concordia Contest: Advancing the Cooperative Intelligence of Language Model Agents",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "Concordia Scenarios Dataset",
+      "description": "A set of mixed-motive social dilemma scenarios provided by the Concordia framework. These scenarios include natural language descriptions of the environment and co-player behaviors, which agents use as input. Example: 'Dorothy goes grocery shopping for dinner and overhears Charlie talking about Alice.'",
+      "encodingFormat": "[FILL IN THE BLANK: data format]",
+      "contentUrl": "https://github.com/google-deepmind/concordia"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The expected output is natural language descriptions of the agents' actions and intentions in response to the scenarios. Example: 'Charlie sets up a stand to talk to people about Alice's bad deeds.'",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "action_description",
+          "dataType": "sc:Text",
+          "description": "A natural language description of the agent's intended action. Example: 'Dorothy goes grocery shopping for dinner.'"
+        },
+        {
+          "@type": "cr:Field",
+          "name": "interaction_description",
+          "dataType": "sc:Text",
+          "description": "A natural language description of the interaction outcome as determined by the Game Master. Example: 'Charlie is kicked out of the grocery store for disturbing other customers.'"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "transformers",
+        "numpy",
+        "pandas",
+        "[FILL IN THE BLANK: additional required packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "[FILL IN THE BLANK: list of all metrics mentioned in the paper]"
+    ],
+    "higherIsBetter": "[FILL IN THE BLANK: true or false]",
+    "notes": "[FILL IN THE BLANK: details on metric computation]"
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact primary evaluation metric used to score agents?",
+    "What is the encoding format of the Concordia Scenarios Dataset?",
+    "What are the specific metrics used to evaluate cooperative intelligence?",
+    "What are the exact memory and runtime constraints for the task?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - The data format of the Concordia Scenarios Dataset is not specified in the paper.",
+    "cr:evaluation.primaryMetric - The primary evaluation metric is not explicitly mentioned in the paper.",
+    "cr:evaluation.metrics - The list of evaluation metrics is not provided in the paper.",
+    "cr:evaluation.higherIsBetter - It is unclear whether higher values of the metric(s) are better.",
+    "cr:evaluation.notes - Details on how the metrics are computed are not available in the paper.",
+    "cr:implementation.cr:environment.packages[3] - Additional required Python packages are not specified in the paper."
+  ]
+}

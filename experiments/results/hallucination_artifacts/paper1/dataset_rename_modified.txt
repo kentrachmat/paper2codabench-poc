@@ -1,0 +1,219 @@
+NeurIPS 2024 ML4CFD Competition: Harnessing
+Machine Learning for Computational Fluid Dynamics
+in Airfoil Design
+Mouadh Yagoubi, David Danan, Milad SynthBench-2024, Jean-Patrick Brunet, Maroua Gmati
+IRT SystemX, Palaiseau, France
+Ahmed Mazari 1, Florent Bonnet 1,2
+1. SimAI team, Ansys Inc, France
+2. Sorbonne Université, CNRS, ISIR
+Asma Farjallah
+NVIDIA
+Paola Cinnella
+Institut Jean Le Rond D’Alembert
+Sorbonne Université, France
+Patrick Gallinari
+Sorbonne Université, CNRS, ISIR
+Criteo AI Lab
+Marc Schoenauer
+INRIA Saclay, France
+Abstract
+The integration of machine learning (ML) techniques for addressing intricate
+physics problems is increasingly recognized as a promising avenue for expediting
+simulations. However, assessing ML-derived physical models poses a significant
+challenge for their adoption within industrial contexts. This competition is designed
+to promote the development of innovative ML approaches for tackling physical
+challenges, leveraging our recently introduced unified evaluation framework known
+as Learning Industrial Physical Simulations (LIPS). Building upon the preliminary
+edition held from November 2023 to March 20241, this iteration centers on a task
+fundamental to a well-established physical application: airfoil design simulation,
+utilizing our proposed AirfRANS dataset. The competition evaluates solutions
+based on various criteria encompassing ML accuracy, computational efficiency,
+Out-Of-Distribution performance, and adherence to physical principles. Notably,
+this competition represents a pioneering effort in exploring ML-driven surrogate
+methods aimed at optimizing the trade-off between computational efficiency and ac-
+curacy in physical simulations. Hosted on the Codabench platform, the competition
+offers online training and evaluation for all participating solutions.
+Keywords
+· Geometric Deep Learning · Hybridization · Benchmark · PDE · CFD
+1
+Competition description
+1.1
+Background and impact
+Nowadays, numerical simulation has become indispensable for designing and managing intricate
+physical systems due to its cost-effectiveness compared to real-world experiments. While classical
+numerical methods often offer accurate predictions of system behavior, they typically come with
+1https://www.codabench.org/competitions/1534/
+Preprint. Under review.
+arXiv:2407.01641v1  [physics.flu-dyn]  30 Jun 2024
+
+
+a high computational cost, limiting their applicability in complex industrial settings. Machine
+learning (ML) approaches, proven successful in diverse domains like computer vision, natural
+language processing, and speech recognition, are increasingly gaining traction. Recently, they gain
+a particular attention in physical domains where traditional numerical methods face challenges or
+involve expensive and imprecise computations.
+Deep Learning (DL) techniques, in particular, have garnered attention for their ability to tackle
+complex tasks, showing promising results across various physical domains (see e.g.,[1–5]). These
+approaches facilitate significant acceleration of simulations by replacing certain computational
+components with data-driven models. The primary goal of the presented challenge is to foster the
+development of novel ML solutions for solving physical problems. To achieve this, we propose
+focusing on a well-established Computational Fluid Dynamics (CFD) use case: airfoil design. Our
+aim is to establish an efficient benchmarking framework for evaluating submitted solutions.
+In addition to traditional machine learning metrics assessing accuracy and speedup, we aim to
+incorporate other essential criteria crucial for validating ML-based physical models in industrial
+settings. These include Out-of-Distribution (OOD) generalization and physics compliance. To
+facilitate this evaluation, we introduce our recently developed benchmarking platform, LIPS (Learning
+Industrial Physical Simulation)[6], which is briefly outlined in the following paragraph.
+LIPS Framework
+The LIPS Framework [6] serves as a unified and extensible platform designed
+for benchmarking ML-based physical simulations in a uniform yet adaptable manner. It facilitates
+the evaluation of various ML-based physical simulators through four key modules: data management,
+benchmark configurator, augmented simulator, and evaluation (Figure 1).
+Figure 1: Learning Industrial Physical Simulation (LIPS) framework
+Primarily, the LIPS framework is utilized to establish generic and comprehensive evaluation criteria
+for ranking submitted solutions. This evaluation process encompasses multiple aspects to address
+industrial requirements and expectations. The following categories outline the evaluation criteria
+considered:
+• ML-related performance: we focus on assessing the trade-offs between typical model
+accuracy metrics like Mean Squared Error (MSE) and computation time.
+• Out-of-Distribution (OOD) generalization: given the necessity in industrial physical
+simulation to extrapolate over minor variations in problem geometry or physical parameters,
+we incorporate OOD geometry evaluation, such as unseen airfoil mesh variations.
+• Physics compliance: ensuring adherence to physical laws is crucial when simulation results
+influence real-world decisions. Depending on the benchmark’s criticality, this category of
+criteria aims to specify the types and quantity of physical laws that must be satisfied.
+Note that the Airfoil design task being considered for this competition has already been implemented
+within the LIPS framework and was successfully utilized during the preliminary edition of this
+competition.
+1.2
+Novelty
+The integration of machine learning (ML) with physics represents an expanding area of research,
+with a multitude of industrial applications. A considerable portion of this research capitalizes on the
+2
+
+
+latest advancements in ML to address challenges encountered in the physical sciences, as exemplified
+by the recent Machine Learning and the Physical Sciences workshop [7]. Only a limited selection of
+competitions focus on specific industrial use cases within the physical domain, such as molecular
+simulations (Open Catalyst Challenge [8]), particle physics [9], and robotics [10]. Conversely, certain
+scholarly endeavors, including the ICLR 2023 Workshop on Physics for Machine Learning [11],
+along with studies cited in [12, 13], attempt to harness the inherent structures of physical systems and
+the accumulated body of physics knowledge to forge novel ML methodologies, thereby enhancing
+our comprehension of these disciplines.
+What sets this challenge apart is its objective to develop ML strategies specifically designed to tackle
+physical problems as defined by a particular dataset, the airfoil design task using the AirFrans dataset.
+We held a trial run of this competition in 2023 [14]. The competition facilitated the exploration of
+novel approaches, including Physics-Informed Neural Networks (PINNs), Graph Neural Networks,
+Transformers, and combinations with classical ML techniques. The winning strategies, particularly
+the first-place solution, underscored the potential of combining classical ML with advanced mesh
+graph treatments [15].
+Launching a new edition in the scope of NeurIPS will enables the refinement of evaluation criteria
+to better assess the practical applicability and industrial relevance of solutions, encourages the
+development of more sophisticated ML models that can address the limitations identified in the
+previous contest, and strengthens the community by fostering collaboration and knowledge exchange.
+Moreover, by focusing again on airfoil design but with updated baseline solutions from the preliminary
+edition (see table 2), the competition aims to push the boundaries of what’s achievable, promoting
+innovations that could lead to significant advancements in the efficiency and accuracy of physical
+simulations. To do so, we refine the score computation to make it more challenging, including the
+consideration of new physical criteria and the assessment of robustness to additive noise. Besides,
+submissions will be trained and evaluated on GPU servers provided by NVIDIA as it was the case
+for the preliminary competition hosted on Codabench. Having dedicated GPU resources for the
+challenge allows us to establish a unified process for all participants, ensuring fair evaluation and
+enabling those without GPU resources to participate.
+1.3
+Data
+As mentioned above, the AirfRANS dataset generated for the purpose of the competition is based on
+specific physical solver that represents the ground truth: OpenFoam (see table 1). For more details
+about the datasets, the reader could refer to [16]. For the needs of this challenge, the datasets will be
+slightly adapted, without any major changes. Each simulation is given as a point cloud defined via
+the nodes of the simulation mesh, that is to say a discretization of the 2D domain considered. Inputs
+and outputs variables for each task are listed in table 1. For the challenge, we consider three datasets
+each comprised of several samples to be used in the ML tasks, such as training and testing. Note that
+each sample in these datasets is associated to a CFD 2D simulation using OpenFoam.
+• Training set: 103 samples, AirfRANS ’scarce’ task, training split, filtered to keep the
+simulation where the number of reynolds is between 3e6 and 5e6
+• Test set : 200 samples, AirfRANS ’full’ task, testing split
+• OOD test Set : 496 samples, AirfRANS reynolds task, testing split
+The decision to employ a limited training split in our approach is driven by a crucial consideration:
+the high cost associated with acquiring real-world data for tackling industrial challenges. Obtaining
+authentic samples demands significant investments of time and resources. By incorporating this
+scarcity into the training set, we aim to closely mirror the constraints faced in practical industrial
+scenarios. This strategy ensures that the models are trained under conditions that faithfully represent
+the challenges of real-world deployment, ultimately leading to more effective solutions tailored to
+industrial needs.
+Table 1: Reference data for the task and its related input/output variables.
+Task
+Reference physical simulator
+Dataset description
+Input variables
+Output variables
+Airfoil design
+OpenFoam [17]
+AirfRANS [16]
+Positions
+Velocity (¯ux, ¯uy)
+Documentation [18]
+Inlet velocity
+Pressure divided by the specific mass ( ¯ps)
+GitHub [19]
+Distance to the airfoil
+Turbulent kinematic viscosity (¯νt)
+Normals
+3
+
+
+1.4
+Tasks and application scenarios
+This competition will address the challenge of improving baseline solutions for the airfoil design
+problem by building ML-based surrogate models. The overall aim is to reduce the physical simulation
+cost while preserving acceptable precision for the outputs. Furthermore, we encourage solutions that
+can be generalized to solve other scenarios of the airfoils usecase through the OOD generalization
+dataset.
+(a) Input
+(b) Output
+Figure 2: (a) Airfoil mesh. (b) x-velocity field.
+Aircraft design requires a rigorous study of the surrounding aerodynamic fields that could be measured
+experimentally. However, experiments are extremely costly, time-consuming, and may considerably
+hinder the time to market new concepts, e.g. to match the stringent constraints on fuel consumption
+imposed by the energy transition. Moreover, prototypes may not be feasible for highly complex
+configurations. To circumvent that, one of the solutions is virtual testing, which enables coping with
+complex constraints and test configurations in a more time-efficient and cheap way. Hence, numerical
+simulation is crucial for modeling such physical phenomena that are governed by Partial Differential
+Equations (PDEs) and widely used in Computational Fluid Dynamics (CFD) to solve Navier-Stokes
+equations (NS). NS-PDEs are highly nonlinear and their analytical resolution is out of reach. They
+are numerically solved with the help of discretization methods such as finite differences, finite
+elements, or finite volume methods. At high Reynolds number (beyond a certain threshold), NS-PDEs
+involve a complex energy transfer process that cascades from large nearly inviscid length scales to
+small dissipative ones (Kolmogorov microscales), which makes their direct resolution challenging
+and expensive (thousands of CPU hours). Following this complexity and the related challenges,
+several strategies are adopted in traditional CFD solvers to solve these equations over different scales,
+including Direct Numerical Simulation (DNS) of all scales, which is prohibitively expensive at high
+Reynolds, Large Eddy Simulation (LES) that models the smaller scales of turbulence and resolves
+the largest, and Reynolds-Averaged Navier-Stokes (RANS) that solves mean field equations while
+modeling all scales of turbulence.
+Despite the efficiency of these methods, NS-PDEs are still computationally expensive and may take
+several hours to converge to an accurate solution w.r.t the granularity of meshes. For that reason,
+we argue that Deep Learning (DL) could be a potential surrogate model to cover several CFD tasks
+including design exploration, design optimization, inverse problem, and real-time control, as well
+as super-resolution. DL enjoys several advantages: (i) can represent a large family of functions,
+(ii) can lead to mesh-free models, (iii) trades-off accuracy and complexity, and (iv) enables fast
+inference once the model is trained. Regarding the aforementioned challenges and the potential of
+surrogate models, a benchmarking aerodynamic dataset called AirfRANS [16] was introduced to
+study the capabilities of DL in approximating the functional space of NS-PDEs (in this case, RANS
+supplemented with the well-known k-ω SST turbulence model). This dataset is a model for real-world
+applications in aerodynamics, and the numerical solutions can be validated against experimental data
+available on the NASA Turbulence Modeling Resource (TMR) of the Langley Research Center [20].
+The simulations are run with OpenFoam [21, 17]. From a design standpoint, the challenges are: (1)
+simulations come in the form of unstructured mesh with millions of nodes, (2) High Reynolds leading
+to sharp signals, (3) Difficulty at encoding the geometry and boundary conditions w.r.t complex
+topological and physical variations including Angle of Attacks (AOA). In this challenge, we propose
+to study the AirFoil design problem by considering a scarce data regime [16]. The task consists in
+predicting the incompressible steady-state two-dimensional fields and the force acting over airfoils in
+a subsonic regime. The goal is to find the airfoil that maximizes the lift-over-drag ratio and predict the
+4
+
+
+velocity and pressure fields around it accurately. To physically evaluate the DL models, only surface
+and volume fields are regressed. Then, force coefficients are computed as post-treatments to stick
+with typical postprocessing of the RANS equations. Therefore, the trained DL model is said to be
+physically consist

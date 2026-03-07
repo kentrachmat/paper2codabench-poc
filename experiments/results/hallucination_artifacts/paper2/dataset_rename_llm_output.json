@@ -1,0 +1,89 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "neurips2024-llm-privacy-challenge-task",
+  "name": "LLM Privacy Challenge",
+  "description": "The NeurIPS 2024 LLM Privacy Challenge addresses privacy risks in Large Language Models (LLMs) by focusing on identifying vulnerabilities (Red Team) and developing protective measures (Blue Team). Participants work with synthetic datasets to explore privacy-preserving techniques.",
+  "paper_id": "neurips2024-llm-privacy-challenge",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "Synthetic Private Data",
+      "description": "Synthetic datasets designed to mimic real-world private information, such as replacing private data in public datasets (e.g., Enron emails) with random strings while maintaining realistic formats. These datasets are large, diverse, and ethically generated.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The expected output includes attack results (e.g., extracted sensitive information) for Red Team and defense results (e.g., sanitized outputs or privacy-preserving measures) for Blue Team.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "attack_accuracy",
+          "dataType": "sc:Float",
+          "description": "The success rate of identifying and extracting sensitive information from LLMs. Example: 0.85 for 85% accuracy."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "efficiency",
+          "dataType": "sc:Float",
+          "description": "Resource efficiency of the method, such as the number of tokens or queries used for Red Team or computational overhead for Blue Team. Example: 0.75 for 75% efficiency."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "model_effectiveness",
+          "dataType": "sc:Float",
+          "description": "The general performance of the LLM after applying defensive methods (Blue Team only). Example: 0.92 for 92% effectiveness."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "[FILL IN THE BLANK: list of required Python packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "Attack Accuracy",
+      "Efficiency",
+      "Model Effectiveness"
+    ],
+    "higherIsBetter": "[FILL IN THE BLANK: true or false]",
+    "notes": "Red Team submissions are ranked higher for higher attack accuracy and efficiency. Blue Team submissions are ranked higher for lower attack accuracy, higher efficiency, and better model effectiveness."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "no"
+  },
+  "open_questions": [
+    "The exact format of the synthetic dataset is not specified.",
+    "The primary evaluation metric is not explicitly stated in the paper.",
+    "The list of required Python packages for implementation is not provided."
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset format is not specified in the paper.",
+    "cr:input[0].contentUrl - dataset download URL is not provided in the paper.",
+    "cr:implementation.cr:environment.packages - list of required Python packages is not mentioned.",
+    "cr:evaluation.primaryMetric - primary evaluation metric is not explicitly stated.",
+    "cr:evaluation.higherIsBetter - it is not explicitly stated whether higher values are better for the primary metric."
+  ]
+}

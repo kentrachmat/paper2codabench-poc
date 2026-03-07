@@ -1,0 +1,115 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "eeg-foundation-challenge-task",
+  "name": "EEG Foundation Challenge",
+  "description": "The EEG Foundation Challenge consists of two tasks: predicting behavioral performance (response time) in the Contrast Change Detection (CCD) task using EEG data and demographic traits, and predicting continuous latent psychological constructs (e.g., internalization, externalization, attention, and the p-factor) using EEG data and demographic traits.",
+  "cr:input": [
+    {
+      "name": "HBN-EEG Dataset",
+      "description": "High-density EEG recordings with 128 channels, demographic traits (age, gender, handedness), and psychological factors (internalization, externalization, attention, p-factor). EEG data is formatted as X \u2208 R^(128 \u00d7 t), where 128 is the number of electrodes and t is the number of time steps. Event labels are Y \u2208 R^(k \u00d7 t), where k is the number of event labels. Demographic and psychological traits are P \u2208 R^7.",
+      "url": null,
+      "distribution": null,
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "application/json",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predicted response times for the CCD task (continuous values between 0.5 and 2.5 seconds) and predicted continuous psychopathology scores (internalization, externalization, attention, p-factor).",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "description": null,
+      "field": [
+        {
+          "name": "response_time",
+          "description": "Predicted response time for the CCD task, in seconds. Example: 1.75.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "internalization",
+          "description": "Predicted internalization score. Example: 0.85.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "externalization",
+          "description": "Predicted externalization score. Example: -0.45.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "attention",
+          "description": "Predicted attention score. Example: 1.25.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "p_factor",
+          "description": "Predicted p-factor score. Example: -0.15.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        }
+      ],
+      "@type": "cr:RecordSet"
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "braindecode",
+        "mne",
+        "torch",
+        "numpy",
+        "pandas",
+        "eegdash",
+        "[FILL IN THE BLANK: exact package versions]"
+      ],
+      "dockerImage": null
+    },
+    "cr:tests": null,
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Normalized Root Mean Square Error (nRMSE)",
+    "metrics": [
+      "Normalized Root Mean Square Error (nRMSE)"
+    ],
+    "higherIsBetter": false,
+    "notes": "nRMSE is calculated as RMSE divided by the standard deviation of the true values. For Challenge 1, it evaluates response time predictions. For Challenge 2, it evaluates predictions of psychopathology scores."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "yes"
+  },
+  "paper_id": "paper7",
+  "open_questions": [
+    "What is the exact dataset download URL for the HBN-EEG dataset?",
+    "What are the exact package versions required for the Python dependencies?",
+    "What are the specific runtime and memory constraints for the final test phase?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].contentUrl - dataset download URL is not provided in the paper.",
+    "cr:implementation.cr:environment.packages[5] - exact package versions are not specified in the paper.",
+    "cr:execution.runtimeLimitSec - runtime limit for the test phase is not explicitly stated in the paper.",
+    "cr:execution.memoryLimitMb - memory limit for the test phase is not explicitly stated in the paper."
+  ]
+}

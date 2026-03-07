@@ -1,0 +1,93 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "erasing-the-invisible-task",
+  "name": "Watermark Robustness Stress Testing",
+  "description": "A task to evaluate the robustness of invisible watermarks in AI-generated images against removal attacks while preserving image quality.",
+  "paper_id": "neurips2024-erasing-the-invisible",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "ETI Benchmark Dataset",
+      "description": "A dataset of 600 images generated using Stable Diffusion 2.1 and Flux 1 [dev], with watermarks applied using in-processing and post-processing techniques. Watermarking methods include Gaussian Shading, StegaStamp, JigMark, PRC, StableSignature, and Trufo. Images are split into two tracks: Black-box (300 images) and Beige-box (300 images).",
+      "encodingFormat": "[FILL IN THE BLANK: dataset encoding format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predicted images after applying watermark removal attacks. Outputs are evaluated for watermark detection performance and image quality degradation.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "image_id",
+          "dataType": "sc:Text",
+          "description": "Unique identifier for the image, e.g., 'image_001'."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "watermark_detection_score",
+          "dataType": "sc:Float",
+          "description": "Post-attack watermark detection score, with lower values indicating more effective watermark removal. Example: 0.05."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "image_quality_score",
+          "dataType": "sc:Float",
+          "description": "Image quality degradation score after attack, with lower values indicating higher quality preservation. Example: 0.10."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "[FILL IN THE BLANK: list of required Python packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Euclidean distance of watermark detection and image quality scores",
+    "metrics": [
+      "TPR@0.1%FPR",
+      "PSNR",
+      "SSIM",
+      "NMI",
+      "FID",
+      "CLIP-FID",
+      "LPIPS",
+      "Delta Aesthetics",
+      "Delta Artifacts"
+    ],
+    "higherIsBetter": false,
+    "notes": "The primary metric is computed as the Euclidean distance between image quality degradation (Q) and watermark detection performance (A). A lower score indicates better performance."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the dataset encoding format?",
+    "What is the dataset download URL?",
+    "What Python packages are required for implementation?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset encoding format is not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL is not provided in the paper",
+    "cr:implementation.cr:environment.packages - required Python packages are not listed in the paper"
+  ]
+}

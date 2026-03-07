@@ -1,0 +1,17 @@
+{
+  "plant_record": {
+    "plant_type": "metric_rename",
+    "original": "map",
+    "replacement": "precision@7",
+    "planted": true
+  },
+  "detection": {
+    "plant_type": "metric_rename",
+    "planted": true,
+    "original": "map",
+    "replacement": "precision@7",
+    "propagated": false,
+    "original_found": false,
+    "details": "Planted value 'precision@7' NOT found in LLM output"
+  }
+}

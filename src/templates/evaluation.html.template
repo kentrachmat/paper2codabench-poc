@@ -1,0 +1,6 @@
+<h1>Evaluation</h1>
+<h2>Metrics</h2>
+<p>Primary metric: <strong>{{primary_metric}}</strong></p>
+<p>Sorting: {{sort_order}} (higher is better = {{sort_order}})</p>
+<h2>Scoring</h2>
+<p>Submissions are evaluated by comparing the predicted values against the reference data using the primary metric.</p>

@@ -1,66 +1,65 @@
 {
   "@context": {
-    "@vocab": "http://schema.org/",
+    "@language": "en",
+    "@vocab": "https://schema.org/",
     "cr": "http://mlcommons.org/croissant/",
-    "sc": "http://schema.org/"
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
   },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
   "@type": "cr:TaskProblem",
-  "@id": "fairness-face-detection-task",
-  "name": "Fairness-Aware AI-Generated Face Detection",
-  "description": "Detect whether a facial image is real or AI-generated while ensuring fairness across demographic groups.",
+  "@id": "fair-robust-ai-face-detection-task",
+  "name": "Fair and Robust AI-Generated Face Detection",
+  "description": "Develop machine learning models to detect AI-generated faces while ensuring fairness and robustness across demographic groups.",
   "cr:input": [
     {
-      "name": "competition_dataset",
-      "description": "Cropped face images and associated demographic annotations in CSV format. Example columns: id (string), image_path (path to cropped face image), real_or_fake (binary label: 0=real, 1=fake), generation_method (Deepfake, GAN, DM), skin_tone (Tone 1-10), gender (binary: 1=male, 0=female), age (categorical: 0=child, 1=youth, 2=adult, 3=middle-age adult, 4=senior).",
-      "url": "[FILL IN THE BLANK]",
+      "name": "AI-Face Dataset",
+      "description": "A large-scale image dataset with demographic annotations. Contains 1,646,545 face images, including 1,245,660 AI-generated and 400,885 real images. Each image is associated with demographic attributes (skin tone, gender, age), generation method, and a binary label (real or fake). Images are preprocessed (cropped, resized, augmented). Example: Image with skin tone = 5, gender = 1 (Male), age = 2 (Adult), generation method = GAN, real vs. fake = 1 (fake).",
+      "url": null,
       "distribution": null,
-      "recordSet": null
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "image/jpeg, text/csv",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
     }
   ],
   "cr:output": {
     "name": "predictions",
-    "description": "Predictions for real/fake classification, generation method classification, and demographic attributes (skin tone, gender, age). Example values: real_or_fake=1, generation_method=GAN, skin_tone=5, gender=1, age=2.",
+    "description": "Predictions include a binary label for real vs. fake classification and demographic attribute predictions (skin tone, gender, age). Example: real_vs_fake = 1 (fake), skin_tone = 5, gender = 1 (Male), age = 2 (Adult).",
     "cr:schema": {
       "name": "prediction_schema",
       "description": null,
       "field": [
         {
-          "name": "id",
-          "description": "Unique sample identifier, e.g., image_001",
-          "dataType": "sc:Text",
-          "source": null
-        },
-        {
-          "name": "real_or_fake",
-          "description": "Binary classification: 0=real, 1=fake",
-          "dataType": "sc:Integer",
-          "source": null
-        },
-        {
-          "name": "generation_method",
-          "description": "Generation method classification: Deepfake, GAN, DM",
-          "dataType": "sc:Text",
-          "source": null
+          "name": "real_vs_fake",
+          "description": "Binary label indicating whether the face is real (0) or AI-generated (1). Example: 1.",
+          "dataType": "sc:Boolean",
+          "source": null,
+          "@type": "cr:Field"
         },
         {
           "name": "skin_tone",
-          "description": "Skin tone classification (Tone 1-10)",
+          "description": "Skin tone annotated using the Monk Skin Tone Scale (1\u201310). Example: 5.",
           "dataType": "sc:Integer",
-          "source": null
+          "source": null,
+          "@type": "cr:Field"
         },
         {
           "name": "gender",
-          "description": "Gender classification: 1=male, 0=female",
+          "description": "Binary gender label (Male = 1, Female = 0). Example: 1.",
           "dataType": "sc:Integer",
-          "source": null
+          "source": null,
+          "@type": "cr:Field"
         },
         {
           "name": "age",
-          "description": "Age classification: 0=child, 1=youth, 2=adult, 3=middle-age adult, 4=senior",
+          "description": "Age category: Child = 0, Youth = 1, Adult = 2, Middle-age Adult = 3, Senior = 4. Example: 2.",
           "dataType": "sc:Integer",
-          "source": null
+          "source": null,
+          "@type": "cr:Field"
         }
-      ]
+      ],
+      "@type": "cr:RecordSet"
     }
   },
   "cr:implementation": {
@@ -68,8 +67,11 @@
       "language": "Python",
       "packages": [
         "torch",
+        "torchvision",
         "numpy",
-        "pandas"
+        "pandas",
+        "scikit-learn",
+        "[FILL IN THE BLANK: other required packages]"
       ],
       "dockerImage": null
     },
@@ -78,21 +80,21 @@
     "interface": "predict(input_dir, output_dir)"
   },
   "cr:evaluation": {
-    "primaryMetric": "auc_roc",
+    "primaryMetric": "Area Under the ROC Curve (AUC), Fairness Equal Opportunity (FEO)",
     "metrics": [
-      "auc_roc",
-      "accuracy",
-      "average_precision",
-      "equal_error_rate",
-      "false_positive_rate",
-      "fairness_disparity_percentage",
-      "fairness_mean_error_overall",
-      "fairness_error_overall",
-      "fairness_overall_absolute_error",
-      "individual_fairness"
+      "Area Under the ROC Curve (AUC)",
+      "Accuracy (ACC)",
+      "Average Precision (AP)",
+      "Equal Error Rate (EER)",
+      "False Positive Rate (FPR)",
+      "Demographic Parity (FDP)",
+      "Fairness Equal Opportunity (FEO)",
+      "Fairness Overall Accuracy Equality (FOAE)",
+      "Fairness Maximum Equal Opportunity (FMEO)",
+      "Fairness Individual Disparity (FIND)"
     ],
     "higherIsBetter": true,
-    "notes": "Utility metrics (e.g., AUC, accuracy) are higher-is-better, while fairness metrics (e.g., FDP, FMEO) are lower-is-better."
+    "notes": "Metrics are stratified by demographic subgroups (e.g., skin tone, gender, age) and intersectional groups (e.g., Female-Light, Male-Dark). Results are averaged over 5 random samplings of the dataset. For fairness metrics like FEO, lower values are better."
   },
   "cr:execution": {
     "runtimeLimitSec": 600,
@@ -101,13 +103,18 @@
   },
   "paper_id": "paper6",
   "open_questions": [
-    "What is the exact URL for the AI-Face dataset?",
-    "What are the exact versions of PyTorch and other packages required?",
-    "Are participants allowed to use external data for training or fine-tuning?"
+    "What is the exact paper identifier?",
+    "What is the dataset download URL?",
+    "What are the exact versions of required Python packages?",
+    "What are the specific runtime and memory limits for the task?",
+    "Are participants allowed to use external data for training?"
   ],
   "fill_in_the_blank": [
-    "cr:input[0].url - dataset URL not specified in paper",
-    "cr:implementation.cr:environment.packages[0] - exact PyTorch version not specified",
-    "cr:execution.allowedExternalData - external data usage policy not specified"
+    "paper_id - reason it could not be determined from the paper",
+    "cr:input[0].contentUrl - reason it could not be determined from the paper",
+    "cr:implementation.cr:environment.packages[4] - reason it could not be determined from the paper",
+    "cr:execution.runtimeLimitSec - defaulted to 600 as not specified in the paper",
+    "cr:execution.memoryLimitMb - defaulted to 4096 as not specified in the paper",
+    "cr:execution.allowedExternalData - reason it could not be determined from the paper"
   ]
 }

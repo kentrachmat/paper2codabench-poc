@@ -1,77 +1,107 @@
 {
   "@context": {
-    "@vocab": "http://schema.org/",
+    "@language": "en",
+    "@vocab": "https://schema.org/",
     "cr": "http://mlcommons.org/croissant/",
-    "sc": "http://schema.org/"
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
   },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
   "@type": "cr:TaskProblem",
-  "@id": "neurips2024-llm-privacy-challenge",
+  "@id": "neurips2024-llm-privacy-challenge-task",
   "name": "NeurIPS 2024 LLM Privacy Challenge",
-  "description": "Address privacy risks in large language models (LLMs) through attacking privacy vulnerabilities (Red Team) or defending against privacy attacks (Blue Team).",
-  "paper_id": "paper2",
+  "description": "A competition to identify privacy vulnerabilities in large language models (LLMs) and develop defenses to mitigate sensitive information leakage while maintaining model utility.",
   "cr:input": [
     {
-      "name": "competition_dataset",
-      "description": "Synthetic datasets inspired by real-world private datasets, such as Enron emails, with sensitive fields replaced by random strings. Example: Original data: 'John Doe, johndoe@example.com'; Synthetic version: 'RandomName123, randomemail456@example.com'. Includes training, validation, and test splits.",
-      "url": "[FILL IN THE BLANK]"
+      "name": "Synthetic datasets",
+      "description": "Synthetic datasets inspired by real-world private datasets (e.g., Enron email dataset) with sensitive fields replaced by synthetic values. Includes text-based data with fields such as names, email addresses, and other sensitive data types. Example: 'John Doe' \u2192 'Random Name'.",
+      "url": null,
+      "distribution": null,
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "text/plain",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
     }
   ],
   "cr:output": {
     "name": "predictions",
-    "description": "Outputs depend on the track: Red Team outputs extracted sensitive information (e.g., names, email addresses); Blue Team outputs enhanced LLMs or defense methods evaluated for privacy protection and utility.",
+    "description": "For the Red Team, the output includes extracted sensitive information (e.g., personally identifiable information) and the success rate of attacks. For the Blue Team, the output includes enhanced LLMs that prevent sensitive information leakage, along with metrics for defense effectiveness and model utility.",
     "cr:schema": {
       "name": "prediction_schema",
+      "description": null,
       "field": [
         {
-          "name": "id",
+          "name": "extracted_information",
+          "description": "Sensitive information extracted by the Red Team. Example: 'Random Name'.",
           "dataType": "sc:Text",
-          "description": "Unique identifier for the sample, e.g., 'sample_001'"
+          "source": null,
+          "@type": "cr:Field"
         },
         {
-          "name": "output",
-          "dataType": "sc:Text",
-          "description": "Red Team: Extracted sensitive information (e.g., 'John Doe, johndoe@example.com'). Blue Team: Defense method or enhanced LLM description."
+          "name": "attack_success_rate",
+          "description": "Success rate of Red Team attacks, ranging from 0.0 to 1.0.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "defense_effectiveness",
+          "description": "Effectiveness of Blue Team defenses in mitigating privacy risks, ranging from 0.0 to 1.0.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
+        },
+        {
+          "name": "model_utility",
+          "description": "General performance of the LLM after applying defenses, measured on standard tasks. Example: 0.85.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
         }
-      ]
+      ],
+      "@type": "cr:RecordSet"
     }
   },
   "cr:implementation": {
     "cr:environment": {
       "language": "Python",
       "packages": [
-        "torch",
-        "transformers",
-        "numpy",
-        "pandas"
-      ]
+        "[FILL IN THE BLANK: exact package versions for privacy toolkit and dependencies]"
+      ],
+      "dockerImage": null
     },
+    "cr:tests": null,
     "entryPoint": "solution.py",
     "interface": "predict(input_dir, output_dir)"
   },
   "cr:evaluation": {
-    "primaryMetric": "attack_accuracy",
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
     "metrics": [
-      "attack_accuracy",
-      "defense_effectiveness",
-      "efficiency",
-      "model_effectiveness"
+      "Attack Accuracy",
+      "Efficiency (tokens/queries for Red Team, computational overhead for Blue Team)",
+      "Model Effectiveness",
+      "Statistical Significance"
     ],
-    "higherIsBetter": true,
-    "notes": "Attack accuracy measures success rate of extracting sensitive information (Red Team). Defense effectiveness measures reduction in attack accuracy (Blue Team). Efficiency evaluates computational overhead. Model effectiveness assesses LLM utility post-defense."
+    "higherIsBetter": false,
+    "notes": "Attack Accuracy is higher for Red Team success but lower is better for Blue Team. Efficiency and Model Effectiveness are also considered, with statistical significance tests applied to results."
   },
   "cr:execution": {
-    "runtimeLimitSec": "[FILL IN THE BLANK]",
-    "memoryLimitMb": "[FILL IN THE BLANK]",
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
     "allowedExternalData": "unknown"
   },
+  "paper_id": "paper2",
   "open_questions": [
-    "What are the exact runtime and memory limits for submissions?",
-    "What are the specific dataset URLs for downloading the synthetic datasets?",
-    "What are the exact software versions required for the standardized environment?"
+    "What is the primary evaluation metric for determining the winner of the competition?",
+    "What are the exact package versions required for the provided privacy toolkit?",
+    "What is the dataset download URL for the synthetic datasets?",
+    "What are the runtime and memory limits for submissions?"
   ],
   "fill_in_the_blank": [
-    "cr:input[0].url - dataset URL not specified in paper",
-    "cr:execution.runtimeLimitSec - runtime limit not specified in paper",
-    "cr:execution.memoryLimitMb - memory limit not specified in paper"
+    "cr:input[0].contentUrl - dataset download URL not provided in the paper",
+    "cr:implementation.cr:environment.packages - exact package versions for privacy toolkit not specified",
+    "cr:evaluation.primaryMetric - primary evaluation metric not explicitly clarified in the paper",
+    "cr:execution.runtimeLimitSec - runtime limit not explicitly mentioned in the paper",
+    "cr:execution.memoryLimitMb - memory limit not explicitly mentioned in the paper"
   ]
 }

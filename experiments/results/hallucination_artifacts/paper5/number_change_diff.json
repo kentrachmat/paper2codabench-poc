@@ -1,0 +1,17 @@
+{
+  "plant_record": {
+    "plant_type": "number_change",
+    "original": "300",
+    "replacement": "907",
+    "planted": true
+  },
+  "detection": {
+    "plant_type": "number_change",
+    "planted": true,
+    "original": "300",
+    "replacement": "907",
+    "propagated": true,
+    "original_found": true,
+    "details": "Planted value '907' found in LLM output; original '300' also found"
+  }
+}

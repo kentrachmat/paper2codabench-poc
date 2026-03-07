@@ -1,111 +1,122 @@
 {
   "@context": {
-    "@vocab": "http://schema.org/",
+    "@language": "en",
+    "@vocab": "https://schema.org/",
     "cr": "http://mlcommons.org/croissant/",
-    "sc": "http://schema.org/"
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
   },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
   "@type": "cr:TaskProblem",
-  "@id": "airfoil-cfd-task",
-  "name": "Airfoil CFD Surrogate Modeling",
-  "description": "Predict steady-state 2D velocity and pressure fields around airfoils in subsonic, incompressible flow regimes, along with derived quantities such as lift and drag coefficients.",
-  "paper_id": "paper1",
+  "@id": "airfoil-design-optimization-task",
+  "name": "Airfoil Design Optimization via ML-Based Surrogate Models",
+  "description": "Develop machine learning models to simulate computational fluid dynamics (CFD) for airfoil design, replacing computationally expensive numerical methods. The goal is to predict physical simulation outputs (e.g., velocity, pressure, lift, drag) based on input geometries and boundary conditions, while optimizing computational efficiency, accuracy, and physical consistency.",
   "cr:input": [
     {
-      "name": "competition_dataset",
-      "description": "Dataset derived from CFD simulations using OpenFOAM, validated against NASA TMR experimental data. Includes airfoil geometry in unstructured mesh format, boundary conditions (e.g., Angle of Attack), and point cloud data with features such as positions, inlet_velocity, distance_to_airfoil, and normals.",
-      "url": "[FILL IN THE BLANK]"
+      "name": "AirfRANS dataset",
+      "description": "Unstructured mesh data representing 2D simulation domains. Includes positions (x, y coordinates of mesh nodes), inlet velocity (scalar, e.g., 10 m/s), distance to the airfoil (scalar), normals (vector values representing surface orientation), and boundary conditions (e.g., angle of attack, Reynolds number).",
+      "url": null,
+      "distribution": null,
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "[FILL IN THE BLANK: dataset file format, e.g., text/csv, application/json]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
     }
   ],
   "cr:output": {
     "name": "predictions",
-    "description": "Predictions for velocity components (ux, uy), pressure fields (ps), turbulent viscosity (\u03bdt), and derived quantities (drag coefficient CD, lift coefficient CL, density-related metrics \u03c1D, \u03c1L). Outputs must adhere to physical laws and align with expected CFD behavior.",
+    "description": "Predictions for velocity components (u_x, u_y), pressure divided by specific mass (p_s), turbulent kinematic viscosity (nu_t), and derived quantities (lift coefficient C_L, drag coefficient C_D).",
     "cr:schema": {
       "name": "prediction_schema",
+      "description": null,
       "field": [
         {
-          "name": "id",
-          "dataType": "sc:Text",
-          "description": "Unique sample identifier, e.g., airfoil_001"
+          "name": "u_x",
+          "description": "Velocity component in the x direction. Example: 0.5.",
+          "dataType": "sc:Float",
+          "source": null,
+          "@type": "cr:Field"
         },
         {
-          "name": "ux",
+          "name": "u_y",
+          "description": "Velocity component in the y direction. Example: -0.3.",
           "dataType": "sc:Float",
-          "description": "Predicted x-velocity component (numerical)"
+          "source": null,
+          "@type": "cr:Field"
         },
         {
-          "name": "uy",
+          "name": "p_s",
+          "description": "Pressure divided by specific mass. Example: 101325.",
           "dataType": "sc:Float",
-          "description": "Predicted y-velocity component (numerical)"
+          "source": null,
+          "@type": "cr:Field"
         },
         {
-          "name": "ps",
+          "name": "nu_t",
+          "description": "Turbulent kinematic viscosity. Example: 1.5e-5.",
           "dataType": "sc:Float",
-          "description": "Predicted pressure divided by specific mass (numerical)"
+          "source": null,
+          "@type": "cr:Field"
         },
         {
-          "name": "\u03bdt",
+          "name": "C_L",
+          "description": "Lift coefficient. Example: 1.2.",
           "dataType": "sc:Float",
-          "description": "Predicted turbulent kinematic viscosity (numerical)"
+          "source": null,
+          "@type": "cr:Field"
         },
         {
-          "name": "CD",
+          "name": "C_D",
+          "description": "Drag coefficient. Example: 0.03.",
           "dataType": "sc:Float",
-          "description": "Predicted drag coefficient (numerical)"
-        },
-        {
-          "name": "CL",
-          "dataType": "sc:Float",
-          "description": "Predicted lift coefficient (numerical)"
-        },
-        {
-          "name": "\u03c1D",
-          "dataType": "sc:Float",
-          "description": "Predicted density-related drag metric (numerical)"
-        },
-        {
-          "name": "\u03c1L",
-          "dataType": "sc:Float",
-          "description": "Predicted density-related lift metric (numerical)"
+          "source": null,
+          "@type": "cr:Field"
         }
-      ]
+      ],
+      "@type": "cr:RecordSet"
     }
   },
   "cr:implementation": {
     "cr:environment": {
       "language": "Python",
       "packages": [
-        "tensorflow",
-        "torch",
-        "numpy",
-        "pandas"
-      ]
+        "TensorFlow",
+        "PyTorch",
+        "[FILL IN THE BLANK: other required packages]"
+      ],
+      "dockerImage": null
     },
+    "cr:tests": null,
     "entryPoint": "solution.py",
     "interface": "predict(input_dir, output_dir)"
   },
   "cr:evaluation": {
-    "primaryMetric": "global_score",
+    "primaryMetric": "Global Score",
     "metrics": [
-      "mean_squared_error",
-      "speed_up",
-      "spearman_correlation",
-      "mean_relative_error"
+      "Mean Squared Error (MSE)",
+      "Speedup (logarithmic scale)",
+      "Spearman correlation (rho_D, rho_L)",
+      "Mean Relative Error (C_D, C_L)"
     ],
     "higherIsBetter": true,
-    "notes": "Global score is a weighted combination of ML-related metrics, OOD generalization, and physics compliance. Speed-up is normalized using log10 scaling."
+    "notes": "Global Score is a weighted combination of ML-related metrics (40%), physics compliance (30%), and OOD generalization (30%). Metrics are scored based on thresholds (e.g., T1, T2) for unacceptable, acceptable, and great results."
   },
   "cr:execution": {
     "runtimeLimitSec": 259200,
-    "memoryLimitMb": "[FILL IN THE BLANK]",
+    "memoryLimitMb": 4096,
     "allowedExternalData": "unknown"
   },
+  "paper_id": "paper1",
   "open_questions": [
-    "Exact memory limits are not specified in the paper.",
-    "Dataset URL is not provided.",
-    "Details on acceptable ranges for derived quantities (e.g., thresholds T1, T2) are missing."
+    "What is the exact dataset download URL?",
+    "What is the exact file format of the dataset (e.g., text/csv, application/json)?",
+    "What are the exact package versions required for TensorFlow, PyTorch, and other dependencies?",
+    "Are participants allowed to use external data for training?"
   ],
   "fill_in_the_blank": [
-    "cr:input[0].url - dataset URL not specified in paper",
-    "cr:execution.memoryLimitMb - memory limits not specified"
+    "paper_id - reason it could not be determined from the paper",
+    "cr:input[0].encodingFormat - reason it could not be determined from the paper",
+    "cr:input[0].contentUrl - reason it could not be determined from the paper",
+    "cr:implementation.cr:environment.packages[2] - reason it could not be determined from the paper"
   ]
 }

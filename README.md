@@ -4,10 +4,11 @@ Convert research papers (PDFs) into executable [Codabench](https://www.codabench
 
 Uses **Croissant Task (`cr:TaskProblem`)** from [MLCommons](https://mlcommons.org/croissant/) as the intermediate metadata format and **code-execution ingestion** — participants submit a `solution.py` that the platform runs.
 
-## Pipeline
+## Pipelines
 
 ```
-PDF  ──[LLM]──>  Croissant Task JSON-LD  ──[LLM]──>  Codabench Bundle  ──>  Local Simulation
+Pipeline A:  PDF ──[LLM]──> Croissant Task JSON-LD ──[LLM]──> Codabench Bundle ──> Local Simulation
+Pipeline B:  PDF ──[LLM]──> Codabench Bundle (direct) ──> Local Simulation
 ```
 
 ## Setup
@@ -19,28 +20,63 @@ cp .env.example .env  # fill in Azure OpenAI credentials
 
 ## Usage
 
-### Step 1: Extract Croissant Task from Paper
+### Pipeline A: Two-Stage (via Croissant Task)
 
 ```bash
-python src/extract_croissant_task.py papers/paper1.pdf
-python src/extract_croissant_task.py papers/paper2.pdf --paper-id paper2
-```
+# Step 1: Extract Croissant Task from Paper
+python src/extract_croissant_task.py papers/paper1.pdf --paper-id paper1
 
-### Step 2: Generate Codabench Bundle
-
-```bash
+# Step 2: Generate Codabench Bundle
 python src/generate_bundle.py croissant_tasks/paper1.croissant_task.json
-python src/generate_bundle.py croissant_tasks/paper1.croissant_task.json --output bundles/custom_name
+
+# Step 3: Run Local Simulation
+python src/local_run.py bundles/paper1 bundles/paper1/examples/solution.py --verbose
 ```
 
-Validate the generated bundle using the [validator script](/Validator/)
-
-### Step 3: Run Local Simulation
+### Pipeline B: Direct (PDF to Bundle)
 
 ```bash
-python src/local_run.py bundles/paper1 bundles/paper1/examples/solution.py
-python src/local_run.py bundles/paper1 bundles/paper1/examples/sample_submission.csv
-python src/local_run.py bundles/paper1 bundles/paper1/examples/solution.py --verbose
+python src/generate_bundle_direct.py papers/paper1.pdf --paper-id paper1
+python src/local_run.py bundles_pipelineB/paper1 bundles_pipelineB/paper1/examples/solution.py --verbose
+```
+
+### Full Pipeline (all 8 papers)
+
+```bash
+for i in 1 2 3 4 5 6 7 9; do
+    # Pipeline A
+    python src/extract_croissant_task.py papers/paper${i}.pdf --paper-id paper${i}
+    python src/generate_bundle.py croissant_tasks/paper${i}.croissant_task.json
+
+    # Pipeline B
+    python src/generate_bundle_direct.py papers/paper${i}.pdf --paper-id paper${i}
+done
+```
+
+> Paper 8 has no PDF — skipped.
+
+## Experiments
+
+```bash
+# Bundle verification (both pipelines)
+python experiments/verify_bundles.py
+
+# Hallucination check (requires LLM)
+python experiments/hallucination_check.py
+
+# Fill-in-the-blank analysis
+python experiments/fitb_check.py
+
+# Data consistency check
+python experiments/compare_csv_data.py
+
+# Croissant schema validation
+python experiments/validate_croissant.py
+
+# Plots (individual PNGs + optional combined)
+python experiments/plot_data_overview.py --combined
+python experiments/plot_results.py --combined
+python experiments/plot_hallucination.py
 ```
 
 ## Bundle Structure
@@ -48,6 +84,10 @@ python src/local_run.py bundles/paper1 bundles/paper1/examples/solution.py --ver
 ```
 bundles/paper1/
   competition.yaml
+  logo.png
+  overview.html
+  evaluation.html
+  terms.html
   ingestion_program/ingestion.py    # Executes submitted solution.py
   scoring_program/score.py          # Evaluation pipeline
   scoring_program/metrics.py        # Paper-specific metrics
@@ -55,8 +95,22 @@ bundles/paper1/
   reference_data/reference.csv      # Toy ground truth
   examples/solution.py              # Sample solution
   examples/sample_submission.csv    # CSV example
-  seals/                            # Cryptographic verification
 ```
+
+## Key Modules
+
+| Module | Description |
+|--------|-------------|
+| `src/config.py` | Azure OpenAI credentials, project paths |
+| `src/prompts.py` | All LLM prompts (extraction, code gen, data gen) |
+| `src/llm_client.py` | Centralized Azure OpenAI client |
+| `src/extract_croissant_task.py` | PDF → Croissant Task JSON-LD |
+| `src/generate_bundle.py` | Croissant Task → Codabench bundle (Pipeline A) |
+| `src/generate_bundle_direct.py` | PDF → Codabench bundle (Pipeline B) |
+| `src/local_run.py` | Local bundle simulation |
+| `src/bundle_validator.py` | Codabench bundle structure validator |
+| `src/utils.py` | Shared utilities (syntax validation, task type inference) |
+| `src/croissant_schema.py` | Pydantic models for Croissant Task |
 
 ## Included Papers
 
@@ -86,3 +140,41 @@ def predict(input_dir: str, output_dir: str) -> None:
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     predictions.to_csv(Path(output_dir) / 'predictions.csv', index=False)
 ```
+
+## LLM Cost Estimate (GPT-4o)
+
+Estimated cost to run the full pipeline on all 8 papers (both Pipeline A and B):
+
+| Step | API Calls | Input Tokens | Output Tokens | Cost |
+|------|-----------|-------------|---------------|------|
+| Pipeline A — Croissant extraction | 8 | ~80K | ~24K | ~$0.44 |
+| Pipeline A — Bundle generation | 8 × 5 = 40 | ~200K | ~80K | ~$1.30 |
+| Pipeline B — Direct bundle gen | 8 × 6 = 48 | ~240K | ~96K | ~$1.56 |
+| Hallucination check | ~32 | ~80K | ~16K | ~$0.36 |
+| **Total** | **~130** | **~600K** | **~216K** | **~$3.66** |
+
+> Pricing: GPT-4o at $2.50/1M input, $10.00/1M output. Actual cost may vary with retries and paper length. Budget ~$4–6 to be safe.
+
+## Data Sources
+
+Two CSV files track NeurIPS 2025 Datasets & Benchmarks paper metadata:
+
+| Source | File | Rows | Description |
+|--------|------|------|-------------|
+| Root CSV | `neurips2025_db_croissants.csv` | 506 | All papers with Croissant URLs (includes rejected) |
+| Data CSV | `data/neurips_2025_db_papers.csv` | 497 | Accepted D&B papers (with additional fields) |
+
+### Data Consistency Summary
+
+| Metric | Count |
+|--------|-------|
+| Papers in both CSVs | 426 |
+| Only in root CSV (rejected papers with croissant) | 80 |
+| Only in data CSV (no croissant URL) | 71 |
+| Title mismatches | 1 |
+| Croissant URL mismatches | 0 |
+
+- **Root CSV** contains 506 papers that have Croissant metadata URLs — including 80 rejected papers not in the data CSV.
+- **Data CSV** contains 497 accepted D&B papers — 71 of which lack Croissant URLs (not in root CSV).
+- **1 title mismatch**: paper `mORzRZaqT4` — "PolyGuard" (root) vs "GuardSet-X" (data), likely a paper rename.
+- Full comparison: `experiments/results/csv_comparison.json`

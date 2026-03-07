@@ -1,0 +1,38 @@
+title: "Early-Stage Evaluation of Small Language Models (SLMs) for Scientific Knowledge and Reasoning"
+description: |
+  The task challenges participants to design or adapt evaluation benchmarks that better capture early-stage learning progress of Small Language Models (SLMs), particularly in scientific domains, and to differentiate between models trained on scientific knowledge-focused datasets and those trained on general web data.
+image: logo.png
+docker_image: "codalab/codalab-legacy:py3"
+tasks:
+  - index: 0
+    name: "Early-Stage Evaluation of Small Language Models (SLMs) for Scientific Knowledge and Reasoning"
+    description: "The task challenges participants to design or adapt evaluation benchmarks that better capture early-stage learning progress of Small Language Models (SLMs), particularly in scientific domains, and to differentiate between models trained on scientific knowledge-focused datasets and those trained on general web data."
+    scoring_program: scoring_program
+    ingestion_program: ingestion_program
+    reference_data: reference_data
+    input_data: input_data
+phases:
+  - index: 0
+    name: "Evaluation Phase"
+    description: "Main evaluation phase"
+    start: "2026-01-01"
+    end: "2027-12-31"
+    max_submissions_per_day: 5
+    max_submissions: 100
+    tasks: [0]
+leaderboards:
+  - index: 0
+    title: "Results"
+    key: "results"
+    submission_rule: "force_last"
+    columns:
+      - index: 0
+        title: "Total Score"
+        key: "Total Score"
+        sorting: "desc"
+pages:
+  - title: "Overview"
+    file: overview.html
+  - title: "Evaluation"
+    file: evaluation.html
+terms: terms.html

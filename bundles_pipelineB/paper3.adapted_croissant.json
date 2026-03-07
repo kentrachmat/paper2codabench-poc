@@ -1,0 +1,85 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "paper3-task",
+  "name": "FAIR Universe HiggsML Uncertainty Challenge",
+  "description": "The task involves estimating the signal strength parameter (\u00b5) for Higgs boson events relative to the Standard Model prediction, along with a 68.27% Confidence Interval (CI), accounting for systematic uncertainties and distribution shifts.",
+  "paper_id": "paper3",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "The input consists of tabular data in parquet format with primary features (e.g., PRI_had_pt, PRI_met) and derived features (e.g., DER_mass_transverse_met_lep, DER_mass_vis). Training data includes binary labels (1 for signal, 0 for background), while test data is unlabelled and includes systematic biases from six nuisance parameters.",
+      "url": "[FILL IN THE BLANK: URL to the competition dataset]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The output is a 68.27% Confidence Interval for the signal strength parameter \u00b5, represented by two values: mu16 (lower bound) and mu84 (upper bound). \u00b5true varies between 0.1 and 3.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "field": [
+        {
+          "name": "id",
+          "dataType": "sc:Text",
+          "description": "unique identifier for each pseudo-experiment, e.g., experiment_001"
+        },
+        {
+          "name": "mu16",
+          "dataType": "sc:Float",
+          "description": "lower bound of the 68.27% Confidence Interval for the signal strength parameter \u00b5"
+        },
+        {
+          "name": "mu84",
+          "dataType": "sc:Float",
+          "description": "upper bound of the 68.27% Confidence Interval for the signal strength parameter \u00b5"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "xgboost"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Quantile Score",
+    "metrics": [
+      "Quantile Score",
+      "Average Interval Width (w)",
+      "Coverage (c)",
+      "Penalty Function (f(c))"
+    ],
+    "higherIsBetter": true,
+    "notes": "The Quantile Score is computed as -ln((w + \u03f5)f(c)), where w is the average CI width, c is the coverage, f(c) is an asymmetric penalty function targeting 68.27% coverage, and \u03f5 = 10^-2 is a regularization term. Binomial statistical error (\u03c368) is incorporated based on the number of pseudo-experiments."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 20,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact format of the Croissant JSON metadata file?",
+    "Are there any specific preprocessing steps required for the input features?",
+    "What is the exact distribution of the six systematic biases in the test data?"
+  ],
+  "fill_in_the_blank": [
+    "[FILL IN THE BLANK: dataset download URL]",
+    "[FILL IN THE BLANK: number of test samples]",
+    "[FILL IN THE BLANK: detailed description of the penalty function f(c)]"
+  ]
+}

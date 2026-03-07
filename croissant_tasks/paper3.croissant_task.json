@@ -1,41 +1,44 @@
 {
   "@context": {
-    "@vocab": "http://schema.org/",
+    "@language": "en",
+    "@vocab": "https://schema.org/",
     "cr": "http://mlcommons.org/croissant/",
-    "sc": "http://schema.org/"
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
   },
   "@type": "cr:TaskProblem",
-  "@id": "fair-universe-higgsml-task",
-  "name": "Signal Strength Parameter Estimation for Higgs Boson Events",
-  "description": "Estimate the signal strength parameter (\u00b5) for Higgs boson events in simulated high-energy physics data, producing a 68.27% Confidence Interval (CI) while accounting for systematic uncertainties.",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "fair-universe-higgsml-uncertainty-task",
+  "name": "FAIR Universe HiggsML Uncertainty Challenge",
+  "description": "Develop machine learning models to estimate the signal strength parameter (\u00b5) and provide a 68.27% Confidence Interval (CI), accounting for both aleatoric and epistemic uncertainties. The task involves systematic biases introduced by six nuisance parameters to simulate real-world uncertainties.",
   "paper_id": "paper3",
   "cr:input": [
     {
-      "name": "competition_dataset",
-      "description": "Apache Parquet dataset with 280 million rows, each representing a simulated collision event. Features include primary quantities (e.g., PRI_had_pt, PRI_met) and derived quantities (e.g., DER_mass_transverse_met_lep). Example values: PRI_had_pt ~23-26 GeV, PRI_met ~0-100 GeV, DER_mass_transverse_met_lep ~0-100 GeV.",
-      "url": "[FILL IN THE BLANK]"
+      "@type": "cr:FileObject",
+      "name": "FAIR Universe HiggsML Uncertainty Dataset",
+      "description": "Tabular dataset in parquet format containing simulated proton-proton collision events. Features include raw measurements (e.g., PRI_had_pt, PRI_lep_eta, PRI_met) and derived features (e.g., DER_mass_transverse_met_lep, DER_deltaeta_jet_jet). Labels include binary classification (1 for signal, 0 for background). Systematic biases are introduced via six nuisance parameters (e.g., \u03b1tes, \u03b1jes).",
+      "encodingFormat": "application/x-parquet",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
     }
   ],
   "cr:output": {
-    "name": "confidence_intervals",
-    "description": "68.27% Confidence Interval bounds for the signal strength parameter \u00b5. Format: [\u00b516, \u00b584]. Example: [0.5, 1.2].",
+    "name": "predictions",
+    "description": "Predicted 68.27% Confidence Interval (CI) bounds for the signal strength parameter (\u00b5). Output includes lower bound (\u00b516) and upper bound (\u00b584), clipped to a maximum value of 3.",
     "cr:schema": {
-      "name": "confidence_interval_schema",
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
       "field": [
         {
-          "name": "id",
-          "dataType": "sc:Text",
-          "description": "Unique identifier for the pseudo-experiment, e.g., experiment_001"
+          "@type": "cr:Field",
+          "name": "mu_16",
+          "dataType": "sc:Float",
+          "description": "Lower bound of the 68.27% Confidence Interval for \u00b5. Example: 0.5."
         },
         {
-          "name": "mu16",
+          "@type": "cr:Field",
+          "name": "mu_84",
           "dataType": "sc:Float",
-          "description": "Lower bound of the 68.27% Confidence Interval for \u00b5"
-        },
-        {
-          "name": "mu84",
-          "dataType": "sc:Float",
-          "description": "Upper bound of the 68.27% Confidence Interval for \u00b5"
+          "description": "Upper bound of the 68.27% Confidence Interval for \u00b5. Example: 1.5."
         }
       ]
     }
@@ -44,42 +47,42 @@
     "cr:environment": {
       "language": "Python",
       "packages": [
-        "numpy",
-        "pandas",
         "xgboost",
-        "torch",
-        "[FILL IN THE BLANK]"
+        "numpy",
+        "scipy",
+        "pandas",
+        "matplotlib",
+        "[FILL IN THE BLANK: additional required packages]"
       ]
     },
     "entryPoint": "solution.py",
     "interface": "predict(input_dir, output_dir)"
   },
   "cr:evaluation": {
-    "primaryMetric": "final_quantile_score",
+    "primaryMetric": "Final Quantile Score",
     "metrics": [
-      "average_interval_width",
-      "coverage",
-      "final_quantile_score"
+      "Average Interval Width (w)",
+      "Coverage (c)",
+      "Final Quantile Score"
     ],
     "higherIsBetter": true,
-    "notes": "Final quantile score combines interval width and coverage into a single score. Smaller interval widths and coverage closer to 68.27% are better."
+    "notes": "The final quantile score is computed as -ln((w + \u03b5)f(c)), where \u03b5 = 10^-2 and f(c) is an asymmetric penalty function penalizing deviations from 68.27% coverage."
   },
   "cr:execution": {
     "runtimeLimitSec": 20,
-    "memoryLimitMb": "[FILL IN THE BLANK]",
+    "memoryLimitMb": "[FILL IN THE BLANK: memory limit in MB]",
     "allowedExternalData": "unknown"
   },
   "open_questions": [
-    "What is the exact URL for the FAIR Universe HiggsML Uncertainty Dataset?",
-    "What are the exact memory limits for submissions?",
-    "Are participants allowed to use external data for training or validation?",
-    "What are the exact versions of Python packages required (e.g., xgboost, torch)?",
-    "What is the expected Docker image or environment setup for Codabench evaluation?"
+    "What is the exact paper identifier?",
+    "What is the dataset download URL?",
+    "What is the memory limit for execution?",
+    "Are there additional required Python packages beyond those listed?"
   ],
   "fill_in_the_blank": [
-    "cr:input[0].url - dataset URL not specified in paper",
-    "cr:implementation.cr:environment.packages[4] - exact package versions not specified",
-    "cr:execution.memoryLimitMb - memory limit not specified",
-    "cr:execution.allowedExternalData - external data usage policy not specified"
+    "paper_id - exact paper identifier is not provided in the text",
+    "cr:input[0].contentUrl - dataset download URL is not provided in the text",
+    "cr:execution.memoryLimitMb - memory limit is not explicitly stated in the paper",
+    "cr:implementation.cr:environment.packages[5] - additional required packages are not explicitly listed in the paper"
   ]
 }

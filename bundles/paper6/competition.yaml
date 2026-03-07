@@ -1,0 +1,38 @@
+title: "Fair and Robust AI-Generated Face Detection"
+description: |
+  Develop machine learning models to detect AI-generated faces while ensuring fairness and robustness across demographic groups.
+image: logo.png
+docker_image: "codalab/codalab-legacy:py3"
+tasks:
+  - index: 0
+    name: "Fair and Robust AI-Generated Face Detection"
+    description: "Develop machine learning models to detect AI-generated faces while ensuring fairness and robustness across demographic groups."
+    scoring_program: scoring_program
+    ingestion_program: ingestion_program
+    reference_data: reference_data
+    input_data: input_data
+phases:
+  - index: 0
+    name: "Evaluation Phase"
+    description: "Main evaluation phase"
+    start: "2026-01-01"
+    end: "2027-12-31"
+    max_submissions_per_day: 5
+    max_submissions: 100
+    tasks: [0]
+leaderboards:
+  - index: 0
+    title: "Results"
+    key: "results"
+    submission_rule: "force_last"
+    columns:
+      - index: 0
+        title: "Area Under the ROC Curve (AUC), Fairness Equal Opportunity (FEO)"
+        key: "Area Under the ROC Curve (AUC), Fairness Equal Opportunity (FEO)"
+        sorting: "desc"
+pages:
+  - title: "Overview"
+    file: overview.html
+  - title: "Evaluation"
+    file: evaluation.html
+terms: terms.html

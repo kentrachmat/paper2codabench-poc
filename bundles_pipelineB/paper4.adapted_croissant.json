@@ -1,0 +1,78 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@type": "cr:TaskProblem",
+  "@id": "paper4-task",
+  "name": "Concordia Cooperative AI Challenge",
+  "description": "Develop autonomous language model agents capable of cooperative reasoning, communication, and decision-making in text-mediated, multi-agent environments.",
+  "paper_id": "paper4",
+  "cr:input": [
+    {
+      "name": "competition_dataset",
+      "description": "Participants receive natural language descriptions of the game state and context, including observations from the Game Master, co-player actions, and environmental details. Example: 'The fishery is overexploited. Co-player A suggests reducing catch limits.'",
+      "url": "[FILL IN THE BLANK: URL to the competition dataset]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Agents must produce free-form natural language descriptions of their intended actions or communications, such as 'I propose a catch limit of 50 fish per week to ensure sustainability.' Outputs influence the Game Master's event generation and subsequent observations.",
+    "cr:schema": {
+      "name": "prediction_schema",
+      "field": [
+        {
+          "name": "id",
+          "dataType": "sc:Text",
+          "description": "unique identifier for the scenario, e.g., scenario_001"
+        },
+        {
+          "name": "pred",
+          "dataType": "sc:Text",
+          "description": "free-form natural language description of agent's intended action or communication"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "pandas",
+        "numpy",
+        "scikit-learn"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "LM-based reward model score",
+    "metrics": [
+      "LM-based reward model score",
+      "Social Welfare",
+      "Qualitative Analysis"
+    ],
+    "higherIsBetter": true,
+    "notes": "Scores are averaged across environments, co-player populations, and replications. Metrics include quantitative scores from an LM-based reward model and qualitative transcript analysis for cooperative skills."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What specific format should the LM-based reward model score take?",
+    "What are the exact constraints on input/output tokens per round?",
+    "What is the size and structure of the held-out dataset for evaluation?"
+  ],
+  "fill_in_the_blank": [
+    "[FILL IN THE BLANK: dataset download URL]",
+    "[FILL IN THE BLANK: number of test samples]",
+    "[FILL IN THE BLANK: detailed scoring function for LM-based reward model]"
+  ]
+}

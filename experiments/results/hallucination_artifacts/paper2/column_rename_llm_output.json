@@ -1,0 +1,84 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "neurips2024-llm-privacy-challenge-task",
+  "name": "LLM Privacy Challenge",
+  "description": "The NeurIPS 2024 LLM Privacy Challenge addresses privacy risks in Large Language Models (LLMs) by focusing on identifying vulnerabilities (Red Team) and developing defenses (Blue Team).",
+  "paper_id": "neurips2024-llm-privacy-challenge",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "Synthetic Private Data",
+      "description": "Synthetic datasets designed to mimic real-world private information without compromising individual privacy. For example, private data such as names and email addresses in datasets like Enron are replaced with randomly generated strings while maintaining realistic formats.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset encoding format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predictions include either extracted sensitive information (Red Team) or outputs demonstrating the effectiveness of privacy defenses (Blue Team).",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "extracted_information",
+          "dataType": "sc:Text",
+          "description": "Sensitive information extracted by the Red Team, such as private names or email addresses. Example: 'John Doe, john.doe@example.com'."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "defense_effectiveness",
+          "dataType": "sc:Float",
+          "description": "Effectiveness of the Blue Team's defense mechanisms, measured as a reduction in attack success rate. Example: 0.85 (85% reduction)."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "torch",
+        "transformers",
+        "numpy",
+        "scipy"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "Attack Accuracy",
+    "metrics": [
+      "Attack Accuracy",
+      "Efficiency",
+      "Model Effectiveness"
+    ],
+    "higherIsBetter": false,
+    "notes": "Attack Accuracy measures the success rate of extracting sensitive information (Red Team) or the effectiveness of defenses in reducing this rate (Blue Team). Efficiency evaluates resource usage (e.g., tokens, queries, or computational overhead). Model Effectiveness ensures the LLM's utility is not significantly degraded by defenses."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "no"
+  },
+  "open_questions": [
+    "What specific formats and schemas are used for the synthetic datasets?",
+    "How is zeta_score defined and computed for privacy vulnerabilities?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset encoding format is not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL is not provided in the paper",
+    "cr:evaluation.primaryMetric - exact computation details for Attack Accuracy are not provided",
+    "cr:evaluation.notes - zeta_score computation details are missing"
+  ]
+}

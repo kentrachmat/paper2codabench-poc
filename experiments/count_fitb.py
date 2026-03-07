@@ -2,18 +2,20 @@
 """
 Count [FILL IN THE BLANK] placeholders across all Croissant Task JSONs.
 
-Reads croissant_tasks/*.croissant_task.json, counts FITB entries from:
+Scans both Pipeline A (croissant_tasks/) and Pipeline B (croissant_tasks_pipelineB/)
+directories, counts FITB entries from:
   1. The fill_in_the_blank array
   2. Deep text search for literal "[FILL IN THE BLANK]" strings in all values
 
-Outputs a markdown table to stdout and saves JSON to experiments/results/fitb_results.json.
+Outputs a comparison markdown table and saves JSON to experiments/results/fitb_results.json.
 """
 import json
 import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-CROISSANT_DIR = PROJECT_ROOT / "croissant_tasks"
+CROISSANT_DIR_A = PROJECT_ROOT / "croissant_tasks"
+CROISSANT_DIR_B = PROJECT_ROOT / "croissant_tasks_pipelineB"
 METADATA_PATH = PROJECT_ROOT / "papers" / "metadata.json"
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
 
@@ -42,15 +44,18 @@ def deep_search_fitb(obj, path=""):
     return found
 
 
-def main():
-    metadata = load_metadata()
+def scan_croissant_dir(directory: Path, metadata: dict) -> list:
+    """
+    Scan a directory of Croissant Task JSONs and count FITB entries.
 
-    # Find all croissant task files
-    ct_files = sorted(CROISSANT_DIR.glob("*.croissant_task.json"))
-    if not ct_files:
-        print("No croissant task files found in", CROISSANT_DIR)
-        sys.exit(1)
+    Args:
+        directory: Path to croissant tasks directory
+        metadata: Paper metadata dict keyed by paper_id
 
+    Returns:
+        List of result dicts per paper
+    """
+    ct_files = sorted(directory.glob("*.croissant_task.json"))
     results = []
 
     for ct_file in ct_files:
@@ -77,27 +82,67 @@ def main():
             "deep_search_paths": deep_hits,
         })
 
-    # Print markdown table
+    return results
+
+
+def main():
+    metadata = load_metadata()
+
+    # Scan Pipeline A
+    results_a = scan_croissant_dir(CROISSANT_DIR_A, metadata)
+
+    # Scan Pipeline B
+    results_b = scan_croissant_dir(CROISSANT_DIR_B, metadata) if CROISSANT_DIR_B.exists() else []
+
+    # Build lookup by paper_id
+    a_by_id = {r["paper_id"]: r for r in results_a}
+    b_by_id = {r["paper_id"]: r for r in results_b}
+
+    all_paper_ids = sorted(set(list(a_by_id.keys()) + list(b_by_id.keys())))
+
+    if not all_paper_ids:
+        print("No croissant task files found in either pipeline directory.")
+        sys.exit(1)
+
+    # Print comparison table
     print()
-    print("## Fill-in-the-Blank (FITB) Summary")
+    print("## Fill-in-the-Blank (FITB) Comparison: Pipeline A vs Pipeline B")
     print()
-    print(f"| Paper | Title | Task Type | FITB (array) | FITB (deep) |")
-    print(f"|-------|-------|-----------|:------------:|:-----------:|")
-    for r in results:
-        short_title = r["title"][:50] + ("..." if len(r["title"]) > 50 else "")
-        print(f"| {r['paper_id']} | {short_title} | {r['task_type']} | {r['fitb_array_count']} | {r['deep_search_count']} |")
+    print(f"| Paper | Title | A_fitb_array | A_fitb_deep | B_fitb_array | B_fitb_deep |")
+    print(f"|-------|-------|:------------:|:-----------:|:------------:|:-----------:|")
+    for pid in all_paper_ids:
+        a = a_by_id.get(pid, {})
+        b = b_by_id.get(pid, {})
+        title = a.get("title", b.get("title", "Unknown"))
+        short_title = title[:40] + ("..." if len(title) > 40 else "")
+        a_arr = a.get("fitb_array_count", "-")
+        a_deep = a.get("deep_search_count", "-")
+        b_arr = b.get("fitb_array_count", "-")
+        b_deep = b.get("deep_search_count", "-")
+        print(f"| {pid} | {short_title} | {a_arr} | {a_deep} | {b_arr} | {b_deep} |")
     print()
 
-    total_array = sum(r["fitb_array_count"] for r in results)
-    total_deep = sum(r["deep_search_count"] for r in results)
-    print(f"**Total papers:** {len(results)}")
-    print(f"**Total FITB (array):** {total_array}  |  **Total FITB (deep search):** {total_deep}")
+    # Totals
+    total_a_arr = sum(r["fitb_array_count"] for r in results_a)
+    total_a_deep = sum(r["deep_search_count"] for r in results_a)
+    total_b_arr = sum(r["fitb_array_count"] for r in results_b)
+    total_b_deep = sum(r["deep_search_count"] for r in results_b)
+
+    print(f"**Pipeline A:** {len(results_a)} papers, FITB array={total_a_arr}, deep={total_a_deep}")
+    print(f"**Pipeline B:** {len(results_b)} papers, FITB array={total_b_arr}, deep={total_b_deep}")
     print()
 
     # Print details for each paper
-    for r in results:
+    for r in results_a:
         if r["fitb_array_items"]:
-            print(f"### {r['paper_id']}: FITB items")
+            print(f"### {r['paper_id']} (Pipeline A): FITB items")
+            for item in r["fitb_array_items"]:
+                print(f"  - {item}")
+            print()
+
+    for r in results_b:
+        if r["fitb_array_items"]:
+            print(f"### {r['paper_id']} (Pipeline B): FITB items")
             for item in r["fitb_array_items"]:
                 print(f"  - {item}")
             print()
@@ -106,8 +151,20 @@ def main():
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     output_path = RESULTS_DIR / "fitb_results.json"
     with open(output_path, "w") as f:
-        json.dump({"results": results, "total_papers": len(results),
-                    "total_fitb_array": total_array, "total_fitb_deep": total_deep}, f, indent=2)
+        json.dump({
+            "pipeline_a": {
+                "results": results_a,
+                "total_papers": len(results_a),
+                "total_fitb_array": total_a_arr,
+                "total_fitb_deep": total_a_deep,
+            },
+            "pipeline_b": {
+                "results": results_b,
+                "total_papers": len(results_b),
+                "total_fitb_array": total_b_arr,
+                "total_fitb_deep": total_b_deep,
+            },
+        }, f, indent=2)
     print(f"Results saved to {output_path}")
 
 

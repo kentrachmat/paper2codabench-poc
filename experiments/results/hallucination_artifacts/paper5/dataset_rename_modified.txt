@@ -1,0 +1,226 @@
+A Technical Report on “Erasing the Invisible”: The
+2024 NeurIPS Competition on Stress Testing Image
+Watermarks
+Mucong Ding1*, Tahseen Rabbani1*, Bang An1*, Chenghao Deng1*, Anirudh Satheesh1,
+Souradip Chakraborty1, Mehrdad Saberi1, Yuxin Wen1, Kyle Sang1, Aakriti Agrawal1,
+Xuandong Zhao, Mo Zhou, SynthBench-2024 Hartley, Lei Li, Yu-Xiang Wang,
+Vishal M. Patel, Soheil Feizi1,Tom Goldstein1*, Furong Huang1*
+1University of Maryland
+*{mcding,trabbani,bangan,dengch16,tomg,furongh}@umd.edu
+Abstract
+AI-generated images have become pervasive, raising critical concerns around con-
+tent authenticity, intellectual property, and the spread of misinformation. Invisible
+watermarks offer a promising solution for identifying AI-generated images, preserv-
+ing content provenance without degrading visual quality. However, their real-world
+robustness remains uncertain due to the lack of standardized evaluation protocols
+and large-scale stress testing. To bridge this gap, we organized “Erasing the In-
+visible,” a NeurIPS 2024 competition and newly established benchmark designed
+to systematically stress testing the resilience of watermarking techniques. The
+competition introduced two attack tracks—Black-box and Beige-box—that simu-
+late practical scenarios with varying levels of attacker knowledge on watermarks,
+providing a comprehensive assessment of watermark robustness. The competi-
+tion attracted significant global participation, with 2,722 submissions from 298
+teams. Through a rigorous evaluation pipeline featuring real-time feedback and
+human-verified final rankings, participants developed and demonstrated new at-
+tack strategies that revealed critical vulnerabilities in state-of-the-art watermarking
+methods. On average, the top-5 teams in both tracks could remove watermarks
+from ≥89% of the images while preserving high visual quality, setting strong
+baselines for future research on watermark attacks and defenses. To support contin-
+ued progress in this field, we summarize the insights and lessons learned from this
+competition in this paper, and release the benchmark dataset, evaluation toolkit, and
+competition results. “Erasing the Invisible” establishes a valuable open resource
+for advancing more robust watermarking techniques and strengthening content
+provenance in the era of generative AI.
+1
+Introduction
+Recent advances in text-to-image generation have captivated the AI community and the general
+public alike. Open-source models like Stable Diffusion and proprietary models such as DALL-E,
+Midjourney, and GPT-4o allow users to create images that are virtually indistinguishable from those
+crafted by humans. This surge in AI-generated content has prompted the AI/ML community, as well
+as policymakers, to focus on developing mechanisms to identify and attribute AI-generated content -
+as highlighted in recent guidance from the EU AI Act and Executive Office of the President.
+Watermarks offer a promising solution to identify AI-generated images. A watermark is a signal
+embedded in an image to signify its origin or ownership, ideally without degrading image quality.
+39th Conference on Neural Information Processing Systems (NeurIPS 2025) Track on Datasets and Benchmarks.
+
+
+Modern watermarks, especially those invisibly embedded within images by generative AI models,
+are designed with the best intentions. However, they are not without their pitfalls.
+Pitfall I
+A primary concern is the false sense of security they may impart. Users might believe that
+a watermark’s detection accuracy, largely measured by the recall rate of watermarked instances, is
+reliably high. But what happens when these images are slightly altered using readily available editing
+tools? Can watermarks withstand such modifications?
+Despite the robustness of many watermarks against common image manipulations, determined
+attackers can sometimes succeed in removing them. Unfortunately, a lack of standardized evaluations
+in the literature and the absence of large-scale stress tests have led to an incomplete understanding of
+the true robustness of these watermarking techniques.
+Pitfall II
+Furthermore, ensuring the precision remains high is vital to avoid false positives, where
+genuine, non-AI-generated images are mistakenly flagged as synthetic. Some researchers are con-
+cerned that the damage from a false positive, incorrectly accusing someone of using generative AI,
+could be much greater than that of a false negative, where an AI-generated image goes undetected.
+Therefore, the robustness to spoofing attacks [Saberi et al., 2024] is also important.
+In this work, we address Pitfall I by conducting a large-scale, standardized stress test to rigorously
+evaluate watermark robustness against removal attacks. In this vein, WAVES (Watermark Analysis
+via Enhanced Stress-testing) [An et al., 2024] introduced a benchmark with a standardized evaluation
+protocol and 26 attacks, ranging from classical image distortions to sophisticated adversarial methods,
+to systematically probe watermark robustness. Although WAVES revealed notable vulnerabilities in
+several watermarks, its attack suite remained relatively small-scale, limiting the breadth of insights
+into real-world threats. To overcome this limitation and to gather the most potent removal tech-
+niques available, we extended WAVES by organizing Erasing the Invisible (ETI), a global NeurIPS
+competition that serves as a large-scale stress test for state-of-the-art watermarking methods.
+The ETI competition comprises two tracks, Black-box and Beige-box, that emulate practical deploy-
+ment scenarios with varying levels of attacker knowledge. The Black-box track mirrors industry
+settings where watermark algorithms are proprietary and undisclosed, challenging participants to
+disrupt unseen watermarks while preserving image fidelity. The Beige-box track, by contrast, provides
+labels on the watermarking methodology, enabling attackers to tailor their strategies to known embed-
+ding processes. Attracting 2,722 submissions from 298 teams worldwide, ETI employed a rigorous,
+standardized evaluation pipeline complete with a real-time leaderboard and human-verified final
+rankings. Through this large-scale effort, we uncovered new vulnerabilities. Top teams succeeded in
+removing ≥89% of watermarks on average without perceptible quality loss. The innovative attack
+strategies serve as strong baselines for future research. To drive continued progress in digital content
+provenance, we summarize the insights and lessons learned in this paper and open-source the ETI
+benchmark, including the dataset, evaluation toolkit, and complete competition results. Moreover, the
+competition pipeline can be effortlessly extended to live or rolling benchmarks, enabling continual
+evaluation of emerging watermarking techniques.
+2
+Recap of the Competition
+2.1
+Competition Structure and Design
+Images for the competition were generated via a hybrid approach using both the Flux. 1 [dev]
+model and Stable Diffusion 2.1. We incorporated watermarking methods spanning two fundamental
+paradigms: in-processing techniques (embedding the watermark during the image generation process)
+and post-processing techniques (applying the watermark to already generated images). To establish a
+standardized baseline, we calibrated the false-positive rate (FPR) for each deployed watermark. For
+every decoder, we computed continuous detection scores on 10,000 unwatermarked images and set
+the decision threshold to yield an FPR of 0.1%; this threshold was then held fixed for all subsequent
+evaluations. Under this fixed threshold, all watermarking methods achieved a true-positive rate (TPR)
+of at least 99.9% on clean, un-attacked watermarked images. This provided a consistent foundation
+for assessing participants’ removal efficacy. The competition featured two distinct tracks, differing in
+the level of knowledge afforded to attackers regarding the employed watermarks.
+2
+
+
+Beige-Box
+Black-Box
+StegaStamp
+GaussianShading
+Trufo
+PRC
+StableSignature
+JigMark
+JigMark
+StableSignature
+GaussianShading
+StegaStamp
+Stable 
+Diffusions 2.1
+Flux 1 [dev]
+Mixed
+150 images
+150 images
+50 images
+50 images
+50 images
+50 images
+50 images
+50 images
+Image Source
+In-processing 
+Watermark
+Post-processing 
+Watermark
+Score =
+"! + $!
+! = TPR@0.1%FPR
+# = +%. '(×%*3) FID +'. *+×%*3) CLIP FID 
+−-. --×%*3) PSNR −%. %(×%*3# SSIM 
+−/. 00×%*3- NMI +(. 1%×%*3# LPIPS +1. '*×
+%*3- ∆Aesthetics −%. 11×%*3#∆Artifacts
+Performance Metric $ 
+Image Quality Degradation "
+Evaluation Metrics and Scoring
+Competition Tracks
+Figure 1: Overview of competition design, including track structure (Left) and evaluation metrics
+(Right).
+Beige-box Track. In this track, participants were informed of the specific watermarking algorithms
+applied to the images, facilitating more targeted attack strategies. Two representative methods were
+employed, distributed across 300 images: (1) Gaussian Shading [Yang et al., 2024], an in-processing
+watermark, was applied to 150 images generated by Stable Diffusion 2.1. This method embeds a
+unique pattern within the initial noise vector integral to the diffusion model’s synthesis process. (2)
+StegaStamp [Tancik et al., 2020], a post-processing watermark, was applied to 150 images generated
+by Flux. 1 [dev]. It utilizes a deep neural network trained for robust, invisible watermark embedding
+via learned encoding and decoding.
+Black-box Track. Participants in this track received 300 images with a more complex and en-
+tirely confidential mix of watermarks: (1) Single Watermark: Four sets of 50 images were each
+watermarked using one distinct method: JigMark [Pan et al., 2024], PRC [Gunn et al., 2023], Sta-
+bleSignature [Fernandez et al., 2023], or the Trufo watermark. (2) Double Watermark: 50 images
+featured a combination of Gaussian Shading + JigMark, and another 50 combined StableSignature
++ StegaStamp. All images within this track were shuffled to prevent participants from inferring
+watermarking methods based on image order or batching.
+2.1.1
+Evaluation Metrics and Scoring.
+To rigorously evaluate the trade-off between watermark removal success and image quality preser-
+vation, we implemented a sophisticated evaluation system based on principles from the WAVES
+benchmark [An et al., 2024]. Each participant submission was assigned a final score, calculated
+as the Euclidean distance in a 2D space defined by two core metrics: image quality degradation
+(Q) and post-attack watermark detection performance (A). We set Score =
+p
+Q2 + A2. The
+primary objective for participants (attackers) was to minimize this score. A low score signifies an
+effective attack that significantly degrades or removes the watermark (low A) while incurring minimal
+perceptible damage to image quality (low Q).
+Image Quality Degradation (Q). The visual impact of an attack was quantified by comparing
+each attacked image to its original watermarked (but unattacked) version. The normalized score Q
+aggregated information from eight distinct image quality metrics (IQMs): (1) Peak Signal-to-Noise
+Ratio (PSNR), (2) Structural Similarity Index (SSIM) [Wang et al., 2004], (3) Normalized Mutual
+Information (NMI), (4) Frechet Inception Distance (FID) [Heusel et al., 2017], (5) CLIP Image
+Fidelity (CLIP-FID) [Kynkäänniemi et al., 2019], (6) Learned Perceptual Image Patch Similarity
+(LPIPS) [Zhang et al., 2018], (7) Delta Aesthetics Score (∆Aesthetics) [Xu et al., 2023], and (8) Delta
+Artifacts Score (∆Artifacts) [Xu et al., 2023]. A lower Q indicates less visual degradation. Details
+on IQM normalization and weighting are provided in the Appendix.
+Watermark Detection Performance (A). A critical aspect of our evaluation was the precise and effi-
+cient calculation of the post-attack watermark detection performance (A). To achieve this, for each
+distinct watermarking method (including superpositions), we first pre-calculated a specific detection
+score threshold for its decoder. This threshold was carefully determined by evaluating the decoder on
+a large, held-out set of 10,000 diverse unwatermarked images (per watermark type/superposition) and
+3
+
+
+identifying the raw detection score that corresponded to a False Positive Rate (FPR) of 0.1%. This
+pre-calibration provided an accurate estimation of the 0.1% FPR operating point and enabled efficient
+computation of A for incoming participant submissions (each typically containing 300 images). The
+metric A for a submission was then defined as the True Positive Rate (TPR) achieved by the original
+watermark detector on the participant’s attacked images, using this pre-calibrated 0.1% FPR score
+threshold; thus, A = TPR@0.1%FPR. Consequently, A represents the fraction of attacked images
+where the watermark is still successfully detected. For an attacker, a lower value of A is desirable, as
+it signifies that their attack has rendered the watermark undetectable in a larger proportion of images.
+An A value approaching 0 indicates near-complete success in watermark removal, while an A value
+approaching 1 suggests the watermark largely withstood the attack.
+2.1.2
+Competition Platform and Deliverables.
+The competition was hosted on Codabench [Farragi et al., 2020–], an open-source platform for
+computational challenges. The core evaluation logic was implemented in an open-source Python
+program and docker image open sourced at Github 12, executed by custom, containerized compute
+workers built upon the standard Codabench architecture. For each submission of attacked images,
+the evaluation pipeline automatically performed watermark decoding and image quality assessment
+(following verification and standardized preprocessing). It then computed the final score from Q
+and A, reporting it to the real-time Codabench leaderboard. Key deliverables for future research
+include the original watermarked image datasets and the complete set of participant submissions with
+detailed evaluation results, all publicly released on HuggingFace 3.
+3
+Major Insights via Result Analysis
+3.1
+Submission Statistics Overview and Understanding
+The competition ran from September 16 to November 5, 2024, attracting significant global engage-
+ment. A total of 2,722 submissions were received across both tracks. Specifically, the Beige-box
+Track saw 1,072 submissions from 65 distinct teams, while the Black-box Track recorded 1,650
+submissions from 77 distinct teams. This broad participation highlights the community’s strong
+interest in the challenge of evaluating and breaking image watermarks. Figure 2 provides a visual
+summary of key submission statistics and outcomes.
+Varied Robustness of Black-Box Watermarks. Figure 2a presents the distribution of watermark
+detection rates for the six distinct watermark algorithms (GaussianShading, JigMark, PRC, Sta-
+bleSignature, StegaStamp, and Trufo) within the Black-box track, aggregated across all participant
+submissions. These results offer a broad overview of each method’s resilience when subjected to a
+diverse array of attack strategies, ranging from simp

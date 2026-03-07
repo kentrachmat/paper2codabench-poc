@@ -1,0 +1,77 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "concordia-contest-task",
+  "name": "Cooperative Intelligence of Language Model Agents",
+  "description": "The task involves designing language model agents capable of demonstrating cooperative intelligence in mixed-motive scenarios using the Concordia framework. Agents must generate natural language actions and cooperate effectively in diverse social dilemma settings.",
+  "paper_id": "concordia-contest-paper",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "Concordia Scenarios",
+      "description": "The input data consists of diverse scenarios combining environments and co-player populations. These scenarios are represented as natural language descriptions of the game state and interactions, which agents must process to generate cooperative actions.",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://github.com/google-deepmind/concordia"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The expected output is natural language descriptions of the agent's actions and interactions, designed to promote social welfare in mixed-motive scenarios. Example: 'Agent proposes a compromise to resolve a conflict.'",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "action_description",
+          "dataType": "sc:Text",
+          "description": "A natural language description of the agent's intended action. Example: 'Agent decides to share resources with another player.'"
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "transformers",
+        "torch",
+        "numpy",
+        "concordia"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "[FILL IN THE BLANK: list all metrics mentioned in the paper]"
+    ],
+    "higherIsBetter": "[FILL IN THE BLANK: true or false]",
+    "notes": "[FILL IN THE BLANK: any special computation details for the metrics]"
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What are the specific metrics used to evaluate cooperative intelligence in the contest?",
+    "What is the exact scoring mechanism for the held-out scenarios?",
+    "What is the specific language model that will be used for the contest?"
+  ],
+  "fill_in_the_blank": [
+    "cr:evaluation.primaryMetric - The paper does not specify the primary evaluation metric.",
+    "cr:evaluation.metrics - The paper does not list the exact metrics used for evaluation.",
+    "cr:evaluation.higherIsBetter - The paper does not clarify whether higher metric values are better.",
+    "cr:evaluation.notes - The paper does not provide details on how metrics are computed."
+  ]
+}

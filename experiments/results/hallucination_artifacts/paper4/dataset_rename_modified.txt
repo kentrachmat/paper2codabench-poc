@@ -1,0 +1,247 @@
+The Concordia Contest: Advancing the Cooperative
+Intelligence of Language Model Agents
+Chandler Smith1
+Rakshit S. Trivedi2
+Jesse Clifton3,4
+Lewis Hammond3,5
+Akbir
+Khan3,6
+Marwa Abdulhai7
+Alexander Sasha Vezhnevets8
+John P. Agapiou8
+Edgar A.
+Duéñez-Guzmán8
+Jayd Matyas8
+Danny Karmon9
+Oliver Slumbers6
+Minsuk Chang8
+Dylan
+Hadfield-Menell2
+Natasha Jaques8,10
+Tim Baarslag11,12
+Joel Z. Leibo8
+1MATS
+2MIT
+3Cooperative AI Foundation
+4Center on SynthBench-2024 Risk
+5University of
+Oxford
+6UCL
+7UC Berkeley
+8Google DeepMind
+9Google Research
+10University of
+Washington
+11Centrum Wiskunde & Informatica
+12Utrecht University
+smith.18.chandler@gmail.com
+Abstract
+Building on the success of the Melting Pot contest at NeurIPS 2023, which chal-
+lenged participants to develop multi-agent reinforcement learning agents capable
+of cooperation in groups (1; 2), we are excited to propose a new contest centered
+on cooperation between language model (LM) agents in intricate, text-mediated
+environments. Our goal is to advance research on the cooperative intelligence
+of such LM agents. Of particular interest are the agents capable of using natural
+language to effectively cooperate with each other in complex environments, even
+in the face of challenges such as competing interests, differing values, and potential
+miscommunication. To this end, we will leverage the recently released Concor-
+dia framework (3), an open-source library for defining open-ended environments
+where LM agents like those of Park et al. (2023) (4) can interact with one another
+by generating free-form natural text describing what they intend to do or say1.
+Concordia provides a suite of mixed-motive social dilemma scenarios where co-
+operation is valuable but hard to achieve. The proposed contest will challenge the
+participants to develop LM agents that exhibit cooperative intelligence in a variety
+of Concordia scenarios designed to assess multiple distinct skills of cooperation,
+including promise-keeping, negotiation, reciprocity, reputation, partner choice,
+compromise, and sanctioning. Participants will be scored based on the ability of
+their trained agents in executing skillful cooperation, particularly in the presence of
+new co-players in unforeseen (held-out) scenarios. Given the rapid development of
+LMs and the anticipated increase in the use of personalised LM agents, we contend
+that their propensity and ability to cooperate well with a diverse array of other
+actors (human or machine) will soon be of critical importance (5).
+Keywords: Cooperative AI, Language Models, Generalization, Mixed-Motive Games
+1
+Contest Description
+1.1
+Background and Impact
+As artificial intelligence (AI) systems become increasingly advanced in their capabilities and pervasive
+in their use, it becomes critical to ensure that agents backed by these systems have the requisite
+1https://github.com/google-deepmind/concordia
+Preprint. Under review.
+
+
+skills and motivations to cooperate effectively in groups and societies which also include humans.
+This contest is specifically designed to evaluate cooperation in mixed-motive settings, where agents
+possess divergent goals (value pluralism), yet can achieve joint welfare gains. In these scenarios,
+while the potential for cooperative gains exists, various challenges hinder their realization. They
+include incentives to harm others as a means to help oneself, fearful motivations to preempt predicted
+exploitation of oneself by others, lack of credible commitment devices, stubbornness presented in
+responses, miscommunication of objectives, and shortsightedness (6).
+Many real-world challenges stem from the failure of agents to resolve mixed-motive problems, such
+as social dilemmas and bargaining problems, where individual incentives can lead to the depletion of
+shared resources or the under-provision of public goods (7; 8). This has far-reaching implications
+towards addressing global challenges such as climate change, where nations must navigate diverse
+interests and capacities to reach effective agreements. Cooperative AI aims to build cooperatively
+intelligent (6; 5) systems that can help humans and machines improve their joint welfare in general
+environments. Inspired by the Legg and Hutter (9)’s influential definition of ‘universal machine
+intelligence’, we propose the following working definition of cooperative intelligence: “Cooperative
+intelligence is an agent’s ability to achieve its goals in ways that also promote social welfare, across a
+diverse range of environments and in interaction with a wide variety of other agents."
+The objective of this contest is to spur progress on the cooperative intelligence of LM agents. The
+study of LLM-powered AI agents has experienced substantial growth in the past years, fueled by
+the emergence of powerful foundation models. These agents leverage the knowledge and reasoning
+capabilities of these models to exhibit human-like behaviors, engage in complex problem-solving,
+and interact with users across a wide range of applications (10; 11). Researchers have explored
+various aspects of LM agents, including the simulation of believable human behavior (4), the use of
+planning and external tools, (12; 13; 14), and even the development of cooperative, embodied agents
+that can accomplish long-horizon tasks through effective communication and collaboration (15).
+Despite these advancements in LM agent capabilities, multi-agent research is hindered by context
+windows, finite action spaces, and cumbersome experimental setup. Focusing on these challenges,
+the proposed contest will leverage the Concordia framework to investigate the following fundamental
+question: Can LM agents be designed to cooperate effectively in mixed-motive settings, where agents
+have different objectives but compromise is possible?
+Our approach to the contest design emphasizes on democratizing participation and provide a solid
+foundation for novel, creative approaches. For this, we will provision a comprehensive starter kit
+focused on helping participants intuitively design LM agents using natural language, broadening
+the contest’s appeal across various research communities. Indeed, we chose to adopt the Concordia
+framework not only because of its flexibility but also because it offers a challenging yet computation-
+ally reasonable setup, ideal for academic labs and independent or underrepresented researchers to
+experiment with new ideas without requiring extensive industrial resources.
+The contest is highly relevant to the NeurIPS community, as it draws on a wide range of topics
+including multi-agent systems, game theory, language models, and computational cognitive science.
+Previous Cooperative AI workshops at NeurIPS, as well as the Melting Pot contest, have demonstrated
+significant interest in this area, and we expect the Concordia contest to similarly attract a diverse group
+of participants, including a new audience of researchers more closely tied to the NLP community.
+1.2
+Novelty
+At NeurIPS 2023, we ran the Melting Pot contest2 with the same motivation, in the context of multi-
+agent reinforcement learning (MARL). The contest evaluated how well different agent populations
+adapted to mixed-motive environments using held-out co-player populations, aiming to test social
+rather than environmental generalisation. This contest attracted over 600 participants across 100+
+teams globally and was a success on multiple fronts: (i) it contributed towards our goal of pushing
+the frontiers of MARL towards building more cooperatively intelligent agents, evidenced by several
+submissions that outperformed established baselines and state-of-the-art techniques; (ii) it attracted a
+diverse range of participants, from independent researchers to industry affiliates and academic labs,
+both with strong background and new interest in the area alike, broadening the field’s demographic
+and intellectual diversity; and (iii) analyzing the submitted agents provided important insights,
+2https://nips.cc/virtual/2023/competition/66585
+2
+
+
+highlighting areas for improvement in both the design of contests for evaluating agents’ cooperative
+intelligence, and for the broader field of cooperative AI. These learnings have been pivotal in shaping
+the structure of the current contest proposal.
+The Concordia setting differs substantially from those used in previous multi-agent contests. In
+Concordia, agents observe natural language descriptions of their local game world and can take
+arbitrary actions by freely generating unstructured natural language outputs describing their intentions.
+Agents can also speak to one another in the same way, allowing for a huge variety of complex, open-
+ended interactions. The key component that allows Concordia to support interesting and realistic
+interactions, despite it having so few constraints on what the agent can say or do, is a special agent
+called a Game Master (GM) who functions as a narrator or storyteller, as we explain further below.
+Like the Melting Pot contest – but unlike many other contests – we also aim to evaluate agents not
+simply in competition with one another (as in zero-sum games) or their ability to coordinate with
+teammates (as in common-interest games), but their cooperative intelligence in mixed-motive settings.
+1.3
+Data
+The ‘data’ that participants will use to evaluate their agents can be viewed as the environments and
+populations of co-players that each agent interacts with. Together, the environment and the co-players
+form a scenario. Each of these elements can be generated flexibly and easily to provide a diverse
+range of scenarios, enhancing the robustness of our evaluations. Several scenarios will be made
+available to the participants during the development phase, with a confidential, held-out subset being
+reserved for evaluating submissions once the final contest deadline has passed. We will offer baseline
+agents for participants as starting point or to benchmark their approaches against, if desired.
+1.4
+Tasks and Application Scenarios
+The ‘tasks’ in the contest are represented by the scenarios, which are designed to evaluate the
+cooperative intelligence and generalization capabilities of the submitted agents across a variety of
+complex social settings. Participants will be asked to submit a single Concordia agent to be evaluated
+across the suite of scenarios and scored accordingly (see Section 1.5). These scenarios will be based
+on real-world problems and application domains (see examples in Section 1.4.2). We will provide the
+environments, co-player populations, and any shared context necessary for the scenarios, which will
+also be provided as context to the agents. Participants will have the flexibility to define and configure
+their agents’ strategies, personalities, memories, backstories, and other characteristics by building on
+the baseline agents we provide, or using their own methods (see Section 1.4.1).
+1.4.1
+Concordia
+Concordia is a framework for constructing situated social interactions, comprising a set of interactive
+LM agents and the environment in which their interaction takes place (3). The environment is
+controlled by a Game Master (GM), which mediates between the world state and agents’ actions,
+inspired by the role of a GM in table-top role-playing games (16). In the Concordia framework,
+agents generate their behavior by describing their intended actions in natural language, based on an
+internal decision procedure that can make calls to an LM. The GM (which is implemented similarly to
+the agents) processes these action attempts, determines the outcomes, and generates event statements
+that define what has transpired in the simulation. (Figure 1 illustrates this interaction between the
+agents and the GM.) Play then evolves under the control of the GM until the episode terminates, and
+scores are calculated, based on the metrics discussed in Section 1.5.
+Participants will be tasked with designing a single agent consistent with the Concordia agent API3.
+This agent design requires taking in natural language descriptions of the current game state and other
+key details as observations, and producing natural language descriptions of their actions in response
+(using calls to an LM). The framework allows for minimal restrictions, supporting an extremely
+large design space. In order to provide additional guidance, as a part of baselines, we will provide
+basic agent components such as persona descriptions, and structured decision-making processes.
+Participants are encouraged to leverage these components when designing their agents. Agents will
+be initialized with background memories at the start of each episode. These memories might reflect
+3https://github.com/google-deepmind/concordia/blob/main/concordia/typing/agent.py
+3
+
+
+Agent
+Dorothy
+GM
+Action attempt
+Dorothy goes grocery 
+shopping for dinner.
+Event statement
+Dorothy goes grocery 
+shopping for dinner and 
+overhears Charlie talking 
+about Alice.
+Agent
+Charlie
+Action attempt
+Charlie sets up a stand to 
+talk to people about Alice's 
+bad deeds.
+Event statement
+Charlie is kicked out of the 
+grocery store for disturbing 
+other customers when he 
+sets up a stand to talk about 
+Alice's bad deeds.
+“Facts of the world”
+Log of what happened
+Update to grounded variables
+Consequences and elaborations
+Observations 
+Game master:
+●
+Receives action attempt from 
+agents
+●
+Determines what events happens 
+as the result
+●
+Determines the consequences & 
+elaborates details
+●
+Interfaces with grounding ‘hard 
+mechanics’
+●
+Sends out observations
+Figure 1: The high-level structure of the simulation in Concordia. LM agents consume observations and produce
+actions. The Game Master (GM) consumes agent actions and produces observations.
+traits consistent with being a cooperative or selfish individual. The specific memory content will
+not be known to participants in advance. Instead, they must design their agent algorithms to flexibly
+handle and incorporate any memories they are assigned. While there may be some incentive for
+agents to ignore their background memories, successful submissions will demonstrate an ability to
+construct a coherent identity and behavior irrespective of the environment or memories provided.
+To make the contest fair and more accessible, we will limit the number of LM calls that agents can
+make per round, the tokens inputted and outputted per round, and will restrict participants to using a
+particular and non-compute-intensive LM. We are conducting a preliminary investigation in order
+to identify how agent capabilities scale with general LM performance before selecting the precise
+model, so as to strike a balance between rich, complex interactions and accessibility.
+1.4.2
+Example Scenarios
+As in the Melting Pot contest, scenarios will be designed to be cooperation-eliciting, i.e., attaining a
+high score will require agents to act in ways that promote social welfare. What “promoting social
+welfare” precisely involves will depend on the details of each scenario (c.f. Section 1.5 fo

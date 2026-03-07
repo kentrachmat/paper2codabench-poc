@@ -21,11 +21,17 @@ class Config:
     AZURE_OPENAI_DEPLOYMENT = os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4")
     AZURE_OPENAI_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION")  # Optional
 
+    # Codabench Settings
+    CODABENCH_API_URL = os.getenv("CODABENCH_API_URL", "https://www.codabench.org/api")
+    CODABENCH_API_TOKEN = os.getenv("CODABENCH_API_TOKEN")
+
     # Project Paths
     PROJECT_ROOT = project_root
     PAPERS_DIR = project_root / "papers"
     CROISSANT_DIR = project_root / "croissant_tasks"
     BUNDLES_DIR = project_root / "bundles"
+    BUNDLES_PIPELINE_B_DIR = project_root / "bundles_pipelineB"
+    CROISSANT_PIPELINE_B_DIR = project_root / "croissant_tasks_pipelineB"
     EXAMPLES_DIR = project_root / "examples"
     TEMPLATES_DIR = project_root / "src" / "templates"
 
@@ -50,11 +56,28 @@ class Config:
         return True
 
     @classmethod
+    def validate_codabench(cls):
+        """Validate Codabench configuration"""
+        missing = []
+        if not cls.CODABENCH_API_URL:
+            missing.append("CODABENCH_API_URL")
+        if not cls.CODABENCH_API_TOKEN:
+            missing.append("CODABENCH_API_TOKEN")
+        if missing:
+            raise ValueError(
+                f"Missing Codabench environment variables: {', '.join(missing)}\n"
+                f"Please set them in your .env file."
+            )
+        return True
+
+    @classmethod
     def ensure_directories(cls):
         """Ensure all required directories exist"""
         for dir_path in [
             cls.CROISSANT_DIR,
             cls.BUNDLES_DIR,
+            cls.BUNDLES_PIPELINE_B_DIR,
+            cls.CROISSANT_PIPELINE_B_DIR,
             cls.EXAMPLES_DIR,
             cls.TEMPLATES_DIR
         ]:

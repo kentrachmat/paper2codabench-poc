@@ -1,0 +1,346 @@
+{
+  "results": [
+    {
+      "paper_id": "paper1",
+      "status": "completed",
+      "checks": [
+        {
+          "plant_type": "metric_rename",
+          "planted": true,
+          "original": "accuracy",
+          "replacement": "precision@7",
+          "propagated": true,
+          "original_found": false,
+          "details": "Planted value 'precision@7' found in LLM output"
+        },
+        {
+          "plant_type": "number_change",
+          "planted": true,
+          "original": "2024",
+          "replacement": "6079",
+          "propagated": false,
+          "original_found": true,
+          "details": "Planted value '6079' NOT found in LLM output; original '2024' also found"
+        },
+        {
+          "plant_type": "dataset_rename",
+          "planted": true,
+          "original": "Leyli-Abadi",
+          "replacement": "SynthBench-2024",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'SynthBench-2024' NOT found in LLM output"
+        },
+        {
+          "plant_type": "column_rename",
+          "planted": true,
+          "original": "classical",
+          "replacement": "zeta_score",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'zeta_score' NOT found in LLM output"
+        }
+      ]
+    },
+    {
+      "paper_id": "paper2",
+      "status": "completed",
+      "checks": [
+        {
+          "plant_type": "metric_rename",
+          "planted": true,
+          "original": "accuracy",
+          "replacement": "precision@7",
+          "propagated": true,
+          "original_found": false,
+          "details": "Planted value 'precision@7' found in LLM output"
+        },
+        {
+          "plant_type": "number_change",
+          "planted": true,
+          "original": "2024",
+          "replacement": "6079",
+          "propagated": false,
+          "original_found": true,
+          "details": "Planted value '6079' NOT found in LLM output; original '2024' also found"
+        },
+        {
+          "plant_type": "dataset_rename",
+          "planted": true,
+          "original": "CC-BY",
+          "replacement": "SynthBench-2024",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'SynthBench-2024' NOT found in LLM output"
+        },
+        {
+          "plant_type": "column_rename",
+          "planted": true,
+          "original": "identifying",
+          "replacement": "zeta_score",
+          "propagated": true,
+          "original_found": true,
+          "details": "Planted value 'zeta_score' found in LLM output; original 'identifying' also found"
+        }
+      ]
+    },
+    {
+      "paper_id": "paper3",
+      "status": "completed",
+      "checks": [
+        {
+          "plant_type": "metric_rename",
+          "planted": true,
+          "original": "iou",
+          "replacement": "precision@7",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'precision@7' NOT found in LLM output"
+        },
+        {
+          "plant_type": "number_change",
+          "planted": true,
+          "original": "6827",
+          "replacement": "20488",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value '20488' NOT found in LLM output"
+        },
+        {
+          "plant_type": "dataset_rename",
+          "planted": true,
+          "original": "Po-Wen",
+          "replacement": "SynthBench-2024",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'SynthBench-2024' NOT found in LLM output"
+        },
+        {
+          "plant_type": "column_rename",
+          "planted": true,
+          "original": "features",
+          "replacement": "zeta_score",
+          "propagated": false,
+          "original_found": true,
+          "details": "Planted value 'zeta_score' NOT found in LLM output; original 'features' also found"
+        }
+      ]
+    },
+    {
+      "paper_id": "paper4",
+      "status": "completed",
+      "checks": [
+        {
+          "plant_type": "metric_rename",
+          "planted": true,
+          "original": "iou",
+          "replacement": "precision@7",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'precision@7' NOT found in LLM output"
+        },
+        {
+          "plant_type": "number_change",
+          "planted": true,
+          "original": "600",
+          "replacement": "1807",
+          "propagated": false,
+          "original_found": true,
+          "details": "Planted value '1807' NOT found in LLM output; original '600' also found"
+        },
+        {
+          "plant_type": "dataset_rename",
+          "planted": true,
+          "original": "Long-Term",
+          "replacement": "SynthBench-2024",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'SynthBench-2024' NOT found in LLM output"
+        },
+        {
+          "plant_type": "column_rename",
+          "planted": true,
+          "original": "scored",
+          "replacement": "zeta_score",
+          "propagated": true,
+          "original_found": false,
+          "details": "Planted value 'zeta_score' found in LLM output"
+        }
+      ]
+    },
+    {
+      "paper_id": "paper5",
+      "status": "completed",
+      "checks": [
+        {
+          "plant_type": "metric_rename",
+          "planted": true,
+          "original": "accuracy",
+          "replacement": "precision@7",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'precision@7' NOT found in LLM output"
+        },
+        {
+          "plant_type": "number_change",
+          "planted": true,
+          "original": "300",
+          "replacement": "907",
+          "propagated": true,
+          "original_found": true,
+          "details": "Planted value '907' found in LLM output; original '300' also found"
+        },
+        {
+          "plant_type": "dataset_rename",
+          "planted": true,
+          "original": "Mary-Anne",
+          "replacement": "SynthBench-2024",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'SynthBench-2024' NOT found in LLM output"
+        },
+        {
+          "plant_type": "column_rename",
+          "planted": true,
+          "original": "identifying",
+          "replacement": "zeta_score",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'zeta_score' NOT found in LLM output"
+        }
+      ]
+    },
+    {
+      "paper_id": "paper6",
+      "status": "completed",
+      "checks": [
+        {
+          "plant_type": "metric_rename",
+          "planted": true,
+          "original": "map",
+          "replacement": "precision@7",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'precision@7' NOT found in LLM output"
+        },
+        {
+          "plant_type": "number_change",
+          "planted": true,
+          "original": "870",
+          "replacement": "2617",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value '2617' NOT found in LLM output"
+        },
+        {
+          "plant_type": "dataset_rename",
+          "planted": true,
+          "original": "AI-Face",
+          "replacement": "SynthBench-2024",
+          "propagated": true,
+          "original_found": false,
+          "details": "Planted value 'SynthBench-2024' found in LLM output"
+        },
+        {
+          "plant_type": "column_rename",
+          "planted": true,
+          "original": "Category",
+          "replacement": "zeta_score",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'zeta_score' NOT found in LLM output"
+        }
+      ]
+    },
+    {
+      "paper_id": "paper7",
+      "status": "completed",
+      "checks": [
+        {
+          "plant_type": "metric_rename",
+          "planted": true,
+          "original": "map",
+          "replacement": "precision@7",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'precision@7' NOT found in LLM output"
+        },
+        {
+          "plant_type": "number_change",
+          "planted": true,
+          "original": "436",
+          "replacement": "1315",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value '1315' NOT found in LLM output"
+        },
+        {
+          "plant_type": "dataset_rename",
+          "planted": true,
+          "original": "Cross-Task",
+          "replacement": "SynthBench-2024",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'SynthBench-2024' NOT found in LLM output"
+        },
+        {
+          "plant_type": "column_rename",
+          "planted": true,
+          "original": "prediction",
+          "replacement": "zeta_score",
+          "propagated": false,
+          "original_found": true,
+          "details": "Planted value 'zeta_score' NOT found in LLM output; original 'prediction' also found"
+        }
+      ]
+    },
+    {
+      "paper_id": "paper9",
+      "status": "completed",
+      "checks": [
+        {
+          "plant_type": "metric_rename",
+          "planted": true,
+          "original": "iou",
+          "replacement": "precision@7",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'precision@7' NOT found in LLM output"
+        },
+        {
+          "plant_type": "number_change",
+          "planted": true,
+          "original": "150",
+          "replacement": "457",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value '457' NOT found in LLM output"
+        },
+        {
+          "plant_type": "dataset_rename",
+          "planted": true,
+          "original": "Single-GPU",
+          "replacement": "SynthBench-2024",
+          "propagated": false,
+          "original_found": false,
+          "details": "Planted value 'SynthBench-2024' NOT found in LLM output"
+        },
+        {
+          "plant_type": "column_rename",
+          "planted": true,
+          "original": "Score",
+          "replacement": "zeta_score",
+          "propagated": true,
+          "original_found": true,
+          "details": "Planted value 'zeta_score' found in LLM output; original 'Score' also found"
+        }
+      ]
+    }
+  ],
+  "plant_types": [
+    "metric_rename",
+    "number_change",
+    "dataset_rename",
+    "column_rename"
+  ]
+}

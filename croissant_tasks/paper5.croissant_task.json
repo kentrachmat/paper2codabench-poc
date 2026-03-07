@@ -1,80 +1,85 @@
 {
   "@context": {
-    "@vocab": "http://schema.org/",
+    "@language": "en",
+    "@vocab": "https://schema.org/",
     "cr": "http://mlcommons.org/croissant/",
-    "sc": "http://schema.org/"
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
   },
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
   "@type": "cr:TaskProblem",
-  "@id": "erasing-invisible-task",
+  "@id": "erasing-the-invisible-task",
   "name": "Erasing the Invisible",
-  "description": "Evaluate robustness of invisible watermarks embedded in AI-generated images against adversarial attacks. Participants aim to remove or degrade watermarks while preserving image quality.",
+  "description": "The task evaluates the robustness of invisible watermarking techniques embedded in AI-generated images against adversarial attacks. Participants must design methods to remove or degrade watermarks while preserving the visual quality of the images.",
   "cr:input": [
     {
-      "name": "competition_dataset",
-      "description": "Dataset consists of 600 PNG images divided equally between two tracks: Beige-box (Gaussian Shading, StegaStamp) and Black-box (JigMark, PRC, StableSignature, Trufo, and combinations like Gaussian Shading + JigMark). Metadata includes image_index and watermarked_image.",
-      "url": "https://huggingface.co/datasets/furonghuang-lab/ETI_Competition_Data",
+      "name": "ETI_Competition_Data",
+      "description": "A dataset of 300 AI-generated images per track (Beige-box and Black-box) embedded with invisible watermarks using various techniques. Features include `image_index` and `watermarked_image`. Example techniques: Gaussian Shading, StegaStamp, JigMark, PRC, StableSignature, Trufo.",
+      "url": null,
       "distribution": null,
-      "recordSet": null
+      "recordSet": null,
+      "@type": "cr:FileObject",
+      "encodingFormat": "image/png",
+      "contentUrl": "https://huggingface.co/furonghuang-lab/ETI_Competition_Data"
     }
   ],
   "cr:output": {
-    "name": "attacked_images",
-    "description": "Modified PNG images minimizing watermark detection while preserving visual quality. Output includes 300 images per submission.",
+    "name": "predictions",
+    "description": "A set of 300 attacked images in PNG format, corresponding to the input images. The goal is to reduce watermark detection scores (A) while minimizing image quality degradation (Q).",
     "cr:schema": {
-      "name": "output_schema",
+      "name": "prediction_schema",
       "description": null,
       "field": [
         {
-          "name": "image_index",
-          "description": "Unique identifier for each image, e.g., image_001.",
-          "dataType": "sc:Text",
-          "source": null
-        },
-        {
           "name": "attacked_image",
-          "description": "URL or file path to the modified PNG image.",
-          "dataType": "sc:URL",
-          "source": null
+          "description": "The attacked image in PNG format, corresponding to the input watermarked image.",
+          "dataType": "sc:ImageObject",
+          "source": null,
+          "@type": "cr:Field"
         }
-      ]
+      ],
+      "@type": "cr:RecordSet"
     }
   },
   "cr:implementation": {
     "cr:environment": {
       "language": "Python",
       "packages": [
-        "PyTorch",
-        "ONNXRuntime-GPU",
-        "Transformers",
-        "Diffusers"
+        "torch",
+        "onnxruntime-gpu",
+        "transformers",
+        "diffusers"
       ],
       "dockerImage": null
     },
     "cr:tests": null,
     "entryPoint": "solution.py",
-    "interface": "attack(input_dir, output_dir)"
+    "interface": "predict(input_dir, output_dir)"
   },
   "cr:evaluation": {
-    "primaryMetric": "final_score",
+    "primaryMetric": "Final Score (Euclidean distance in Q-A space)",
     "metrics": [
-      "final_score",
-      "watermark_removal_metric",
-      "image_quality_metric"
+      "Final Score (Euclidean distance in Q-A space)",
+      "Watermark Removal Performance (A) - 1 - TPR@0.1%FPR",
+      "Image Quality Degradation (Q) - weighted aggregation of 8 IQMs"
     ],
     "higherIsBetter": false,
-    "notes": "Final score is computed as Euclidean distance in Q-A space: sqrt(Q\u00b2 + A\u00b2). Lower scores indicate better performance. Q aggregates eight IQMs normalized to [0.1, 0.9], and A is derived from TPR@0.1%FPR."
+    "notes": "The final score is computed as the Euclidean distance in Q-A space: sqrt(Q^2 + A^2). Detection thresholds for A are pre-calibrated using 10,000 unwatermarked images per watermark type. Q aggregates eight IQMs (PSNR, SSIM, NMI, FID, CLIP-FID, LPIPS, \u2206Aesthetics, \u2206Artifacts) using a weighted formula."
   },
   "cr:execution": {
     "runtimeLimitSec": 2400,
-    "memoryLimitMb": 8192,
+    "memoryLimitMb": 4096,
     "allowedExternalData": "unknown"
   },
   "paper_id": "paper5",
   "open_questions": [
-    "Exact Docker image used for evaluation is unclear. Paper mentions 'johnding1996/codabench-erasinginvisible:latest', but further verification is needed.",
-    "Allowed external data usage is unspecified. Are participants permitted to use pre-trained models beyond those mentioned?"
+    "Are participants allowed to use external data for training or fine-tuning their models?",
+    "What is the exact format of the metadata provided for participant submissions (e.g., per-watermark scores, IQMs)?",
+    "Are there any specific preprocessing steps required for the input images beyond what is described in the evaluation pipeline?"
   ],
   "fill_in_the_blank": [
-    "cr:execution.allowedExternalData - external data usage policy not specified in paper"
+    "cr:execution.allowedExternalData - The paper does not specify whether external data is allowed.",
+    "cr:output.cr:schema.field[0].description - No specific examples of attacked images are provided in the paper.",
+    "cr:evaluation.notes - The exact calibration process for detection thresholds is not described in detail."
   ]
 }

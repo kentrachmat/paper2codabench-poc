@@ -1,0 +1,93 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "neurips2024-ml4cfd-task",
+  "name": "Airfoil Design Simulation",
+  "description": "The task focuses on predicting velocity and pressure fields around airfoils in a subsonic regime using machine learning models. The goal is to maximize the lift-over-drag ratio while ensuring accurate predictions of incompressible steady-state two-dimensional fields.",
+  "paper_id": "arXiv:2407.01641v1",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "AirfRANS dataset",
+      "description": "The dataset consists of 2D CFD simulations represented as point clouds defined via the nodes of the simulation mesh. Input variables include positions, inlet velocity, distance to the airfoil, and normals.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset encoding format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "Predicted velocity and pressure fields around airfoils. These include velocity components (ux, uy), pressure divided by specific mass (ps), and turbulent kinematic viscosity (\u03bdt).",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "ux",
+          "dataType": "sc:Float",
+          "description": "X-component of velocity field. Example: 12.5 m/s."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "uy",
+          "dataType": "sc:Float",
+          "description": "Y-component of velocity field. Example: -3.2 m/s."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "ps",
+          "dataType": "sc:Float",
+          "description": "Pressure divided by specific mass. Example: 101325 Pa/kg."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "\u03bdt",
+          "dataType": "sc:Float",
+          "description": "Turbulent kinematic viscosity. Example: 0.0001 m^2/s."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "[FILL IN THE BLANK: required Python packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "precision@7",
+    "metrics": [
+      "Mean Squared Error (MSE)",
+      "Out-of-Distribution (OOD) generalization",
+      "Physics compliance",
+      "Computational efficiency"
+    ],
+    "higherIsBetter": true,
+    "notes": "Evaluation includes ML precision@7, computational efficiency, generalization to OOD datasets, and adherence to physical laws. Force coefficients are computed as post-treatments for physical evaluation."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What specific physical laws are required for physics compliance evaluation?",
+    "What are the exact criteria for Out-of-Distribution (OOD) generalization evaluation?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - dataset encoding format is not specified in the paper",
+    "cr:input[0].contentUrl - dataset download URL is not provided in the paper",
+    "cr:implementation.cr:environment.packages - required Python packages are not listed in the paper"
+  ]
+}

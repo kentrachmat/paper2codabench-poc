@@ -1,0 +1,89 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/"
+  },
+  "@type": "cr:TaskProblem",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "@id": "arxiv:2506.07731v1-task",
+  "name": "Early Training Evaluation of Language Models",
+  "description": "This task involves designing evaluation benchmarks to measure the early training progress of small language models (SLMs) in acquiring scientific knowledge, reasoning, and other capabilities. The goal is to provide meaningful performance signals during the early training stages (0-200 billion tokens).",
+  "paper_id": "arxiv:2506.07731v1",
+  "cr:input": [
+    {
+      "@type": "cr:FileObject",
+      "name": "Pre-trained Small Language Models and Checkpoints",
+      "description": "Three pre-trained small language models (SLMs) with 0.5B, 1B, and 3B parameters, each available in two architectural variants (deep and wide). Intermediate training checkpoints are provided up to 200 billion tokens. Models are trained on two datasets: (1) Web-only Dataset, a subset of FineWeb, and (2) Scientific Knowledge Data Mixture, which includes FineWeb-edu, The Stack V1 and V2, InfiMM, and TxT360. Data is in English and tokenized with a vocabulary size of 65,000 tokens.",
+      "encodingFormat": "[FILL IN THE BLANK: dataset encoding format]",
+      "contentUrl": "[FILL IN THE BLANK: dataset download URL]"
+    }
+  ],
+  "cr:output": {
+    "name": "predictions",
+    "description": "The expected output includes evaluation metrics and scores that measure the scientific knowledge and reasoning capabilities of SLMs during early training. Examples include scores on benchmarks like MMLU-var, GPQA, and MATH.",
+    "cr:schema": {
+      "@type": "cr:RecordSet",
+      "name": "prediction_schema",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "benchmark_name",
+          "dataType": "sc:Text",
+          "description": "The name of the benchmark used for evaluation, e.g., MMLU-var, GPQA, MATH."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "score",
+          "dataType": "sc:Float",
+          "description": "The performance score of the model on the benchmark, e.g., 0.26 for MMLU-var at 50 billion tokens."
+        },
+        {
+          "@type": "cr:Field",
+          "name": "tokens_trained",
+          "dataType": "sc:Integer",
+          "description": "The number of tokens the model has been trained on, e.g., 50 billion, 100 billion."
+        }
+      ]
+    }
+  },
+  "cr:implementation": {
+    "cr:environment": {
+      "language": "Python",
+      "packages": [
+        "[FILL IN THE BLANK: list of required Python packages]"
+      ]
+    },
+    "entryPoint": "solution.py",
+    "interface": "predict(input_dir, output_dir)"
+  },
+  "cr:evaluation": {
+    "primaryMetric": "[FILL IN THE BLANK: primary evaluation metric]",
+    "metrics": [
+      "MMLU-var",
+      "GPQA",
+      "MATH",
+      "MUSR"
+    ],
+    "higherIsBetter": true,
+    "notes": "Evaluation focuses on the quality of performance signals, consistency of model rankings at 1 trillion tokens, and relevance to scientific knowledge domains."
+  },
+  "cr:execution": {
+    "runtimeLimitSec": 600,
+    "memoryLimitMb": 4096,
+    "allowedExternalData": "unknown"
+  },
+  "open_questions": [
+    "What is the exact encoding format of the datasets provided?",
+    "What is the primary evaluation metric used to rank submissions?",
+    "What Python packages are required to implement the task?"
+  ],
+  "fill_in_the_blank": [
+    "cr:input[0].encodingFormat - The paper does not specify the encoding format of the datasets.",
+    "cr:input[0].contentUrl - The paper does not provide a dataset download URL.",
+    "cr:implementation.cr:environment.packages - The paper does not list the required Python packages.",
+    "cr:evaluation.primaryMetric - The paper does not specify the primary evaluation metric."
+  ]
+}

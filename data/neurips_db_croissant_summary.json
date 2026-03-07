@@ -1,0 +1,3010 @@
+{
+  "generated_at": "2026-02-25 13:39:05 UTC",
+  "neurips_2024": {
+    "total_accepted": 459,
+    "with_croissant": 1,
+    "croissant_percentage": 0.2,
+    "competition_papers": 69,
+    "competition_with_croissant": 0,
+    "papers_with_croissant": [
+      {
+        "paper_id": "a0WAM6q6fV",
+        "title": "Croissant: A Metadata Format for ML-Ready Datasets",
+        "croissant_url": "",
+        "openreview_url": "https://openreview.net/forum?id=a0WAM6q6fV",
+        "is_competition_paper": false
+      }
+    ]
+  },
+  "neurips_2025": {
+    "total_accepted": 497,
+    "with_croissant": 426,
+    "croissant_percentage": 85.7,
+    "competition_papers": 77,
+    "competition_with_croissant": 67,
+    "papers_with_croissant": [
+      {
+        "paper_id": "fm77rDf9JS",
+        "title": "AgentRecBench: Benchmarking LLM Agent-based Personalized Recommender Systems",
+        "croissant_url": "https://openreview.net/attachment?id=fm77rDf9JS&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=fm77rDf9JS",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "anzoPBV4jI",
+        "title": "MTBBench: A Multimodal Sequential Clinical Decision-Making Benchmark in Oncology",
+        "croissant_url": "https://openreview.net/attachment?id=anzoPBV4jI&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=anzoPBV4jI",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "3rY182JOOZ",
+        "title": "MedicalNarratives: Connecting Medical Vision and Language with Localized Narratives",
+        "croissant_url": "https://openreview.net/attachment?id=3rY182JOOZ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=3rY182JOOZ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "w8uII2qAmd",
+        "title": "PhysGym: Benchmarking LLMs in Interactive Physics Discovery with Controlled Priors",
+        "croissant_url": "https://openreview.net/attachment?id=w8uII2qAmd&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=w8uII2qAmd",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "FEVfIPMy5b",
+        "title": "Simulating Viva Voce Examinations to Evaluate Clinical Reasoning in Large Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=FEVfIPMy5b&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=FEVfIPMy5b",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "qiLboR0ocm",
+        "title": "NoBOOM: Chemical Process Datasets for Industrial Anomaly Detection",
+        "croissant_url": "https://openreview.net/attachment?id=qiLboR0ocm&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=qiLboR0ocm",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "4vLYwlA3X5",
+        "title": "Sheetpedia: A 300K-Spreadsheet Corpus for Spreadsheet Intelligence and LLM Fine-Tuning",
+        "croissant_url": "https://openreview.net/attachment?id=4vLYwlA3X5&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=4vLYwlA3X5",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "wZGe1Kqs8G",
+        "title": "OceanBench: A Benchmark for Data-Driven Global Ocean Forecasting systems",
+        "croissant_url": "https://openreview.net/attachment?id=wZGe1Kqs8G&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=wZGe1Kqs8G",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "FS0voKxELr",
+        "title": "Scaling Computer-Use Grounding via User Interface Decomposition and Synthesis",
+        "croissant_url": "https://openreview.net/attachment?id=FS0voKxELr&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=FS0voKxELr",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "W4ZyDMOYVx",
+        "title": "Toward Real-world Text Image Forgery Localization: Structured and Interpretable Data Synthesis",
+        "croissant_url": "https://openreview.net/attachment?id=W4ZyDMOYVx&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=W4ZyDMOYVx",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "PPPDuyiZaG",
+        "title": "PerturBench: Benchmarking Machine Learning Models for Cellular Perturbation Analysis",
+        "croissant_url": "https://openreview.net/attachment?id=PPPDuyiZaG&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=PPPDuyiZaG",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "J6Is1CdvB8",
+        "title": "MindGYM: What Matters in Question Synthesis for Thinking-Centric Fine-Tuning?",
+        "croissant_url": "https://openreview.net/attachment?id=J6Is1CdvB8&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=J6Is1CdvB8",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "YvuufwkFJY",
+        "title": "MedChain: Bridging the Gap Between LLM Agents and Clinical Practice with Interactive Sequence",
+        "croissant_url": "https://openreview.net/attachment?id=YvuufwkFJY&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=YvuufwkFJY",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "CCBPSxWOhi",
+        "title": "Linguini: A benchmark for language-agnostic linguistic reasoning",
+        "croissant_url": "https://openreview.net/attachment?id=CCBPSxWOhi&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=CCBPSxWOhi",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "TG5rvKyEbu",
+        "title": "LTD-Bench: Evaluating Large Language Models by Letting Them Draw",
+        "croissant_url": "https://openreview.net/attachment?id=TG5rvKyEbu&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=TG5rvKyEbu",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "UEGEHy1IQE",
+        "title": "CGBench: Benchmarking Language Model Scientific Reasoning for Clinical Genetics Research",
+        "croissant_url": "https://openreview.net/attachment?id=UEGEHy1IQE&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=UEGEHy1IQE",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "y0zL9IZxZ7",
+        "title": "MathArena: Evaluating LLMs on Uncontaminated Math Competitions",
+        "croissant_url": "https://openreview.net/attachment?id=y0zL9IZxZ7&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=y0zL9IZxZ7",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Vi2iXrSDzD",
+        "title": "Mars-Bench: A Benchmark for Evaluating Foundation Models for Mars Science Tasks",
+        "croissant_url": "https://openreview.net/attachment?id=Vi2iXrSDzD&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Vi2iXrSDzD",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "xUBgfvyip3",
+        "title": "Revisiting Reinforcement Learning for LLM Reasoning from A Cross-Domain Perspective",
+        "croissant_url": "https://openreview.net/attachment?id=xUBgfvyip3&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=xUBgfvyip3",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "GGMQ3gYhzh",
+        "title": "RAG-IGBench: Innovative Evaluation for RAG-based Interleaved Generation in Open-domain Question Answering",
+        "croissant_url": "https://openreview.net/attachment?id=GGMQ3gYhzh&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=GGMQ3gYhzh",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "NQSbGKlCpx",
+        "title": "ConStellaration: A dataset of QI-like stellarator plasma boundaries and optimization benchmarks",
+        "croissant_url": "https://openreview.net/attachment?id=NQSbGKlCpx&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=NQSbGKlCpx",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "MgXrLxjDed",
+        "title": "UniHG: A Large-scale Universal Heterogeneous Graph Dataset and Benchmark for Representation Learning and Cross-Domain Transferring",
+        "croissant_url": "https://openreview.net/attachment?id=MgXrLxjDed&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=MgXrLxjDed",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "SpNQZwXStl",
+        "title": "C3Po: Cross-View Cross-Modality Correspondence by Pointmap Prediction",
+        "croissant_url": "https://openreview.net/attachment?id=SpNQZwXStl&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=SpNQZwXStl",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "4SUtAp2cm0",
+        "title": "InterMT: Multi-Turn Interleaved Preference Alignment with Human Feedback",
+        "croissant_url": "https://openreview.net/attachment?id=4SUtAp2cm0&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=4SUtAp2cm0",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "hWMY6WUl37",
+        "title": "NeuroRenderedFake: A Challenging Benchmark to Detect Fake Images Generated by Advanced Neural Rendering Methods",
+        "croissant_url": "https://openreview.net/attachment?id=hWMY6WUl37&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=hWMY6WUl37",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "3TN5My3Xw6",
+        "title": "Bubbleformer: Forecasting Boiling with Transformers",
+        "croissant_url": "https://openreview.net/attachment?id=3TN5My3Xw6&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=3TN5My3Xw6",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "fAjbYBmonr",
+        "title": "Why Do Multi-Agent LLM Systems Fail?",
+        "croissant_url": "https://openreview.net/attachment?id=fAjbYBmonr&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=fAjbYBmonr",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "a3hafrDzuA",
+        "title": "WorldModelBench: Judging Video Generation Models As World Models",
+        "croissant_url": "https://openreview.net/attachment?id=a3hafrDzuA&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=a3hafrDzuA",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "qL8M2dOY4L",
+        "title": "RESPIN-S1.0: A read speech corpus of 10000+ hours in dialects of nine Indian Languages",
+        "croissant_url": "https://openreview.net/attachment?id=qL8M2dOY4L&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=qL8M2dOY4L",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ZDrT1eG54T",
+        "title": "TCM-Ladder: A Benchmark for Multimodal Question Answering on Traditional Chinese Medicine",
+        "croissant_url": "https://openreview.net/attachment?id=ZDrT1eG54T&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ZDrT1eG54T",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "1aJ4yvtCac",
+        "title": "DataSIR: A Benchmark Dataset for Sensitive Information Recognition",
+        "croissant_url": "https://openreview.net/attachment?id=1aJ4yvtCac&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=1aJ4yvtCac",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "AB2uK8FhQe",
+        "title": "A Multi-Task Benchmark for Abusive Language Detection in Low-Resource Settings",
+        "croissant_url": "https://openreview.net/attachment?id=AB2uK8FhQe&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=AB2uK8FhQe",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "SZ48ZTgSCn",
+        "title": "AnomalyCoT: A Multi-Scenario Chain-of-Thought Dataset for Multimodal Large Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=SZ48ZTgSCn&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=SZ48ZTgSCn",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "CIjKiSwehR",
+        "title": "Benchmarking Large Language Models with Integer Sequence Generation Tasks",
+        "croissant_url": "https://openreview.net/attachment?id=CIjKiSwehR&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=CIjKiSwehR",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "saDOrrnNTz",
+        "title": "Artificial Hivemind: The Open-Ended Homogeneity of Language Models (and Beyond)",
+        "croissant_url": "https://openreview.net/attachment?id=saDOrrnNTz&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=saDOrrnNTz",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "26VLybEQ2h",
+        "title": "EuroSpeech: A Multilingual Speech Corpus",
+        "croissant_url": "https://openreview.net/attachment?id=26VLybEQ2h&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=26VLybEQ2h",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "1THAjdP4QJ",
+        "title": "PatientSim: A Persona-Driven Simulator for Realistic Doctor-Patient Interactions",
+        "croissant_url": "https://openreview.net/attachment?id=1THAjdP4QJ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=1THAjdP4QJ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ByUIorOhmC",
+        "title": "Collaborating Vision, Depth, and Thermal Signals for Multi-Modal Tracking: Dataset and Algorithm",
+        "croissant_url": "https://openreview.net/attachment?id=ByUIorOhmC&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ByUIorOhmC",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "JWewCpdjjq",
+        "title": "PANORAMA: A Dataset and Benchmarks Capturing Decision Trails and Rationales in Patent Examination",
+        "croissant_url": "https://openreview.net/attachment?id=JWewCpdjjq&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=JWewCpdjjq",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "qlZI9Bgxpy",
+        "title": "FineGRAIN: Evaluating Failure Modes of Text-to-Image Models with Vision Language Model Judges",
+        "croissant_url": "https://openreview.net/attachment?id=qlZI9Bgxpy&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=qlZI9Bgxpy",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "atjpGqjG73",
+        "title": "A Controllable Examination for Long-Context Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=atjpGqjG73&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=atjpGqjG73",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "YIpvHrQAks",
+        "title": "Trans-EnV: A Framework for Evaluating the Linguistic Robustness of LLMs Against English Varieties",
+        "croissant_url": "https://openreview.net/attachment?id=YIpvHrQAks&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=YIpvHrQAks",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "8CKhxBaWO5",
+        "title": "MedSG-Bench: A Benchmark for Medical Image Sequences Grounding",
+        "croissant_url": "https://openreview.net/attachment?id=8CKhxBaWO5&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=8CKhxBaWO5",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "qXiTFAgEx4",
+        "title": "AstroVisBench: A Code Benchmark for Scientific Computing and Visualization in Astronomy",
+        "croissant_url": "https://openreview.net/attachment?id=qXiTFAgEx4&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=qXiTFAgEx4",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "CF2OfwkYdM",
+        "title": "NaturalReasoning: Reasoning in the Wild with 2.8M Challenging Questions",
+        "croissant_url": "https://openreview.net/attachment?id=CF2OfwkYdM&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=CF2OfwkYdM",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "iSwIkUqyqf",
+        "title": "UrbanIng-V2X: A Large-Scale Multi-Vehicle, Multi-Infrastructure Dataset Across Multiple Intersections for Cooperative Perception",
+        "croissant_url": "https://openreview.net/attachment?id=iSwIkUqyqf&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=iSwIkUqyqf",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "NBU5IJGhCf",
+        "title": "Hyperphantasia: A Benchmark for Evaluating the Mental Visualization Capabilities of Multimodal LLMs",
+        "croissant_url": "https://openreview.net/attachment?id=NBU5IJGhCf&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=NBU5IJGhCf",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "VbTDOlnZ6m",
+        "title": "HawkBench: Investigating Resilience of RAG Methods on Stratified Information-Seeking Tasks",
+        "croissant_url": "https://openreview.net/attachment?id=VbTDOlnZ6m&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=VbTDOlnZ6m",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "es2NkPKFCB",
+        "title": "Escaping the SpuriVerse: Can Large Vision-Language Models Generalize Beyond Seen Spurious Correlations?",
+        "croissant_url": "https://openreview.net/attachment?id=es2NkPKFCB&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=es2NkPKFCB",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "FLiMxTkIeu",
+        "title": "AGENTIF: Benchmarking Large Language Models Instruction Following Ability in Agentic Scenarios",
+        "croissant_url": "https://openreview.net/attachment?id=FLiMxTkIeu&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=FLiMxTkIeu",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "GZ2UKmKKNW",
+        "title": "MIRAGE: A Benchmark for Multimodal Information-Seeking and Reasoning in Agricultural Expert-Guided Conversations",
+        "croissant_url": "https://openreview.net/attachment?id=GZ2UKmKKNW&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=GZ2UKmKKNW",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "ig9ujp50D4",
+        "title": "All that structure matches does not glitter",
+        "croissant_url": "https://openreview.net/attachment?id=ig9ujp50D4&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ig9ujp50D4",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "iRsZHAMNHL",
+        "title": "CoralVQA: A Large-Scale Visual Question Answering Dataset for Coral Reef Image Understanding",
+        "croissant_url": "https://openreview.net/attachment?id=iRsZHAMNHL&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=iRsZHAMNHL",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "lzLo5bRgQC",
+        "title": "DecoyDB: A Dataset for Graph Contrastive Learning in Protein-Ligand Binding Affinity Prediction",
+        "croissant_url": "https://openreview.net/attachment?id=lzLo5bRgQC&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=lzLo5bRgQC",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "2XstFOMwp4",
+        "title": "BMMR: A Large-Scale Bilingual Multimodal Multi-Discipline Reasoning Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=2XstFOMwp4&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=2XstFOMwp4",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "bbQV3GQ6Zy",
+        "title": "PAC Bench: Do Foundation Models Understand Prerequisites for Executing Manipulation Policies?",
+        "croissant_url": "https://openreview.net/attachment?id=bbQV3GQ6Zy&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=bbQV3GQ6Zy",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "pmLMrqhIpb",
+        "title": "Absence Bench: Language Models Can’t See What’s Missing",
+        "croissant_url": "https://openreview.net/attachment?id=pmLMrqhIpb&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=pmLMrqhIpb",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "qrFvHgZa7l",
+        "title": "Thousand Voices of Trauma: A Large-Scale Synthetic Dataset for Modeling Prolonged Exposure Therapy Conversations",
+        "croissant_url": "https://openreview.net/attachment?id=qrFvHgZa7l&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=qrFvHgZa7l",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "WJIDorHiuZ",
+        "title": "CoRe: Benchmarking LLMs’ Code Reasoning Capabilities through Static Analysis Tasks",
+        "croissant_url": "https://openreview.net/attachment?id=WJIDorHiuZ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=WJIDorHiuZ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "S9KRk3M7jV",
+        "title": "SutureBot: A Precision Framework & Benchmark For Autonomous End-to-End Suturing",
+        "croissant_url": "https://openreview.net/attachment?id=S9KRk3M7jV&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=S9KRk3M7jV",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "xDcodU49Hh",
+        "title": "PARROT: A Benchmark for Evaluating LLMs in Cross-System SQL Translation",
+        "croissant_url": "https://openreview.net/attachment?id=xDcodU49Hh&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=xDcodU49Hh",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "IbOacMF5qd",
+        "title": "CLEVER: A Curated Benchmark for Formally Verified Code Generation",
+        "croissant_url": "https://openreview.net/attachment?id=IbOacMF5qd&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=IbOacMF5qd",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "5M5WdH659Y",
+        "title": "HouseLayout3D: A Benchmark and Training-free Baseline for 3D Layout Estimation in the Wild",
+        "croissant_url": "https://openreview.net/attachment?id=5M5WdH659Y&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=5M5WdH659Y",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "59vXWteYuh",
+        "title": "Struct-Bench: A Benchmark for Differentially Private Structured Text Generation",
+        "croissant_url": "https://openreview.net/attachment?id=59vXWteYuh&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=59vXWteYuh",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "o5w5Vo2YND",
+        "title": "Two Causally Related Needles in a Video Haystack",
+        "croissant_url": "https://openreview.net/attachment?id=o5w5Vo2YND&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=o5w5Vo2YND",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "2NSPbJrrIW",
+        "title": "ORBIT - Open Recommendation Benchmark for Reproducible Research with Hidden Tests",
+        "croissant_url": "https://openreview.net/attachment?id=2NSPbJrrIW&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=2NSPbJrrIW",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "DIELgiqdvJ",
+        "title": "The Common Pile v0.1: An 8TB Dataset of Public Domain and Openly Licensed Text",
+        "croissant_url": "https://openreview.net/attachment?id=DIELgiqdvJ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=DIELgiqdvJ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "qLdX6TA19s",
+        "title": "ChartMuseum: Testing Visual Reasoning Capabilities of Large Vision-Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=qLdX6TA19s&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=qLdX6TA19s",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "2R6y4Ku9kG",
+        "title": "CodeAssistBench (CAB): Dataset & Benchmarking for Multi-turn Chat-Based Code Assistance",
+        "croissant_url": "https://openreview.net/attachment?id=2R6y4Ku9kG&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=2R6y4Ku9kG",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "I5qDL315bQ",
+        "title": "GSO: Challenging Software Optimization Tasks for Evaluating SWE-Agents",
+        "croissant_url": "https://openreview.net/attachment?id=I5qDL315bQ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=I5qDL315bQ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "s5p9ByKN1j",
+        "title": "WearVQA: A Visual Question Answering Benchmark for Wearables in Egocentric Authentic Real-world scenarios",
+        "croissant_url": "https://openreview.net/attachment?id=s5p9ByKN1j&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=s5p9ByKN1j",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "X7CxMmmgkb",
+        "title": "LISAt: Language-Instructed Segmentation Assistant for Satellite Imagery",
+        "croissant_url": "https://openreview.net/attachment?id=X7CxMmmgkb&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=X7CxMmmgkb",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "eQYToljdNs",
+        "title": "UniFoil: A Universal Dataset of Airfoils in Transitional and Turbulent Regimes for Subsonic and Transonic Flows",
+        "croissant_url": "https://openreview.net/attachment?id=eQYToljdNs&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=eQYToljdNs",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "yfYgwjj5F8",
+        "title": "Generalizing Verifiable Instruction Following",
+        "croissant_url": "https://openreview.net/attachment?id=yfYgwjj5F8&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=yfYgwjj5F8",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Oomuu63IqO",
+        "title": "HARDMath2: A Benchmark for Applied Mathematics Built by Students as Part of a Graduate Class",
+        "croissant_url": "https://openreview.net/attachment?id=Oomuu63IqO&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Oomuu63IqO",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "50gEiKEuUZ",
+        "title": "ConnectomeBench: Can LLMs proofread the connectome?",
+        "croissant_url": "https://openreview.net/attachment?id=50gEiKEuUZ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=50gEiKEuUZ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "DwFDfrPsm8",
+        "title": "NOVA: A Benchmark for Rare Anomaly Localization and Clinical Reasoning in Brain MRI",
+        "croissant_url": "https://openreview.net/attachment?id=DwFDfrPsm8&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=DwFDfrPsm8",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "pkFKjmUE3L",
+        "title": "Common Task Framework For a Critical Evaluation of Scientific Machine Learning Algorithms",
+        "croissant_url": "https://openreview.net/attachment?id=pkFKjmUE3L&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=pkFKjmUE3L",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "rauWoTWls3",
+        "title": "ColorBench: Can VLMs See and Understand the Colorful World? A Comprehensive Benchmark for Color Perception, Reasoning, and Robustness",
+        "croissant_url": "https://openreview.net/attachment?id=rauWoTWls3&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=rauWoTWls3",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "8HUnx0rJNq",
+        "title": "CheMixHub: Datasets and Benchmarks for Chemical Mixture Property Prediction",
+        "croissant_url": "https://openreview.net/attachment?id=8HUnx0rJNq&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=8HUnx0rJNq",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "5HGBErIHuV",
+        "title": "PSMBench: A Benchmark and Dataset for Evaluating LLMs Extraction of Protocol State Machines from RFC Specifications",
+        "croissant_url": "https://openreview.net/attachment?id=5HGBErIHuV&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=5HGBErIHuV",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "mORzRZaqT4",
+        "title": "GuardSet-X: Massive Multi-Domain Safety Policy-Grounded Guardrail Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=mORzRZaqT4&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=mORzRZaqT4",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "TAdeh1dLzu",
+        "title": "Long-term Intracortical Neural activity and Kinematics (LINK): An intracortical neural dataset for chronic brain-machine interfaces, neuroscience, and machine learning",
+        "croissant_url": "https://openreview.net/attachment?id=TAdeh1dLzu&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=TAdeh1dLzu",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "nMpJoVmRy1",
+        "title": "SWE-rebench: An Automated Pipeline for Task Collection and Decontaminated Evaluation of Software Engineering Agents",
+        "croissant_url": "https://openreview.net/attachment?id=nMpJoVmRy1&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=nMpJoVmRy1",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "khzyK7RuzJ",
+        "title": "Alchemist: Turning Public Text-to-Image Data into Generative Gold",
+        "croissant_url": "https://openreview.net/attachment?id=khzyK7RuzJ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=khzyK7RuzJ",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "NheuvQEWDt",
+        "title": "SmokeViz: A Large-Scale Satellite Dataset for Wildfire Smoke Detection and Segmentation",
+        "croissant_url": "https://openreview.net/attachment?id=NheuvQEWDt&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=NheuvQEWDt",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Gy67Zh5X1i",
+        "title": "OpenUnlearning: Accelerating LLM Unlearning via Unified Benchmarking of Methods and Metrics",
+        "croissant_url": "https://openreview.net/attachment?id=Gy67Zh5X1i&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Gy67Zh5X1i",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "REG4cJItSZ",
+        "title": "Benchmarking Egocentric Multimodal Goal Inference for Assistive Wearable Agents",
+        "croissant_url": "https://openreview.net/attachment?id=REG4cJItSZ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=REG4cJItSZ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "nmLRxSLhua",
+        "title": "A Dataset for Distilling Knowledge Priors from Literature for Therapeutic Design",
+        "croissant_url": "https://openreview.net/attachment?id=nmLRxSLhua&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=nmLRxSLhua",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Gi1HtsTAkv",
+        "title": "PF∆: A Benchmark Dataset for Power Flow under Load, Generation, and Topology Variations",
+        "croissant_url": "https://openreview.net/attachment?id=Gi1HtsTAkv&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Gi1HtsTAkv",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "SRP9tz3hYs",
+        "title": "IRRISIGHT: A Large-Scale Multimodal Dataset and Scalable Pipeline to Address Irrigation and Water Management in Agriculture",
+        "croissant_url": "https://openreview.net/attachment?id=SRP9tz3hYs&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=SRP9tz3hYs",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "1ybOI1VvQL",
+        "title": "Fixing It in Post: A Comparative Study of LLM Post-Training Data Quality and Model Performance",
+        "croissant_url": "https://openreview.net/attachment?id=1ybOI1VvQL&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=1ybOI1VvQL",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "BH2miB6Smc",
+        "title": "TreeFinder: A US-Scale Benchmark Dataset for Individual Tree Mortality Monitoring Using High-Resolution Aerial Imagery",
+        "croissant_url": "https://openreview.net/attachment?id=BH2miB6Smc&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=BH2miB6Smc",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "M07aAJKH8B",
+        "title": "CarbonGlobe: A Global-Scale, Multi-Decade Dataset and Benchmark for Carbon Forecasting in Forest Ecosystems",
+        "croissant_url": "https://openreview.net/attachment?id=M07aAJKH8B&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=M07aAJKH8B",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "M4r6dqzsS2",
+        "title": "Towards Automated Petrography",
+        "croissant_url": "https://openreview.net/attachment?id=M4r6dqzsS2&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=M4r6dqzsS2",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "W1WJeqsxnX",
+        "title": "CSI-Bench: A Large-Scale In-the-Wild Dataset for Multi-task WiFi Sensing",
+        "croissant_url": "https://openreview.net/attachment?id=W1WJeqsxnX&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=W1WJeqsxnX",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "mdA5lVvNcU",
+        "title": "Measuring what Matters: Construct Validity in Large Language Model Benchmarks",
+        "croissant_url": "https://openreview.net/attachment?id=mdA5lVvNcU&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=mdA5lVvNcU",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "lqmUbRJsNN",
+        "title": "CLEAR: Command Level Annotated Dataset for Ransomware Detection",
+        "croissant_url": "https://openreview.net/attachment?id=lqmUbRJsNN&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=lqmUbRJsNN",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "Lm8HcblPCJ",
+        "title": "VMDT: Decoding the Trustworthiness of Video Foundation Models",
+        "croissant_url": "https://openreview.net/attachment?id=Lm8HcblPCJ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Lm8HcblPCJ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "KkChcYqvdg",
+        "title": "egoEMOTION: Egocentric Vision and Physiological Signals for Emotion and Personality Recognition in Real-world Tasks",
+        "croissant_url": "https://openreview.net/attachment?id=KkChcYqvdg&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=KkChcYqvdg",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "qFShB5OHAb",
+        "title": "GreenHyperSpectra: A multi-source hyperspectral dataset for global vegetation trait prediction",
+        "croissant_url": "https://openreview.net/attachment?id=qFShB5OHAb&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=qFShB5OHAb",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "wrM8MoRRBs",
+        "title": "BikeBench: A Bicycle Design Benchmark for Generative Models with Objectives and Constraints",
+        "croissant_url": "https://openreview.net/attachment?id=wrM8MoRRBs&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=wrM8MoRRBs",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ZONgHRsAbl",
+        "title": "SMMILE: An expert-driven benchmark for multimodal medical in-context learning",
+        "croissant_url": "https://openreview.net/attachment?id=ZONgHRsAbl&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ZONgHRsAbl",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "vIDsnh0FWH",
+        "title": "AneuG-Flow: A Large-Scale Synthetic Dataset of Diverse Intracranial Aneurysm Geometries and Hemodynamics",
+        "croissant_url": "https://openreview.net/attachment?id=vIDsnh0FWH&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=vIDsnh0FWH",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "eTk1emPYb9",
+        "title": "A Standardized Benchmark for Multilabel Antimicrobial Peptide Classification",
+        "croissant_url": "https://openreview.net/attachment?id=eTk1emPYb9&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=eTk1emPYb9",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "SAT0KPA5UO",
+        "title": "MLIP Arena: Advancing Fairness and Transparency in Machine Learning Interatomic Potentials via an Open, Accessible Benchmark Platform",
+        "croissant_url": "https://openreview.net/attachment?id=SAT0KPA5UO&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=SAT0KPA5UO",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "sVh3eQ642W",
+        "title": "Parameterized Synthetic Text Generation with SimpleStories",
+        "croissant_url": "https://openreview.net/attachment?id=sVh3eQ642W&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=sVh3eQ642W",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ryUzgwD6UQ",
+        "title": "MMTU: A Massive Multi-Task Table Understanding and Reasoning Benchmark",
+        "croissant_url": "https://openreview.net/attachment?id=ryUzgwD6UQ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ryUzgwD6UQ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "yADrJyaBJl",
+        "title": "SVRPBench: A Realistic Benchmark for Stochastic Vehicle Routing Problem",
+        "croissant_url": "https://openreview.net/attachment?id=yADrJyaBJl&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=yADrJyaBJl",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "N07WGSPh9l",
+        "title": "AGC-Drive: A Large-Scale Dataset for Real-World Aerial-Ground Collaboration in Driving Scenarios",
+        "croissant_url": "https://openreview.net/attachment?id=N07WGSPh9l&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=N07WGSPh9l",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "BeFjjyzWOJ",
+        "title": "A Technical Report on “Erasing the Invisible”: The 2024 NeurIPS Competition on Stress Testing Image Watermarks",
+        "croissant_url": "https://openreview.net/attachment?id=BeFjjyzWOJ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=BeFjjyzWOJ",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "54TTgXlS2U",
+        "title": "FreshStack: Building Realistic Benchmarks for Evaluating Retrieval on Technical Documents",
+        "croissant_url": "https://openreview.net/attachment?id=54TTgXlS2U&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=54TTgXlS2U",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "R4MeWTeVej",
+        "title": "Worse than Zero-shot? A Fact-Checking Dataset for Evaluating the Robustness of RAG Against Misleading Retrievals",
+        "croissant_url": "https://openreview.net/attachment?id=R4MeWTeVej&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=R4MeWTeVej",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "l8Mz3dcK1S",
+        "title": "ChemPile: A 250 GB Diverse and Curated Dataset for Chemical Foundation Models",
+        "croissant_url": "https://openreview.net/attachment?id=l8Mz3dcK1S&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=l8Mz3dcK1S",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "rf8c4zw9lO",
+        "title": "Quantifying Generalisation in Imitation Learning",
+        "croissant_url": "https://openreview.net/attachment?id=rf8c4zw9lO&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=rf8c4zw9lO",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "hpu6r8oLw9",
+        "title": "HO-Cap: A Capture System and Dataset for 3D Reconstruction and Pose Tracking of Hand-Object Interaction",
+        "croissant_url": "https://openreview.net/attachment?id=hpu6r8oLw9&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=hpu6r8oLw9",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "AnJaRzEZZs",
+        "title": "DQVis Dataset: Natural Language to Biomedical Visualization",
+        "croissant_url": "https://openreview.net/attachment?id=AnJaRzEZZs&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=AnJaRzEZZs",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "aQaRZ8wj67",
+        "title": "EVAAA: A Virtual Environment Platform for Essential Variables in Autonomous and Adaptive Agents",
+        "croissant_url": "https://openreview.net/attachment?id=aQaRZ8wj67&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=aQaRZ8wj67",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "jjdqnI8mTt",
+        "title": "UVE: Are MLLMs Unified Evaluators for AI-Generated Videos?",
+        "croissant_url": "https://openreview.net/attachment?id=jjdqnI8mTt&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=jjdqnI8mTt",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "VUz3Jcomsv",
+        "title": "AutoOpt: A Dataset and a Unified Framework for Automating Optimization Problem Solving",
+        "croissant_url": "https://openreview.net/attachment?id=VUz3Jcomsv&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=VUz3Jcomsv",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "BIlSrNHdki",
+        "title": "Aeolus: A Multi-structural Flight Delay Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=BIlSrNHdki&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=BIlSrNHdki",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Vb6i3Dp24N",
+        "title": "OCRBench v2: An Improved Benchmark for Evaluating Large Multimodal Models on Visual Text Localization and Reasoning",
+        "croissant_url": "https://openreview.net/attachment?id=Vb6i3Dp24N&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Vb6i3Dp24N",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "rNw128KrYU",
+        "title": "SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series",
+        "croissant_url": "https://openreview.net/attachment?id=rNw128KrYU&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=rNw128KrYU",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "oLGUJ7OmyE",
+        "title": "KnowMol: Advancing Molecular Large Language Models with Multi-Level Chemical Knowledge",
+        "croissant_url": "https://openreview.net/attachment?id=oLGUJ7OmyE&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=oLGUJ7OmyE",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "atofIc3x1q",
+        "title": "TaiwanVQA: Benchmarking and Enhancing Cultural Understanding in Vision-Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=atofIc3x1q&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=atofIc3x1q",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "Ub196uN2Hz",
+        "title": "MUVR: A Multi-Modal Untrimmed Video Retrieval Benchmark with Multi-Level Visual Correspondence",
+        "croissant_url": "https://openreview.net/attachment?id=Ub196uN2Hz&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Ub196uN2Hz",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Slrp3l7aYo",
+        "title": "MUniverse: A Simulation and Benchmarking Suite for Motor Unit Decomposition",
+        "croissant_url": "https://openreview.net/attachment?id=Slrp3l7aYo&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Slrp3l7aYo",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "dTTYxsECcz",
+        "title": "STAR: A Benchmark for Astronomical Star Fields Super-Resolution",
+        "croissant_url": "https://openreview.net/attachment?id=dTTYxsECcz&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=dTTYxsECcz",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "kkELPdW6X7",
+        "title": "Towards Evaluating Proactive Risk Awareness of Multimodal Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=kkELPdW6X7&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=kkELPdW6X7",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "PU4AcbqKp4",
+        "title": "ChemX: A Collection of Chemistry Datasets for Benchmarking Automated Information Extraction",
+        "croissant_url": "https://openreview.net/attachment?id=PU4AcbqKp4&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=PU4AcbqKp4",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "6l8q74TabE",
+        "title": "The Catechol Benchmark: Time-series Solvent Selection Data for Few-shot Machine Learning",
+        "croissant_url": "https://openreview.net/attachment?id=6l8q74TabE&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=6l8q74TabE",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "aqr5pyOQpf",
+        "title": "DermaCon-IN: A Multiconcept-Annotated Dermatological Image Dataset of Indian Skin Disorders for Clinical AI Research",
+        "croissant_url": "https://openreview.net/attachment?id=aqr5pyOQpf&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=aqr5pyOQpf",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "b6L9g5EEFN",
+        "title": "VADB: A Large-Scale Video Aesthetic Database with Professional and Multi-Dimensional Annotations",
+        "croissant_url": "https://openreview.net/attachment?id=b6L9g5EEFN&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=b6L9g5EEFN",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "CfOsKx3jF8",
+        "title": "CPSea: Large-scale cyclic peptide-protein complex dataset for machine learning in cyclic peptide design",
+        "croissant_url": "https://openreview.net/attachment?id=CfOsKx3jF8&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=CfOsKx3jF8",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "VcUmuGXhaI",
+        "title": "OrthoLoC: UAV 6-DoF Localization and Calibration Using Orthographic Geodata",
+        "croissant_url": "https://openreview.net/attachment?id=VcUmuGXhaI&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=VcUmuGXhaI",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "5SpFenlxDF",
+        "title": "LawShift: Benchmarking Legal Judgment Prediction Under Statute Shifts",
+        "croissant_url": "https://openreview.net/attachment?id=5SpFenlxDF&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=5SpFenlxDF",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "rRrswElWIW",
+        "title": "ICPC-Eval: Probing the Frontiers of LLM Reasoning with Competitive Programming Contests",
+        "croissant_url": "https://openreview.net/attachment?id=rRrswElWIW&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=rRrswElWIW",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "iYLOh41doC",
+        "title": "Semantic-KG: Using Knowledge Graphs to Construct Benchmarks for Measuring Semantic Similarity",
+        "croissant_url": "https://openreview.net/attachment?id=iYLOh41doC&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=iYLOh41doC",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "6WgflzYQpf",
+        "title": "SuperGPQA: Scaling LLM Evaluation across 285 Graduate Disciplines",
+        "croissant_url": "https://openreview.net/attachment?id=6WgflzYQpf&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=6WgflzYQpf",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "SSF4qgsNYE",
+        "title": "OmniBench: Towards The Future of Universal Omni-Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=SSF4qgsNYE&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=SSF4qgsNYE",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "qkdVjCAPOE",
+        "title": "XIFBench: Evaluating Large Language Models on Multilingual Instruction Following",
+        "croissant_url": "https://openreview.net/attachment?id=qkdVjCAPOE&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=qkdVjCAPOE",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "OGWkr7gXka",
+        "title": "SWE-bench Goes Live!",
+        "croissant_url": "https://openreview.net/attachment?id=OGWkr7gXka&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=OGWkr7gXka",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "KMcOBvdBZd",
+        "title": "Web-Scale Collection of Video Data for 4D Animal Reconstruction",
+        "croissant_url": "https://openreview.net/attachment?id=KMcOBvdBZd&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=KMcOBvdBZd",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "IlaCGlUHvI",
+        "title": "STSBench: A Large-Scale Dataset for Modeling Neuronal Activity in the Dorsal Stream of Primate Visual Cortex",
+        "croissant_url": "https://openreview.net/attachment?id=IlaCGlUHvI&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=IlaCGlUHvI",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "VIsPHMMiW8",
+        "title": "FGBench: A Dataset and Benchmark for Molecular Property Reasoning at Functional Group-Level in Large Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=VIsPHMMiW8&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=VIsPHMMiW8",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "vCej5sO61x",
+        "title": "AHa-Bench: Benchmarking Audio Hallucinations in Large Audio-Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=vCej5sO61x&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=vCej5sO61x",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "M476xkfNXe",
+        "title": "UMU-Bench: Closing the Modality Gap in Multimodal Unlearning Evaluation",
+        "croissant_url": "https://openreview.net/attachment?id=M476xkfNXe&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=M476xkfNXe",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "GiUI70epUN",
+        "title": "$\\texttt{AVROBUSTBENCH}$: Benchmarking the Robustness of Audio-Visual Recognition Models at Test-Time",
+        "croissant_url": "https://openreview.net/attachment?id=GiUI70epUN&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=GiUI70epUN",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "X0juYgFVng",
+        "title": "Massive Sound Embedding Benchmark (MSEB)",
+        "croissant_url": "https://openreview.net/attachment?id=X0juYgFVng&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=X0juYgFVng",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "wEH5YGPSTx",
+        "title": "ReinAD: Towards Real-world Industrial Anomaly Detection with a Comprehensive Contrastive Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=wEH5YGPSTx&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=wEH5YGPSTx",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "JUBogzglgH",
+        "title": "PUO-Bench: A Panel Understanding and Operation Benchmark with A Privacy-Preserving Framework",
+        "croissant_url": "https://openreview.net/attachment?id=JUBogzglgH&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=JUBogzglgH",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "tue0NwZROJ",
+        "title": "Seeking and Updating with Live Visual Knowledge",
+        "croissant_url": "https://openreview.net/attachment?id=tue0NwZROJ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=tue0NwZROJ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "mkd6YVTf7Z",
+        "title": "ClinBench: A Standardized Multi-Domain Framework for Evaluating Large Language Models in Clinical Information Extraction",
+        "croissant_url": "https://openreview.net/attachment?id=mkd6YVTf7Z&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=mkd6YVTf7Z",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "rGWjTlK6Ev",
+        "title": "STARC-9: A Large-scale Dataset for Multi-Class Tissue Classification for CRC Histopathology",
+        "croissant_url": "https://openreview.net/attachment?id=rGWjTlK6Ev&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=rGWjTlK6Ev",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ukXJIhQaR5",
+        "title": "ClinicalLab: Aligning Agents for Multi-Departmental Clinical Diagnostics in the Real World",
+        "croissant_url": "https://openreview.net/attachment?id=ukXJIhQaR5&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ukXJIhQaR5",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "91scW3DywW",
+        "title": "TAPAS: Datasets for Learning the Learning with Errors Problem",
+        "croissant_url": "https://openreview.net/attachment?id=91scW3DywW&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=91scW3DywW",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "NkiLldW2bi",
+        "title": "QCircuitBench: A Large-Scale Dataset for Benchmarking Quantum Algorithm Design",
+        "croissant_url": "https://openreview.net/attachment?id=NkiLldW2bi&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=NkiLldW2bi",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "vbr63iQsbv",
+        "title": "SECODEPLT: A Unified Benchmark for Evaluating the Security Risks and Capabilities of Code GenAI",
+        "croissant_url": "https://openreview.net/attachment?id=vbr63iQsbv&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=vbr63iQsbv",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "W4b3v9jx1p",
+        "title": "Benchmarking Retrieval-Augmented Multimomal Generation for Document Question Answering",
+        "croissant_url": "https://openreview.net/attachment?id=W4b3v9jx1p&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=W4b3v9jx1p",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "U9BJbzjE4v",
+        "title": "CHASM: Unveiling Covert Advertisements on Chinese Social Media",
+        "croissant_url": "https://openreview.net/attachment?id=U9BJbzjE4v&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=U9BJbzjE4v",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "q8yxEltBHY",
+        "title": "AutoHood3D: A Multi‑Modal Benchmark for Automotive Hood Design and Fluid–Structure Interaction",
+        "croissant_url": "https://openreview.net/attachment?id=q8yxEltBHY&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=q8yxEltBHY",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "VJEcCMx16R",
+        "title": "CogPhys: Assessing Cognitive Load via Multimodal Remote and Contact-based Physiological Sensing",
+        "croissant_url": "https://openreview.net/attachment?id=VJEcCMx16R&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=VJEcCMx16R",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "xcw6UWNtFJ",
+        "title": "CXReasonBench: A Benchmark for Evaluating Structured Diagnostic Reasoning in Chest X-rays",
+        "croissant_url": "https://openreview.net/attachment?id=xcw6UWNtFJ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=xcw6UWNtFJ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "P3JBBnh10z",
+        "title": "EmergentTTS-Eval: Evaluating TTS Models on Complex Prosodic, Expressiveness, and Linguistic Challenges Using Model-as-a-Judge",
+        "croissant_url": "https://openreview.net/attachment?id=P3JBBnh10z&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=P3JBBnh10z",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "2TxdMkJ6Yw",
+        "title": "Whose View of Safety? A Deep DIVE Dataset for Pluralistic Alignment of Text-to-Image Models",
+        "croissant_url": "https://openreview.net/attachment?id=2TxdMkJ6Yw&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=2TxdMkJ6Yw",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "c2F2dUx01R",
+        "title": "Diffusion Classifiers Understand Compositionality, but Conditions Apply",
+        "croissant_url": "https://openreview.net/attachment?id=c2F2dUx01R&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=c2F2dUx01R",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "t8Okk2PRWU",
+        "title": "MLRC-Bench: Can Language Agents Solve Machine Learning Research Challenges?",
+        "croissant_url": "https://openreview.net/attachment?id=t8Okk2PRWU&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=t8Okk2PRWU",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "1KSxxnFNb9",
+        "title": "PARALLELPROMPT: Extracting Parallelism from Large Language Model Queries",
+        "croissant_url": "https://openreview.net/attachment?id=1KSxxnFNb9&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=1KSxxnFNb9",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "oMlOYlujEq",
+        "title": "Towards precision protein-ligand affinity prediction benchmark: A Complete and Modification-Aware DAVIS Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=oMlOYlujEq&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=oMlOYlujEq",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "7B8AYtmQRT",
+        "title": "Ineq-Comp: Benchmarking Human-Intuitive Compositional Reasoning in Automated Theorem Proving of Inequalities",
+        "croissant_url": "https://openreview.net/attachment?id=7B8AYtmQRT&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=7B8AYtmQRT",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "sZvXXPqONQ",
+        "title": "TraffiDent: A  Dataset for Understanding the Interplay Between Traffic Dynamics and Incidents",
+        "croissant_url": "https://openreview.net/attachment?id=sZvXXPqONQ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=sZvXXPqONQ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "6vI3OOYddm",
+        "title": "MolVision: Molecular Property Prediction with Vision Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=6vI3OOYddm&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=6vI3OOYddm",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "AUaW6DS9si",
+        "title": "Mind2Web 2: Evaluating Agentic Search with Agent-as-a-Judge",
+        "croissant_url": "https://openreview.net/attachment?id=AUaW6DS9si&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=AUaW6DS9si",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "YA4748Gu5w",
+        "title": "MONITRS: Multimodal Observations of Natural Incidents Through Remote Sensing",
+        "croissant_url": "https://openreview.net/attachment?id=YA4748Gu5w&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=YA4748Gu5w",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "x1lSRe3hcO",
+        "title": "DeceptionBench: A Comprehensive Benchmark for AI Deception Behaviors in Real-world Scenarios",
+        "croissant_url": "https://openreview.net/attachment?id=x1lSRe3hcO&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=x1lSRe3hcO",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "RGZzSbo4jj",
+        "title": "CrypticBio: A Large Multimodal Dataset for Visually Confusing Species",
+        "croissant_url": "https://openreview.net/attachment?id=RGZzSbo4jj&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=RGZzSbo4jj",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "BmwbEWRkyE",
+        "title": "Bridging Crypto with ML-based Solvers: the SAT Formulation and Benchmarks",
+        "croissant_url": "https://openreview.net/attachment?id=BmwbEWRkyE&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=BmwbEWRkyE",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "3Z8fWHKqlu",
+        "title": "VeriThoughts: Enabling Automated Verilog Code Generation using Reasoning and Formal Verification",
+        "croissant_url": "https://openreview.net/attachment?id=3Z8fWHKqlu&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=3Z8fWHKqlu",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "pJcPhHHlVY",
+        "title": "RADAR: Benchmarking Language Models on Imperfect Tabular Data",
+        "croissant_url": "https://openreview.net/attachment?id=pJcPhHHlVY&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=pJcPhHHlVY",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "MS1gqufmVu",
+        "title": "Rethinking Evaluation of Infrared Small Target Detection",
+        "croissant_url": "https://openreview.net/attachment?id=MS1gqufmVu&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=MS1gqufmVu",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "diYaFg8pqm",
+        "title": "vHector and HeisenVec: Scalable Vector Graphics Generation Through Large Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=diYaFg8pqm&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=diYaFg8pqm",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "NoIWLerNKH",
+        "title": "ConViS-Bench: Estimating Video Similarity  Through Semantic Concepts",
+        "croissant_url": "https://openreview.net/attachment?id=NoIWLerNKH&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=NoIWLerNKH",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "p2pRiDwjDa",
+        "title": "MRSAudio: A Large-Scale Multimodal Recorded Spatial Audio Dataset with Refined Annotations",
+        "croissant_url": "https://openreview.net/attachment?id=p2pRiDwjDa&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=p2pRiDwjDa",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "JROdIT3czF",
+        "title": "Face-Human-Bench: A Comprehensive Benchmark of Face and Human Understanding for Multi-modal Assistants",
+        "croissant_url": "https://openreview.net/attachment?id=JROdIT3czF&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=JROdIT3czF",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "sTKsFIVqik",
+        "title": "V2X-Radar: A Multi-modal Dataset with 4D Radar for Cooperative Perception",
+        "croissant_url": "https://openreview.net/attachment?id=sTKsFIVqik&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=sTKsFIVqik",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "8nHq0IIwpd",
+        "title": "CoreaSpeech: Korean Speech Corpus via JAMO-based Coreset Selection for Efficient and Robust Korean Speech Generation",
+        "croissant_url": "https://openreview.net/attachment?id=8nHq0IIwpd&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=8nHq0IIwpd",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "GClrNUTqly",
+        "title": "ProteinConformers: Benchmark Dataset for Simulating Protein Conformational Landscape Diversity and Plausibility",
+        "croissant_url": "https://openreview.net/attachment?id=GClrNUTqly&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=GClrNUTqly",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "F48NfH4NFE",
+        "title": "FAIR Universe HiggsML Uncertainty Dataset and Competition",
+        "croissant_url": "https://openreview.net/attachment?id=F48NfH4NFE&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=F48NfH4NFE",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "9KfkMAy2ut",
+        "title": "FailureSensorIQ: A Multi-Choice QA Dataset for Understanding Sensor Relationships and Failure Modes",
+        "croissant_url": "https://openreview.net/attachment?id=9KfkMAy2ut&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=9KfkMAy2ut",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "DgH9YCsqWm",
+        "title": "MME: A Comprehensive Evaluation Benchmark for Multimodal Large Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=DgH9YCsqWm&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=DgH9YCsqWm",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "JtowPuCeHI",
+        "title": "EgoVid-5M: A Large-Scale Video-Action Dataset for Egocentric Videos Generation",
+        "croissant_url": "https://openreview.net/attachment?id=JtowPuCeHI&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=JtowPuCeHI",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Di30GwhQSX",
+        "title": "OS-Harm: A Benchmark for Measuring Safety of Computer Use Agents",
+        "croissant_url": "https://openreview.net/attachment?id=Di30GwhQSX&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Di30GwhQSX",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "VhRelRY9ii",
+        "title": "PhysDrive: A Multimodal Remote Physiological Measurement Dataset for In-vehicle Driver Monitoring",
+        "croissant_url": "https://openreview.net/attachment?id=VhRelRY9ii&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=VhRelRY9ii",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "8FZ4oRWJjq",
+        "title": "CPRet: A Dataset, Benchmark, and Model for Retrieval in Competitive Programming",
+        "croissant_url": "https://openreview.net/attachment?id=8FZ4oRWJjq&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=8FZ4oRWJjq",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "RBssYVpQEr",
+        "title": "RealMath: A Continuous Benchmark for Evaluating Language Models on Research-Level Mathematics",
+        "croissant_url": "https://openreview.net/attachment?id=RBssYVpQEr&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=RBssYVpQEr",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "VB2cgrlikN",
+        "title": "3D-RAD: A Comprehensive 3D Radiology Med-VQA Dataset with Multi-Temporal Analysis and Diverse Diagnostic Tasks",
+        "croissant_url": "https://openreview.net/attachment?id=VB2cgrlikN&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=VB2cgrlikN",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "SRStCEJ0Qu",
+        "title": "SonoGym: High Performance Simulation for Challenging Surgical Tasks with Robotic Ultrasound",
+        "croissant_url": "https://openreview.net/attachment?id=SRStCEJ0Qu&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=SRStCEJ0Qu",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "IzCaw5sQgj",
+        "title": "SeasonBench-EA: A Multi-Source Benchmark for Seasonal Prediction and Numerical Model Post-Processing in East Asia",
+        "croissant_url": "https://openreview.net/attachment?id=IzCaw5sQgj&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=IzCaw5sQgj",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "kzXM6GtU3g",
+        "title": "MMMG: A Massive, Multidisciplinary, Multi-Tier Generation Benchmark for Text-to-Image Reasoning",
+        "croissant_url": "https://openreview.net/attachment?id=kzXM6GtU3g&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=kzXM6GtU3g",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "7k0JBDeHAv",
+        "title": "WolBanking77: Wolof Banking Speech Intent Classification Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=7k0JBDeHAv&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=7k0JBDeHAv",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "zyBG1j339A",
+        "title": "GenSpace: Benchmarking Spatially-Aware Image Generation",
+        "croissant_url": "https://openreview.net/attachment?id=zyBG1j339A&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=zyBG1j339A",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "ElX4WxEa0W",
+        "title": "MMPB: It’s Time for Multi-Modal Personalization",
+        "croissant_url": "https://openreview.net/attachment?id=ElX4WxEa0W&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ElX4WxEa0W",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "kMQju9SFBP",
+        "title": "Impromptu VLA: Open Weights and Open Data for Driving Vision-Language-Action Models",
+        "croissant_url": "https://openreview.net/attachment?id=kMQju9SFBP&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=kMQju9SFBP",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Hqoywh28zV",
+        "title": "DCAD-2000: A Multilingual Dataset across 2000+ Languages with Data Cleaning as Anomaly Detection",
+        "croissant_url": "https://openreview.net/attachment?id=Hqoywh28zV&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Hqoywh28zV",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ZKwlz9ZQxS",
+        "title": "ThinkBench: Dynamic Out-of-Distribution Evaluation for Robust LLM Reasoning",
+        "croissant_url": "https://openreview.net/attachment?id=ZKwlz9ZQxS&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ZKwlz9ZQxS",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "jMTAcE3RlO",
+        "title": "DanmakuTPPBench: A Multi-modal Benchmark for Temporal Point Process Modeling and Understanding",
+        "croissant_url": "https://openreview.net/attachment?id=jMTAcE3RlO&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=jMTAcE3RlO",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Wkss6Md6sv",
+        "title": "Towards Understanding Camera Motions in Any Video",
+        "croissant_url": "https://openreview.net/attachment?id=Wkss6Md6sv&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Wkss6Md6sv",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "mPznBXZSWf",
+        "title": "MS-Bench: Evaluating LMMs in Ancient Manuscript Study through a Dunhuang Case Study",
+        "croissant_url": "https://openreview.net/attachment?id=mPznBXZSWf&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=mPznBXZSWf",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "vZ7fJntf0a",
+        "title": "Decompile-Bench: Million-Scale Binary-Source Function Pairs for Real-World Binary Decompilation",
+        "croissant_url": "https://openreview.net/attachment?id=vZ7fJntf0a&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=vZ7fJntf0a",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "PuzbYHf1GR",
+        "title": "nvBench 2.0: Resolving Ambiguity in Text-to-Visualization through Stepwise Reasoning",
+        "croissant_url": "https://openreview.net/attachment?id=PuzbYHf1GR&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=PuzbYHf1GR",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "NfeA0waFaE",
+        "title": "REOBench: Benchmarking Robustness of Earth Observation Foundation Models",
+        "croissant_url": "https://openreview.net/attachment?id=NfeA0waFaE&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=NfeA0waFaE",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "138y2wo6ok",
+        "title": "PolypSense3D: A Multi-Source Benchmark Dataset for Depth-Aware Polyp Size Measurement in Endoscopy",
+        "croissant_url": "https://openreview.net/attachment?id=138y2wo6ok&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=138y2wo6ok",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Wm2BmYn5Rc",
+        "title": "FlareX: A Physics-Informed Dataset for Lens Flare Removal via 2D Synthesis and 3D Rendering",
+        "croissant_url": "https://openreview.net/attachment?id=Wm2BmYn5Rc&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Wm2BmYn5Rc",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "A3aV30YGqP",
+        "title": "GTPBD: A Fine-Grained Global Terraced Parcel and Boundary Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=A3aV30YGqP&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=A3aV30YGqP",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "su3Ch8Ia4a",
+        "title": "TimE: A Multi-level Benchmark for Temporal Reasoning of LLMs in Real-World Scenarios",
+        "croissant_url": "https://openreview.net/attachment?id=su3Ch8Ia4a&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=su3Ch8Ia4a",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "S9TQM1Uhpl",
+        "title": "OneIG-Bench: Omni-dimensional Nuanced Evaluation for Image Generation",
+        "croissant_url": "https://openreview.net/attachment?id=S9TQM1Uhpl&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=S9TQM1Uhpl",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "N5BB7Or30g",
+        "title": "SwitchLingua: The First Large-Scale Multilingual and Multi-Ethnic Code-Switching Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=N5BB7Or30g&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=N5BB7Or30g",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "4ueprXZqZP",
+        "title": "OVERT: A Benchmark for Over-Refusal Evaluation on Text-to-Image Models",
+        "croissant_url": "https://openreview.net/attachment?id=4ueprXZqZP&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=4ueprXZqZP",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ZbcUIxACQE",
+        "title": "RDB2G-Bench: A Comprehensive Benchmark for Automatic Graph Modeling of Relational Databases",
+        "croissant_url": "https://openreview.net/attachment?id=ZbcUIxACQE&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ZbcUIxACQE",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "KI8XRNjPI2",
+        "title": "Augmenting Biological Fitness Prediction Benchmarks with Landscapes Features from GraphFLA",
+        "croissant_url": "https://openreview.net/attachment?id=KI8XRNjPI2&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=KI8XRNjPI2",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "jpwvhUSp2Y",
+        "title": "STEER-ME: Assessing the Microeconomic Reasoning of Large Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=jpwvhUSp2Y&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=jpwvhUSp2Y",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "HtGOaraQEH",
+        "title": "Through the Lens: Benchmarking Deepfake Detectors Against Moiré-Induced Distortions",
+        "croissant_url": "https://openreview.net/attachment?id=HtGOaraQEH&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=HtGOaraQEH",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "MdEkxa6PV9",
+        "title": "BRACE: A Benchmark for Robust Audio Caption Quality Evaluation",
+        "croissant_url": "https://openreview.net/attachment?id=MdEkxa6PV9&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=MdEkxa6PV9",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "Sm7RXgRx29",
+        "title": "EOC-Bench: Can MLLMs Identify, Recall, and Forecast Objects in an Egocentric World?",
+        "croissant_url": "https://openreview.net/attachment?id=Sm7RXgRx29&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Sm7RXgRx29",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "G4AZhSEcrV",
+        "title": "The Curse of Multi-Modalities: Evaluating Hallucinations of Large Multimodal Models across Language, Visual, and Audio",
+        "croissant_url": "https://openreview.net/attachment?id=G4AZhSEcrV&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=G4AZhSEcrV",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "6BpKATZQd8",
+        "title": "MM-OPERA: Benchmarking Open-ended Association Reasoning for Large Vision-Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=6BpKATZQd8&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=6BpKATZQd8",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "DCxsuBXHvx",
+        "title": "FAVOR-Bench: A Comprehensive Benchmark for Fine-Grained Video Motion Understanding",
+        "croissant_url": "https://openreview.net/attachment?id=DCxsuBXHvx&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=DCxsuBXHvx",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "MpaSsvHcWC",
+        "title": "RTV-Bench: Benchmarking MLLM Continuous Perception, Understanding and Reasoning through Real-Time Video",
+        "croissant_url": "https://openreview.net/attachment?id=MpaSsvHcWC&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=MpaSsvHcWC",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "vxVrN9wqD7",
+        "title": "SAGE-Eval: Evaluating LLMs for Systematic Generalizations of Safety Facts",
+        "croissant_url": "https://openreview.net/attachment?id=vxVrN9wqD7&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=vxVrN9wqD7",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "4a0w7AkrY7",
+        "title": "TalkCuts: A Large-Scale Dataset for Multi-Shot Human Speech Video Generation",
+        "croissant_url": "https://openreview.net/attachment?id=4a0w7AkrY7&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=4a0w7AkrY7",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "QoBxQrvFRd",
+        "title": "BOOM: Benchmarking Out-Of-distribution Molecular Property Predictions of Machine Learning Models",
+        "croissant_url": "https://openreview.net/attachment?id=QoBxQrvFRd&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=QoBxQrvFRd",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "am6RR85mnc",
+        "title": "SciArena: An Open Evaluation Platform for Non-Verifiable Scientific Literature-Grounded Tasks",
+        "croissant_url": "https://openreview.net/attachment?id=am6RR85mnc&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=am6RR85mnc",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "0BCUXg40r7",
+        "title": "PanTS: The Pancreatic Tumor Segmentation Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=0BCUXg40r7&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=0BCUXg40r7",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "7SD9RCvcb9",
+        "title": "VideoCAD: A Dataset and Model for Learning Long‑Horizon 3D CAD UI Interactions from Video",
+        "croissant_url": "https://openreview.net/attachment?id=7SD9RCvcb9&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=7SD9RCvcb9",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Cmx6b7w2nk",
+        "title": "Measuring Scientific Capabilities of Language Models with a Systems Biology Dry Lab",
+        "croissant_url": "https://openreview.net/attachment?id=Cmx6b7w2nk&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Cmx6b7w2nk",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "5YQAo0S3Hm",
+        "title": "PHANTOM: A Benchmark for Hallucination Detection in Financial Long-Context QA",
+        "croissant_url": "https://openreview.net/attachment?id=5YQAo0S3Hm&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=5YQAo0S3Hm",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Yovojkx1Zm",
+        "title": "InFlux: A Benchmark for Self-Calibration of Dynamic Intrinsics of Video Cameras",
+        "croissant_url": "https://openreview.net/attachment?id=Yovojkx1Zm&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Yovojkx1Zm",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "MQPZPtv8GG",
+        "title": "AgMMU: A Comprehensive Agricultural Multimodal Understanding Benchmark",
+        "croissant_url": "https://openreview.net/attachment?id=MQPZPtv8GG&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=MQPZPtv8GG",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "U5RIVFtat1",
+        "title": "LiveCodeBench Pro: How Do Olympiad Medalists Judge LLMs in Competitive Programming?",
+        "croissant_url": "https://openreview.net/attachment?id=U5RIVFtat1&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=U5RIVFtat1",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "qk6ORqQ4Cu",
+        "title": "APIGen-MT: Agentic Pipeline for Multi-Turn Data Generation via Simulated Agent-Human Interplay",
+        "croissant_url": "https://openreview.net/attachment?id=qk6ORqQ4Cu&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=qk6ORqQ4Cu",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "d0F0N0cu4n",
+        "title": "What’s in Common? Multimodal Models Hallucinate When Reasoning Across Scenes",
+        "croissant_url": "https://openreview.net/attachment?id=d0F0N0cu4n&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=d0F0N0cu4n",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "dB6W56wQL9",
+        "title": "Results of the Big ANN: NeurIPS’23 competition",
+        "croissant_url": "https://openreview.net/attachment?id=dB6W56wQL9&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=dB6W56wQL9",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "qaxf7q41aK",
+        "title": "AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents",
+        "croissant_url": "https://openreview.net/attachment?id=qaxf7q41aK&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=qaxf7q41aK",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "vhHYTjMt9Z",
+        "title": "DetectiumFire: A Comprehensive Multi-modal Dataset Bridging Vision and Language for Fire Understanding",
+        "croissant_url": "https://openreview.net/attachment?id=vhHYTjMt9Z&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=vhHYTjMt9Z",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "SSTilOugAu",
+        "title": "CosmoBench: A Multiscale, Multiview, Multitask Cosmology Benchmark for Geometric Deep Learning",
+        "croissant_url": "https://openreview.net/attachment?id=SSTilOugAu&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=SSTilOugAu",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "aBlqKPkc4a",
+        "title": "Nemotron-CLIMB: Clustering-based Iterative Data Mixture Bootstrapping for Language Model Pre-training",
+        "croissant_url": "https://openreview.net/attachment?id=aBlqKPkc4a&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=aBlqKPkc4a",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "HZJiIog5XH",
+        "title": "When No Paths Lead to Rome: Benchmarking Systematic Neural Relational Reasoning",
+        "croissant_url": "https://openreview.net/attachment?id=HZJiIog5XH&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=HZJiIog5XH",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "z6WfQ43sHr",
+        "title": "PhyBlock: A Progressive Benchmark for Physical Understanding and Planning via 3D Block Assembly",
+        "croissant_url": "https://openreview.net/attachment?id=z6WfQ43sHr&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=z6WfQ43sHr",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "LA5NJPkUrw",
+        "title": "AVerImaTeC: A Dataset for Automatic Verification of Image-Text Claims with Evidence from the Web",
+        "croissant_url": "https://openreview.net/attachment?id=LA5NJPkUrw&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=LA5NJPkUrw",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "yeqrrn51TL",
+        "title": "Time-IMM: A Dataset and Benchmark for Irregular Multimodal Multivariate Time Series",
+        "croissant_url": "https://openreview.net/attachment?id=yeqrrn51TL&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=yeqrrn51TL",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "p0E74lpRBD",
+        "title": "Paper2Poster: Towards Multimodal Poster Automation from Scientific Papers",
+        "croissant_url": "https://openreview.net/attachment?id=p0E74lpRBD&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=p0E74lpRBD",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "KYkjCO8fG5",
+        "title": "MimeQA: Towards Socially-Intelligent Nonverbal Foundation Models",
+        "croissant_url": "https://openreview.net/attachment?id=KYkjCO8fG5&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=KYkjCO8fG5",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "smlCP7jHN3",
+        "title": "LibriBrain: Over 50 Hours of Within-Subject MEG to Improve Speech Decoding Methods at Scale",
+        "croissant_url": "https://openreview.net/attachment?id=smlCP7jHN3&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=smlCP7jHN3",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "pEUknKjOoW",
+        "title": "T1: A Tool-Oriented Conversational Dataset for Multi-Turn Agentic Planning",
+        "croissant_url": "https://openreview.net/attachment?id=pEUknKjOoW&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=pEUknKjOoW",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "SDJ3Y1ZkNz",
+        "title": "URB - Urban Routing Benchmark for RL-equipped Connected Autonomous Vehicles",
+        "croissant_url": "https://openreview.net/attachment?id=SDJ3Y1ZkNz&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=SDJ3Y1ZkNz",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "wxFfPVPtdy",
+        "title": "LexiCon: a Benchmark for Planning under Temporal Constraints in Natural Language",
+        "croissant_url": "https://openreview.net/attachment?id=wxFfPVPtdy&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=wxFfPVPtdy",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "JX9DE6colf",
+        "title": "MLR-Bench: Evaluating AI Agents on Open-Ended Machine Learning Research",
+        "croissant_url": "https://openreview.net/attachment?id=JX9DE6colf&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=JX9DE6colf",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "T3UksaPK64",
+        "title": "Envisioning Beyond the Pixels: Benchmarking Reasoning-Informed Visual Editing",
+        "croissant_url": "https://openreview.net/attachment?id=T3UksaPK64&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=T3UksaPK64",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Gyq8lMgdk5",
+        "title": "GraphLand: Evaluating Graph Machine Learning Models on Diverse Industrial Data",
+        "croissant_url": "https://openreview.net/attachment?id=Gyq8lMgdk5&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Gyq8lMgdk5",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "3wJh9Pw2sn",
+        "title": "MLLM-ISU: The First-Ever Comprehensive Benchmark for Multimodal Large Language Models based Intrusion Scene Understanding",
+        "croissant_url": "https://openreview.net/attachment?id=3wJh9Pw2sn&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=3wJh9Pw2sn",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "htddaLFOmZ",
+        "title": "LCDB 1.1: A Database Illustrating Learning Curves Are More Ill-Behaved Than Previously Thought",
+        "croissant_url": "https://openreview.net/attachment?id=htddaLFOmZ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=htddaLFOmZ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "BpT5w97FsP",
+        "title": "Do You Really Need Public Data? Surrogate Public Data for Differential Privacy on Tabular Data",
+        "croissant_url": "https://openreview.net/attachment?id=BpT5w97FsP&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=BpT5w97FsP",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Kzj3nBorD8",
+        "title": "From Objects to Anywhere: A Holistic Benchmark for Multi-level Visual Grounding in 3D Scenes",
+        "croissant_url": "https://openreview.net/attachment?id=Kzj3nBorD8&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Kzj3nBorD8",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "7hVyqs8NaP",
+        "title": "Introducing FOReCAst: The Future Outcome Reasoning and Confidence Assessment Benchmark",
+        "croissant_url": "https://openreview.net/attachment?id=7hVyqs8NaP&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=7hVyqs8NaP",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "s3LwZ0k6ia",
+        "title": "TAPVid-360: Tracking Any Point in 360 from Narrow Field of View Video",
+        "croissant_url": "https://openreview.net/attachment?id=s3LwZ0k6ia&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=s3LwZ0k6ia",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Ip1cCUAllL",
+        "title": "WASP: Benchmarking Web Agent Security Against Prompt Injection Attacks",
+        "croissant_url": "https://openreview.net/attachment?id=Ip1cCUAllL&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Ip1cCUAllL",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "QccMOjE05b",
+        "title": "Disentanglement Beyond Static vs. Dynamic: A Benchmark and Evaluation Framework for Multi-Factor Sequential Representations",
+        "croissant_url": "https://openreview.net/attachment?id=QccMOjE05b&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=QccMOjE05b",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "OChorZcZnY",
+        "title": "Robo2VLM: Improving Visual Question Answering using Large-Scale Robot Manipulation Data",
+        "croissant_url": "https://openreview.net/attachment?id=OChorZcZnY&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=OChorZcZnY",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "OSnh4DmGx9",
+        "title": "Toward a Vision-Language Foundation Model for Medical Data: Multimodal Dataset and Benchmarks for Vietnamese PET/CT Report Generation",
+        "croissant_url": "https://openreview.net/attachment?id=OSnh4DmGx9&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=OSnh4DmGx9",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "EtQ2YAWHYs",
+        "title": "OligoGym: Curated Datasets and Benchmarks for Oligonucleotide Drug Discovery",
+        "croissant_url": "https://openreview.net/attachment?id=EtQ2YAWHYs&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=EtQ2YAWHYs",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "GR3P9UXqCE",
+        "title": "QUT-DV25: A Dataset for Dynamic Analysis of Next-Gen Software Supply Chain Attacks",
+        "croissant_url": "https://openreview.net/attachment?id=GR3P9UXqCE&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=GR3P9UXqCE",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "z3TftXOizf",
+        "title": "OctoNet: A Large-Scale Multi-Modal Dataset for Human Activity Understanding Grounded in Motion-Captured 3D Pose Labels",
+        "croissant_url": "https://openreview.net/attachment?id=z3TftXOizf&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=z3TftXOizf",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "woQKlen8EI",
+        "title": "MJ-Bench: Is Your Multimodal Reward Model Really a Good Judge for Text-to-Image Generation?",
+        "croissant_url": "https://openreview.net/attachment?id=woQKlen8EI&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=woQKlen8EI",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "918POZbZ50",
+        "title": "scGeneScope: A Treatment-Matched Single Cell Imaging and Transcriptomics Dataset and Benchmark for Treatment Response Modeling",
+        "croissant_url": "https://openreview.net/attachment?id=918POZbZ50&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=918POZbZ50",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Tpb7uKAN3H",
+        "title": "EgoExoBench: A Benchmark for First- and Third-person View Video Understanding in MLLMs",
+        "croissant_url": "https://openreview.net/attachment?id=Tpb7uKAN3H&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Tpb7uKAN3H",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "nxGSj1xkm3",
+        "title": "Towards Better Dental AI: A Multimodal Benchmark and Instruction Dataset for Panoramic X-ray Analysis",
+        "croissant_url": "https://openreview.net/attachment?id=nxGSj1xkm3&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=nxGSj1xkm3",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ZSUpwHviwS",
+        "title": "BurstDeflicker: A Benchmark Dataset for Flicker Removal in Dynamic Scenes",
+        "croissant_url": "https://openreview.net/attachment?id=ZSUpwHviwS&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ZSUpwHviwS",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "gDkQ5iesrI",
+        "title": "Benchmarking End-To-End Performance of AI-Based Chip Placement Algorithms",
+        "croissant_url": "https://openreview.net/attachment?id=gDkQ5iesrI&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=gDkQ5iesrI",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "ibXRF9ivR0",
+        "title": "A Multimodal Benchmark for Framing of Oil & Gas Advertising and Potential Greenwashing Detection",
+        "croissant_url": "https://openreview.net/attachment?id=ibXRF9ivR0&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ibXRF9ivR0",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Vd5JXiX073",
+        "title": "Diagnosing and Addressing Pitfalls in KG-RAG Datasets: Toward More Reliable Benchmarking",
+        "croissant_url": "https://openreview.net/attachment?id=Vd5JXiX073&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Vd5JXiX073",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "lovsIkZLnI",
+        "title": "HelpSteer3-Preference: Open Human-Annotated Preference Data across Diverse Tasks and Languages",
+        "croissant_url": "https://openreview.net/attachment?id=lovsIkZLnI&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=lovsIkZLnI",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "w98hMEjzu8",
+        "title": "The Automated LLM Speedrunning Benchmark: Reproducing NanoGPT Improvements",
+        "croissant_url": "https://openreview.net/attachment?id=w98hMEjzu8&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=w98hMEjzu8",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "ufhH8YXxOB",
+        "title": "Enhancing Multilingual LLM Pretraining with Model-Based Data Selection",
+        "croissant_url": "https://openreview.net/attachment?id=ufhH8YXxOB&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ufhH8YXxOB",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Za7IcsXIRV",
+        "title": "MiNT: Multi-Network Transfer Benchmark for Temporal Graph Learning",
+        "croissant_url": "https://openreview.net/attachment?id=Za7IcsXIRV&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Za7IcsXIRV",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "YowD33Q89V",
+        "title": "EngiBench: A Framework for Data-Driven Engineering Design Research",
+        "croissant_url": "https://openreview.net/attachment?id=YowD33Q89V&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=YowD33Q89V",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "3CVU3RRvPx",
+        "title": "Intend to Move: A Multimodal Dataset for Intention-Aware Human Motion Understanding",
+        "croissant_url": "https://openreview.net/attachment?id=3CVU3RRvPx&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=3CVU3RRvPx",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "VfG4FBJ9Gc",
+        "title": "CaMiT: A Time-Aware Car Model Dataset for Classification and Generation",
+        "croissant_url": "https://openreview.net/attachment?id=VfG4FBJ9Gc&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=VfG4FBJ9Gc",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "shDB5inCJO",
+        "title": "ArchPower: Dataset for Architecture-Level Power Modeling of Modern CPU Design",
+        "croissant_url": "https://openreview.net/attachment?id=shDB5inCJO&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=shDB5inCJO",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "mHCOVlFXTw",
+        "title": "PRING: Rethinking Protein-Protein Interaction Prediction from Pairs to Graphs",
+        "croissant_url": "https://openreview.net/attachment?id=mHCOVlFXTw&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=mHCOVlFXTw",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "gpwA9aZLTZ",
+        "title": "QuestBench: Can LLMs ask the right question to acquire information in reasoning tasks?",
+        "croissant_url": "https://openreview.net/attachment?id=gpwA9aZLTZ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=gpwA9aZLTZ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "nEvQ95xgaR",
+        "title": "Video-SafetyBench: A Benchmark for Safety Evaluation of Video LVLMs",
+        "croissant_url": "https://openreview.net/attachment?id=nEvQ95xgaR&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=nEvQ95xgaR",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "8raQTkdPos",
+        "title": "PSBench: a large-scale benchmark for estimating the accuracy of protein complex structural models",
+        "croissant_url": "https://openreview.net/attachment?id=8raQTkdPos&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=8raQTkdPos",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "U8qonc6dMF",
+        "title": "IR-OptSet: An Optimization-Sensitive Dataset for Advancing LLM-Based IR Optimizer",
+        "croissant_url": "https://openreview.net/attachment?id=U8qonc6dMF&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=U8qonc6dMF",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "cU5W9Z3r8p",
+        "title": "Words That Unite The World: A Unified Framework for Deciphering Central Bank Communications",
+        "croissant_url": "https://openreview.net/attachment?id=cU5W9Z3r8p&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=cU5W9Z3r8p",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "bDBxf9f5Li",
+        "title": "Care-PD: A Multi-Site Anonymized Clinical Dataset for Parkinson’s Disease Gait Assessment",
+        "croissant_url": "https://openreview.net/attachment?id=bDBxf9f5Li&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=bDBxf9f5Li",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "PXkdqh4SXT",
+        "title": "MMIG-Bench: Towards Comprehensive and Explainable Evaluation of Multi-Modal Image Generation Models",
+        "croissant_url": "https://openreview.net/attachment?id=PXkdqh4SXT&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=PXkdqh4SXT",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "K3S0uNfUsY",
+        "title": "Towards A Generalist Code Embedding Model Based On Massive Data Synthesis",
+        "croissant_url": "https://openreview.net/attachment?id=K3S0uNfUsY&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=K3S0uNfUsY",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Wmsnx7EPel",
+        "title": "Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs",
+        "croissant_url": "https://openreview.net/attachment?id=Wmsnx7EPel&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Wmsnx7EPel",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "8wyCbbzF4Q",
+        "title": "Embodied Web Agents: Bridging Physical-Digital Realms for Integrated Agent Intelligence",
+        "croissant_url": "https://openreview.net/attachment?id=8wyCbbzF4Q&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=8wyCbbzF4Q",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "BqVIt5Dxxh",
+        "title": "EmoNet-Face: An Expert-Annotated Benchmark for Synthetic Emotion Recognition",
+        "croissant_url": "https://openreview.net/attachment?id=BqVIt5Dxxh&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=BqVIt5Dxxh",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "fqpR9FRso9",
+        "title": "DrVD-Bench: Do Vision-Language Models Reason Like Human Doctors in Medical Image Diagnosis?",
+        "croissant_url": "https://openreview.net/attachment?id=fqpR9FRso9&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=fqpR9FRso9",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "UZD5CQV6f9",
+        "title": "MVU-Eval: Towards Multi-Video Understanding Evaluation for Multimodal LLMs",
+        "croissant_url": "https://openreview.net/attachment?id=UZD5CQV6f9&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=UZD5CQV6f9",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "JfwMk10sUz",
+        "title": "From Play to Replay: Composed Video Retrieval for Temporally Fine-Grained Videos",
+        "croissant_url": "https://openreview.net/attachment?id=JfwMk10sUz&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=JfwMk10sUz",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "koxXKW4FbR",
+        "title": "Listening to the Brain: Multi-Band sEEG Auditory Reconstruction via Dynamic Spatio-Temporal Hypergraphs",
+        "croissant_url": "https://openreview.net/attachment?id=koxXKW4FbR&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=koxXKW4FbR",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "CtEocbcMyR",
+        "title": "LithoSim: A Large, Holistic Lithography Simulation Benchmark for AI-Driven Semiconductor Manufacturing",
+        "croissant_url": "https://openreview.net/attachment?id=CtEocbcMyR&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=CtEocbcMyR",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "GWonJSceOf",
+        "title": "Can LLMs Outshine Conventional Recommenders? A Comparative Evaluation",
+        "croissant_url": "https://openreview.net/attachment?id=GWonJSceOf&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=GWonJSceOf",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "AIOq1vWSgK",
+        "title": "LabUtopia: High-Fidelity Simulation and Hierarchical Benchmark for Scientific Embodied Agents",
+        "croissant_url": "https://openreview.net/attachment?id=AIOq1vWSgK&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=AIOq1vWSgK",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "zRhO4hizR8",
+        "title": "Benchmarking Spatiotemporal Reasoning in LLMs and Reasoning Models: Capabilities and Challenges",
+        "croissant_url": "https://openreview.net/attachment?id=zRhO4hizR8&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=zRhO4hizR8",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "FpxIViTl3C",
+        "title": "CellVerse: Do Large Language Models Really Understand Cell Biology?",
+        "croissant_url": "https://openreview.net/attachment?id=FpxIViTl3C&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=FpxIViTl3C",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "lPkdQHBCVY",
+        "title": "Leader360V: A Large-scale, Real-world 360 Video Dataset for Multi-task Learning in Diverse Environment",
+        "croissant_url": "https://openreview.net/attachment?id=lPkdQHBCVY&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=lPkdQHBCVY",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "956KYtqwcU",
+        "title": "Can LLMs Correct Themselves? A Benchmark of Self-Correction in LLMs",
+        "croissant_url": "https://openreview.net/attachment?id=956KYtqwcU&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=956KYtqwcU",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "YKQXu4JAYn",
+        "title": "BO4Mob: Bayesian Optimization Benchmarks for High-Dimensional Urban Mobility Problem",
+        "croissant_url": "https://openreview.net/attachment?id=YKQXu4JAYn&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=YKQXu4JAYn",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "Op8Yp8uWHe",
+        "title": "Fire360: A Benchmark for Robust Perception and Episodic Memory in Degraded 360° Firefighting Video",
+        "croissant_url": "https://openreview.net/attachment?id=Op8Yp8uWHe&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Op8Yp8uWHe",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "mFEkBO25Ra",
+        "title": "MedMax: Mixed-Modal Instruction Tuning for Training Biomedical Assistants",
+        "croissant_url": "https://openreview.net/attachment?id=mFEkBO25Ra&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=mFEkBO25Ra",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "VkuNZHv1fe",
+        "title": "MMPerspective: Do MLLMs Understand Perspective? A Comprehensive Benchmark for Perspective Perception, Reasoning, and Robustness",
+        "croissant_url": "https://openreview.net/attachment?id=VkuNZHv1fe&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=VkuNZHv1fe",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ii9kVwf95a",
+        "title": "BEDLAM2.0: Synthetic humans and cameras in motion",
+        "croissant_url": "https://openreview.net/attachment?id=ii9kVwf95a&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ii9kVwf95a",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "LuMGoG6lBA",
+        "title": "SSRB: Direct Natural Language Querying to Massive Heterogeneous Semi-Structured Data",
+        "croissant_url": "https://openreview.net/attachment?id=LuMGoG6lBA&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=LuMGoG6lBA",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "9VxTXAUH7G",
+        "title": "R&D-Agent-Quant: A Multi-Agent Framework for Data-Centric Factors and Model Joint Optimization",
+        "croissant_url": "https://openreview.net/attachment?id=9VxTXAUH7G&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=9VxTXAUH7G",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "7zFLFtqBm0",
+        "title": "SoMi-ToM: Evaluating Multi-Perspective Theory of Mind in Embodied Social Interactions",
+        "croissant_url": "https://openreview.net/attachment?id=7zFLFtqBm0&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=7zFLFtqBm0",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ZXiOUfaWQT",
+        "title": "Is This Tracker On? A Benchmark Protocol for Dynamic Tracking",
+        "croissant_url": "https://openreview.net/attachment?id=ZXiOUfaWQT&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ZXiOUfaWQT",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "oYD6AP03PZ",
+        "title": "EffiBench-X: A Multi-Language Benchmark for Measuring Efficiency of LLM-Generated Code",
+        "croissant_url": "https://openreview.net/attachment?id=oYD6AP03PZ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=oYD6AP03PZ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "LBKyjz2ESc",
+        "title": "CineTechBench: A Benchmark for Cinematographic Technique Understanding and Generation",
+        "croissant_url": "https://openreview.net/attachment?id=LBKyjz2ESc&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=LBKyjz2ESc",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "B1vCImy6yI",
+        "title": "PolyMath: Evaluating Mathematical Reasoning in Multilingual Contexts",
+        "croissant_url": "https://openreview.net/attachment?id=B1vCImy6yI&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=B1vCImy6yI",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "mvahXacGWg",
+        "title": "Beyond Chemical QA: Evaluating LLM's Chemical Reasoning with Modular Chemical Operations",
+        "croissant_url": "https://openreview.net/attachment?id=mvahXacGWg&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=mvahXacGWg",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ZaKGh4wP87",
+        "title": "Solving Inequality Proofs with Large Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=ZaKGh4wP87&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ZaKGh4wP87",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "A9Jfrc1ouy",
+        "title": "SURDS: Benchmarking Spatial Understanding and Reasoning in Driving Scenarios with Vision Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=A9Jfrc1ouy&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=A9Jfrc1ouy",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Xf1sUC7Lxs",
+        "title": "Jailbreak-AudioBench: In-Depth Evaluation and Analysis of Jailbreak Threats for Large Audio Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=Xf1sUC7Lxs&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Xf1sUC7Lxs",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "yzuPL2EXAn",
+        "title": "InfoChartQA: A Benchmark for Multimodal Question Answering on Infographic Charts",
+        "croissant_url": "https://openreview.net/attachment?id=yzuPL2EXAn&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=yzuPL2EXAn",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "GgKHKZgg0Y",
+        "title": "TIDMAD: Time Series Dataset for Discovering Dark Matter with AI Denoising",
+        "croissant_url": "https://openreview.net/attachment?id=GgKHKZgg0Y&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=GgKHKZgg0Y",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "l8Nb6ecZjW",
+        "title": "FlowerTune: A Cross-Domain Benchmark for Federated Fine-Tuning of Large Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=l8Nb6ecZjW&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=l8Nb6ecZjW",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "SeNFo7JGly",
+        "title": "SafeVid: Toward Safety Aligned Video Large Multimodal Models",
+        "croissant_url": "https://openreview.net/attachment?id=SeNFo7JGly&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=SeNFo7JGly",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "4ZAX1NT0ms",
+        "title": "DAVE: Diagnostic benchmark for Audio Visual Evaluation",
+        "croissant_url": "https://openreview.net/attachment?id=4ZAX1NT0ms&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=4ZAX1NT0ms",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "uUCSrMlfD3",
+        "title": "ImgEdit: A Unified Image Editing Dataset and Benchmark",
+        "croissant_url": "https://openreview.net/attachment?id=uUCSrMlfD3&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=uUCSrMlfD3",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "XKhLsRPMsw",
+        "title": "OpenS2V-Nexus: A Detailed Benchmark and Million-Scale Dataset for Subject-to-Video Generation",
+        "croissant_url": "https://openreview.net/attachment?id=XKhLsRPMsw&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=XKhLsRPMsw",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "N52U2h9k9o",
+        "title": "Is Artificial Intelligence Generated Image Detection a Solved Problem?",
+        "croissant_url": "https://openreview.net/attachment?id=N52U2h9k9o&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=N52U2h9k9o",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "fJMWkaT2HX",
+        "title": "UAV-Flow Colosseo: A Real-World Benchmark for Flying-on-a-Word UAV Imitation Learning",
+        "croissant_url": "https://openreview.net/attachment?id=fJMWkaT2HX&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=fJMWkaT2HX",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "5RykuxC8Jl",
+        "title": "CARES: Comprehensive Evaluation of Safety and Adversarial Robustness in Medical LLMs",
+        "croissant_url": "https://openreview.net/attachment?id=5RykuxC8Jl&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=5RykuxC8Jl",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ucshFQqLyE",
+        "title": "DroneAudioset: An Audio Dataset for Drone-based Search and Rescue",
+        "croissant_url": "https://openreview.net/attachment?id=ucshFQqLyE&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ucshFQqLyE",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "dViistWyZl",
+        "title": "IndustryEQA: Pushing the Frontiers of Embodied Question Answering in Industrial Scenarios",
+        "croissant_url": "https://openreview.net/attachment?id=dViistWyZl&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=dViistWyZl",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "Xs7JM4VGHv",
+        "title": "The Temporal Graph of Bitcoin Transactions",
+        "croissant_url": "https://openreview.net/attachment?id=Xs7JM4VGHv&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=Xs7JM4VGHv",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "63iVrXc8cC",
+        "title": "SWE-smith: Scaling Data for Software Engineering Agents",
+        "croissant_url": "https://openreview.net/attachment?id=63iVrXc8cC&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=63iVrXc8cC",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "dndqkXKY6W",
+        "title": "LIFEBENCH: Evaluating Length Instruction Following in Large Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=dndqkXKY6W&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=dndqkXKY6W",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "J0PmRFMZXm",
+        "title": "PartNeXt: A Next-Generation Dataset for Fine-Grained and Hierarchical 3D Part Understanding",
+        "croissant_url": "https://openreview.net/attachment?id=J0PmRFMZXm&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=J0PmRFMZXm",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "aWSh1Ec64T",
+        "title": "KRIS-Bench: Benchmarking Next-Level Intelligent Image Editing Models",
+        "croissant_url": "https://openreview.net/attachment?id=aWSh1Ec64T&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=aWSh1Ec64T",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ye4ntB1Kzi",
+        "title": "ML4CO-Bench-101: Benchmark Machine Learning for Classic Combinatorial Problems on Graphs",
+        "croissant_url": "https://openreview.net/attachment?id=ye4ntB1Kzi&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ye4ntB1Kzi",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "R55b2K5KmA",
+        "title": "CausalVerse: Benchmarking Causal Representation Learning with Configurable High-Fidelity Simulations",
+        "croissant_url": "https://openreview.net/attachment?id=R55b2K5KmA&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=R55b2K5KmA",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "nQq4bMcP7L",
+        "title": "SolidGeo: Measuring Multimodal Spatial Math Reasoning in Solid Geometry",
+        "croissant_url": "https://openreview.net/attachment?id=nQq4bMcP7L&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=nQq4bMcP7L",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "brG8FPq1cf",
+        "title": "PHYBench: Holistic Evaluation of Physical Perception and Reasoning in Large Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=brG8FPq1cf&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=brG8FPq1cf",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "8ObELfOFbB",
+        "title": "LooGLE v2: Are LLMs Ready for Real World Long Dependency Challenges?",
+        "croissant_url": "https://openreview.net/attachment?id=8ObELfOFbB&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=8ObELfOFbB",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "H3nywowPNF",
+        "title": "VideoGameQA-Bench: Evaluating Vision-Language Models for Video Game Quality Assurance",
+        "croissant_url": "https://openreview.net/attachment?id=H3nywowPNF&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=H3nywowPNF",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ck7euvU7V3",
+        "title": "CausalDynamics: A large‐scale benchmark for structural discovery of dynamical causal models",
+        "croissant_url": "https://openreview.net/attachment?id=ck7euvU7V3&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ck7euvU7V3",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "FVIPADDm4E",
+        "title": "EPFL-Smart-Kitchen: An Ego-Exo Multi-Modal Dataset for Challenging Action and Motion Understanding in Video-Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=FVIPADDm4E&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=FVIPADDm4E",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "NdgdyOx7Yg",
+        "title": "VIKI‑R: Coordinating Embodied Multi-Agent Cooperation via Reinforcement Learning",
+        "croissant_url": "https://openreview.net/attachment?id=NdgdyOx7Yg&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=NdgdyOx7Yg",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "63Tia99ofI",
+        "title": "Open-Insect: Benchmarking Open-Set Recognition of Novel Species in Biodiversity Monitoring",
+        "croissant_url": "https://openreview.net/attachment?id=63Tia99ofI&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=63Tia99ofI",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "E58HNCqoaA",
+        "title": "Establishing Best Practices in Building Rigorous Agentic Benchmarks",
+        "croissant_url": "https://openreview.net/attachment?id=E58HNCqoaA&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=E58HNCqoaA",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "IA9RmaP0aw",
+        "title": "Evaluating Program Semantics Reasoning with Type Inference in System $F$",
+        "croissant_url": "https://openreview.net/attachment?id=IA9RmaP0aw&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=IA9RmaP0aw",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "IZHWvvmYwx",
+        "title": "MIR-Bench: Can Your LLM Recognize Complicated Patterns via Many-Shot In-Context Reasoning?",
+        "croissant_url": "https://openreview.net/attachment?id=IZHWvvmYwx&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=IZHWvvmYwx",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "pAd7qVrYPG",
+        "title": "EDBench: Large-Scale Electron Density Data for Molecular Modeling",
+        "croissant_url": "https://openreview.net/attachment?id=pAd7qVrYPG&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=pAd7qVrYPG",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "vDm8VWYYuX",
+        "title": "AtmosSci-Bench: Evaluating the Recent Advance of Large Language Model for Atmospheric Science",
+        "croissant_url": "https://openreview.net/attachment?id=vDm8VWYYuX&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=vDm8VWYYuX",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "RB3HXYY4q6",
+        "title": "Señorita-2M: A High-Quality Instruction-based Dataset for General Video Editing by Video Specialists",
+        "croissant_url": "https://openreview.net/attachment?id=RB3HXYY4q6&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=RB3HXYY4q6",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "MOSXyN4ilj",
+        "title": "EgoExOR: An Ego-Exo-Centric  Operating Room Dataset for Surgical Activity Understanding",
+        "croissant_url": "https://openreview.net/attachment?id=MOSXyN4ilj&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=MOSXyN4ilj",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "efGzsxVSEC",
+        "title": "SentinelKilnDB: A Large-Scale Dataset and Benchmark for OBB Brick Kiln Detection in South Asia Using Satellite Imagery",
+        "croissant_url": "https://openreview.net/attachment?id=efGzsxVSEC&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=efGzsxVSEC",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "0JtNyaHbNx",
+        "title": "RoboCerebra: A Large-scale Benchmark for Long-horizon Robotic Manipulation Evaluation",
+        "croissant_url": "https://openreview.net/attachment?id=0JtNyaHbNx&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=0JtNyaHbNx",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "2Nyue9Tjtg",
+        "title": "InternScenes: A Large-scale Simulatable Indoor Scene Dataset with Realistic Layouts",
+        "croissant_url": "https://openreview.net/attachment?id=2Nyue9Tjtg&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=2Nyue9Tjtg",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "vAkVKIOtcN",
+        "title": "OST-Bench: Evaluating the Capabilities of MLLMs in Online Spatio-temporal Scene Understanding",
+        "croissant_url": "https://openreview.net/attachment?id=vAkVKIOtcN&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=vAkVKIOtcN",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "MhUendsT7L",
+        "title": "Scientists' First Exam: Probing Cognitive Abilities of MLLM via Perception, Understanding, and Reasoning",
+        "croissant_url": "https://openreview.net/attachment?id=MhUendsT7L&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=MhUendsT7L",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "w7CAtdP5XC",
+        "title": "CAPability: A Comprehensive Visual Caption Benchmark for Evaluating Both Correctness and Thoroughness",
+        "croissant_url": "https://openreview.net/attachment?id=w7CAtdP5XC&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=w7CAtdP5XC",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "sQO1ZEQGqX",
+        "title": "DisasterM3: A Remote Sensing Vision-Language Dataset for Disaster Damage Assessment and Response",
+        "croissant_url": "https://openreview.net/attachment?id=sQO1ZEQGqX&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=sQO1ZEQGqX",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "q2VpjD7k1V",
+        "title": "WebGen-Bench: Evaluating LLMs on Generating Interactive and Functional Websites from Scratch",
+        "croissant_url": "https://openreview.net/attachment?id=q2VpjD7k1V&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=q2VpjD7k1V",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "7WDFZKtf7q",
+        "title": "mmWalk: Towards Multi-modal Multi-view Walking Assistance",
+        "croissant_url": "https://openreview.net/attachment?id=7WDFZKtf7q&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=7WDFZKtf7q",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "FDi6Mbl0xD",
+        "title": "OverLayBench: A Benchmark for Layout-to-Image Generation with Dense Overlaps",
+        "croissant_url": "https://openreview.net/attachment?id=FDi6Mbl0xD&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=FDi6Mbl0xD",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "gBxpAKxg22",
+        "title": "OMEGA: Can LLMs Reason Outside the Box in Math? Evaluating Exploratory, Compositional, and Transformative Generalization",
+        "croissant_url": "https://openreview.net/attachment?id=gBxpAKxg22&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=gBxpAKxg22",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "EPQi0v0OxL",
+        "title": "MMLongBench: Benchmarking Long-Context Vision-Language Models Effectively and Thoroughly",
+        "croissant_url": "https://openreview.net/attachment?id=EPQi0v0OxL&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=EPQi0v0OxL",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "QzWPUEuMKU",
+        "title": "SeniorTalk: A Chinese Conversation Dataset with Rich Annotations for Super-Aged Seniors",
+        "croissant_url": "https://openreview.net/attachment?id=QzWPUEuMKU&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=QzWPUEuMKU",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "pGqx3hTSVa",
+        "title": "Martian World Model: Controllable Video Synthesis with Physically Accurate 3D Reconstructions",
+        "croissant_url": "https://openreview.net/attachment?id=pGqx3hTSVa&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=pGqx3hTSVa",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "3chgJBffVS",
+        "title": "CleverBirds: A Multiple-Choice Benchmark for Fine-grained Human Knowledge Tracing",
+        "croissant_url": "https://openreview.net/attachment?id=3chgJBffVS&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=3chgJBffVS",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "I3F7w8MvY9",
+        "title": "Sekai: A Video Dataset towards World Exploration",
+        "croissant_url": "https://openreview.net/attachment?id=I3F7w8MvY9&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=I3F7w8MvY9",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "zubCrOvUZ4",
+        "title": "DynamicVL: Benchmarking Multimodal Large Language Models for Dynamic City Understanding",
+        "croissant_url": "https://openreview.net/attachment?id=zubCrOvUZ4&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=zubCrOvUZ4",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "1lo778KztK",
+        "title": "Scaling Physical Reasoning with the PHYSICS Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=1lo778KztK&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=1lo778KztK",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "02ymnxlypN",
+        "title": "SceneSplat++: A Large Dataset and Comprehensive Benchmark for Language Gaussian Splatting",
+        "croissant_url": "https://openreview.net/attachment?id=02ymnxlypN&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=02ymnxlypN",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "oTeixD3oZO",
+        "title": "C-SEO Bench: Does Conversational SEO Work?",
+        "croissant_url": "https://openreview.net/attachment?id=oTeixD3oZO&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=oTeixD3oZO",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "yn2fJYBKEB",
+        "title": "RSCC: A Large-Scale Remote Sensing Change Caption Dataset for Disaster Events",
+        "croissant_url": "https://openreview.net/attachment?id=yn2fJYBKEB&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=yn2fJYBKEB",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "L7StVf0UXC",
+        "title": "COCONut-PanCap: Joint Panoptic Segmentation and Grounded Captions for Fine-Grained Understanding and Generation",
+        "croissant_url": "https://openreview.net/attachment?id=L7StVf0UXC&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=L7StVf0UXC",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "gKkA9Oc13m",
+        "title": "MomentSeeker: A Task-Oriented Benchmark For Long-Video Moment Retrieval",
+        "croissant_url": "https://openreview.net/attachment?id=gKkA9Oc13m&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=gKkA9Oc13m",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "JCjGvbsOmQ",
+        "title": "ALE-Bench: A Benchmark for Long-Horizon Objective-Driven Algorithm Engineering",
+        "croissant_url": "https://openreview.net/attachment?id=JCjGvbsOmQ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=JCjGvbsOmQ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "6hY4hBL8M6",
+        "title": "Merlin L48 Spectrogram Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=6hY4hBL8M6&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=6hY4hBL8M6",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "JI6GEakOCH",
+        "title": "Can Large Language Models Help Multimodal Language Analysis? MMLA: A Comprehensive Benchmark",
+        "croissant_url": "https://openreview.net/attachment?id=JI6GEakOCH&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=JI6GEakOCH",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "a61AArHrMO",
+        "title": "RAM-W600: A Multi-Task Wrist Dataset and Benchmark for Rheumatoid Arthritis",
+        "croissant_url": "https://openreview.net/attachment?id=a61AArHrMO&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=a61AArHrMO",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "apHeLNdl9g",
+        "title": "A2Seek: Towards Reasoning-Centric Benchmark for Aerial Anomaly Understanding",
+        "croissant_url": "https://openreview.net/attachment?id=apHeLNdl9g&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=apHeLNdl9g",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "415T06x0vG",
+        "title": "MetaBox-v2: A Unified Benchmark Platform for Meta-Black-Box Optimization",
+        "croissant_url": "https://openreview.net/attachment?id=415T06x0vG&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=415T06x0vG",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "cvSWTtTGSZ",
+        "title": "EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis",
+        "croissant_url": "https://openreview.net/attachment?id=cvSWTtTGSZ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=cvSWTtTGSZ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "jKw3Qhc8m1",
+        "title": "IndEgo: A Dataset of Industrial Scenarios and Collaborative Work for Egocentric Assistants",
+        "croissant_url": "https://openreview.net/attachment?id=jKw3Qhc8m1&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=jKw3Qhc8m1",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "b7iEUXectF",
+        "title": "IR3D-Bench: Evaluating Vision-Language Model Scene Understanding as Agentic Inverse Rendering",
+        "croissant_url": "https://openreview.net/attachment?id=b7iEUXectF&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=b7iEUXectF",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "yFIpdvQYmx",
+        "title": "PSI: A Benchmark for Human Interpretation and Response in Traffic Interactions",
+        "croissant_url": "https://openreview.net/attachment?id=yFIpdvQYmx&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=yFIpdvQYmx",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "H3cqr50G7Q",
+        "title": "Roboflow100-VL: A Multi-Domain Object Detection Benchmark for Vision-Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=H3cqr50G7Q&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=H3cqr50G7Q",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "GzgPleFl8f",
+        "title": "From Flatland to Space: Teaching Vision-Language Models to Perceive and Reason in 3D",
+        "croissant_url": "https://openreview.net/attachment?id=GzgPleFl8f&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=GzgPleFl8f",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "sYLiY87mNn",
+        "title": "BackdoorLLM: A Comprehensive Benchmark for Backdoor Attacks and Defenses on Large Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=sYLiY87mNn&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=sYLiY87mNn",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "APNWmytTCS",
+        "title": "SeePhys:  Does Seeing Help Thinking? – Benchmarking Vision-Based Physics Reasoning",
+        "croissant_url": "https://openreview.net/attachment?id=APNWmytTCS&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=APNWmytTCS",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "zYqM6gkqBi",
+        "title": "UltraVideo: High-Quality UHD Video Dataset with Comprehensive Captions",
+        "croissant_url": "https://openreview.net/attachment?id=zYqM6gkqBi&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=zYqM6gkqBi",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "GVB1M5K0ch",
+        "title": "DrivAerStar: An Industrial-Grade CFD Dataset for Vehicle Aerodynamic Optimization",
+        "croissant_url": "https://openreview.net/attachment?id=GVB1M5K0ch&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=GVB1M5K0ch",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "JaOcuRbglz",
+        "title": "Surprise3D: A Dataset for Spatial Understanding and Reasoning in Complex 3D Scenes",
+        "croissant_url": "https://openreview.net/attachment?id=JaOcuRbglz&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=JaOcuRbglz",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "hW7Bpu6Kbn",
+        "title": "MME-VideoOCR: Evaluating OCR-Based Capabilities of Multimodal LLMs in Video Scenarios",
+        "croissant_url": "https://openreview.net/attachment?id=hW7Bpu6Kbn&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=hW7Bpu6Kbn",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "uCz7pHv67y",
+        "title": "MMOT: The First Challenging Benchmark for Drone-based Multispectral Multi-Object Tracking",
+        "croissant_url": "https://openreview.net/attachment?id=uCz7pHv67y&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=uCz7pHv67y",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "3Wb4WuTUVc",
+        "title": "MultiHuman-Testbench: Benchmarking Image Generation for Multiple Humans",
+        "croissant_url": "https://openreview.net/attachment?id=3Wb4WuTUVc&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=3Wb4WuTUVc",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "XUpwWaH7HD",
+        "title": "GlobalTomo: A global dataset for physics-ML seismic wavefield modeling and FWI",
+        "croissant_url": "https://openreview.net/attachment?id=XUpwWaH7HD&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=XUpwWaH7HD",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "QRr9Pwm7zg",
+        "title": "STSBench: A Spatio-temporal Scenario Benchmark for Multi-modal Large Language Models in Autonomous Driving",
+        "croissant_url": "https://openreview.net/attachment?id=QRr9Pwm7zg&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=QRr9Pwm7zg",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "aXFV0Z5cN2",
+        "title": "EgoBlind: Towards Egocentric Visual Assistance for the Blind",
+        "croissant_url": "https://openreview.net/attachment?id=aXFV0Z5cN2&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=aXFV0Z5cN2",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "MhBZzkz4h9",
+        "title": "Multi-SWE-bench: A Multilingual Benchmark for Issue Resolving",
+        "croissant_url": "https://openreview.net/attachment?id=MhBZzkz4h9&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=MhBZzkz4h9",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "UlwaJPzLs2",
+        "title": "MineAnyBuild: Benchmarking Spatial Planning for Open-world AI Agents",
+        "croissant_url": "https://openreview.net/attachment?id=UlwaJPzLs2&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=UlwaJPzLs2",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "fp5RrJ51WK",
+        "title": "ExAct: A Video-Language Benchmark for Expert Action Analysis",
+        "croissant_url": "https://openreview.net/attachment?id=fp5RrJ51WK&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=fp5RrJ51WK",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "WHARtAg5R9",
+        "title": "Situat3DChange: Situated 3D Change Understanding Dataset for Multimodal Large Language Model",
+        "croissant_url": "https://openreview.net/attachment?id=WHARtAg5R9&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=WHARtAg5R9",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "n6GVwmGvZ0",
+        "title": "RBench-V: A Primary Assessment for Visual Reasoning Models with Multimodal Outputs",
+        "croissant_url": "https://openreview.net/attachment?id=n6GVwmGvZ0&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=n6GVwmGvZ0",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "YLxwj5YLb7",
+        "title": "In the Eye of MLLM: Benchmarking Egocentric Video Intent Understanding with Gaze-Guided Prompting",
+        "croissant_url": "https://openreview.net/attachment?id=YLxwj5YLb7&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=YLxwj5YLb7",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "dhWkIa3NFu",
+        "title": "Open CaptchaWorld: A Comprehensive Web-based Platform for Testing and Benchmarking Multimodal LLM Agents",
+        "croissant_url": "https://openreview.net/attachment?id=dhWkIa3NFu&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=dhWkIa3NFu",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "okvCWvaGU7",
+        "title": "3EED: Ground Everything Everywhere in 3D",
+        "croissant_url": "https://openreview.net/attachment?id=okvCWvaGU7&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=okvCWvaGU7",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "ByEZnKp4tf",
+        "title": "Hi3DEval: Advancing 3D Generation Evaluation with Hierarchical Validity",
+        "croissant_url": "https://openreview.net/attachment?id=ByEZnKp4tf&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=ByEZnKp4tf",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "C4IqLzavel",
+        "title": "REFED: A Subject Real-time Dynamic Labeled EEG-fNIRS Synchronized Recorded Emotion Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=C4IqLzavel&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=C4IqLzavel",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "eESbQ5lWiP",
+        "title": "UniEdit: A Unified Knowledge Editing Benchmark for Large Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=eESbQ5lWiP&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=eESbQ5lWiP",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "zZn2Kk5CLt",
+        "title": "Can Large Multimodal Models Understand Agricultural Scenes? Benchmarking with AgroMind",
+        "croissant_url": "https://openreview.net/attachment?id=zZn2Kk5CLt&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=zZn2Kk5CLt",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "fgmrBJemlQ",
+        "title": "MMAR: A Challenging Benchmark for Deep Reasoning in Speech, Audio, Music, and Their Mix",
+        "croissant_url": "https://openreview.net/attachment?id=fgmrBJemlQ&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=fgmrBJemlQ",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "GZ5LI6Fetp",
+        "title": "CHOICE: Benchmarking the Remote Sensing Capabilities of Large Vision-Language Models",
+        "croissant_url": "https://openreview.net/attachment?id=GZ5LI6Fetp&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=GZ5LI6Fetp",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "XhNOSbLH0R",
+        "title": "GS2E: Gaussian Splatting is an Effective Data Generator for Event Stream Generation",
+        "croissant_url": "https://openreview.net/attachment?id=XhNOSbLH0R&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=XhNOSbLH0R",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "g0AMmWiHCq",
+        "title": "BLINK-Twice: You see, but do you observe?  A Reasoning Benchmark on Visual Perception",
+        "croissant_url": "https://openreview.net/attachment?id=g0AMmWiHCq&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=g0AMmWiHCq",
+        "is_competition_paper": true
+      },
+      {
+        "paper_id": "wwlwRuKle7",
+        "title": "VideoUFO: A Million-Scale User-Focused Dataset for Text-to-Video Generation",
+        "croissant_url": "https://openreview.net/attachment?id=wwlwRuKle7&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=wwlwRuKle7",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "cCa48q798X",
+        "title": "Seeing in the Dark: Benchmarking Egocentric 3D Vision with the Oxford Day-and-Night Dataset",
+        "croissant_url": "https://openreview.net/attachment?id=cCa48q798X&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=cCa48q798X",
+        "is_competition_paper": false
+      },
+      {
+        "paper_id": "dJnzFlPUuO",
+        "title": "MMCSBench: A Fine-Grained Benchmark for Large Vision-Language Models in Camouflage Scenes",
+        "croissant_url": "https://openreview.net/attachment?id=dJnzFlPUuO&name=croissant_file",
+        "openreview_url": "https://openreview.net/forum?id=dJnzFlPUuO",
+        "is_competition_paper": false
+      }
+    ]
+  }
+}
