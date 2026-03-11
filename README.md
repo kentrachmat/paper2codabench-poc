@@ -112,15 +112,6 @@ bundles/paper1/
 | `src/utils.py` | Shared utilities (syntax validation, task type inference) |
 | `src/croissant_schema.py` | Pydantic models for Croissant Task |
 
-## Included Papers
-
-| Paper ID | Title | Task Type |
-|----------|-------|-----------|
-| paper1 | [BELKA — Big Encoded Library for Chemical Assessment](https://openreview.net/pdf?id=zwppB4butE) | Classification |
-| paper2 | [FAIR Universe — Handling Uncertainties in Fundamental Science](https://openreview.net/pdf?id=aiYrZONlqy) | Ranking |
-| paper3 | [HAC — The Hacker-Cup AI Competition](https://openreview.net/pdf?id=nZB55Omfc3) | Generation |
-| paper4 | [Weather4cast 2024 — Multi-task Rain Movie Prediction](https://openreview.net/pdf?id=AZ9WzDxoTf) | Segmentation |
-
 ## Submission Interface
 
 Participants implement a `solution.py` with:
@@ -141,19 +132,6 @@ def predict(input_dir: str, output_dir: str) -> None:
     predictions.to_csv(Path(output_dir) / 'predictions.csv', index=False)
 ```
 
-## LLM Cost Estimate (GPT-4o)
-
-Estimated cost to run the full pipeline on all 8 papers (both Pipeline A and B):
-
-| Step | API Calls | Input Tokens | Output Tokens | Cost |
-|------|-----------|-------------|---------------|------|
-| Pipeline A — Croissant extraction | 8 | ~80K | ~24K | ~$0.44 |
-| Pipeline A — Bundle generation | 8 × 5 = 40 | ~200K | ~80K | ~$1.30 |
-| Pipeline B — Direct bundle gen | 8 × 6 = 48 | ~240K | ~96K | ~$1.56 |
-| Hallucination check | ~32 | ~80K | ~16K | ~$0.36 |
-| **Total** | **~130** | **~600K** | **~216K** | **~$3.66** |
-
-> Pricing: GPT-4o at $2.50/1M input, $10.00/1M output. Actual cost may vary with retries and paper length. Budget ~$4–6 to be safe.
 
 ## Data Sources
 

@@ -71,13 +71,13 @@ def plot_heatmap():
             color = "white" if v != 0 else "black"
             ax.text(j, i, label, ha="center", va="center", fontsize=9, color=color, fontweight="bold")
 
-    ax.set_title("Hallucination Propagation\n(planted error -> LLM output)", fontweight="bold")
+    ax.set_title("Hallucination Propagation\n(planted error \u2192 LLM output)", fontweight="bold")
     patches = [
         mpatches.Patch(color=PROP_COLOR, label="Propagated"),
         mpatches.Patch(color=NOPROP_COLOR, label="Not propagated"),
         mpatches.Patch(color=SKIP_COLOR, label="N/A"),
     ]
-    ax.legend(handles=patches, loc="upper right", fontsize=8)
+    ax.legend(handles=patches, loc="upper left", bbox_to_anchor=(1.01, 1), fontsize=8)
 
     out = PLOTS_DIR / "hallucination_heatmap.png"
     fig.savefig(out, dpi=150, bbox_inches="tight", facecolor="white")
