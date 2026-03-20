@@ -51,5 +51,8 @@ Thumbs.db
  
 !bundles/.gitkeep
 
+# Local context
+context.local
+
 # Web cache
 web/__pycache__/
